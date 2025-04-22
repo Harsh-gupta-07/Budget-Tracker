@@ -7,16 +7,16 @@ const TotalBudgetCard = () => {
     <div className="bg-base-200 p-5 rounded-lg shadow-sm border border-gray-700">
       <div className="flex justify-between items-start mb-4">
         <div>
-          <p className="text-gray-300 text-sm mb-2">Total Budget</p>
+          <p className="text-gray-300 text-sm mb-3">Total Budget</p>
           <p className="text-2xl font-semibold font-mono">₹ 2,500.00</p>
         </div>
         <div className="w-10 h-10 p-2 flex justify-center align-middle bg-[#1e2021] rounded-full">
           <Image src="/bank.svg" alt="bank-logo" width={23} height={23} />
         </div>
       </div>
-      {/* <div className="text-xs text-gray-500">
-        <span className="text-gray-800 font-medium">+$200.00</span> from last month
-      </div> */}
+      <div className="text-xs text-gray-500">
+        Let's get Saving!
+      </div>
     </div>
   );
 };
