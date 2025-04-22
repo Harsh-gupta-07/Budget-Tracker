@@ -18,7 +18,7 @@ const Sidebar = () => {
                 height={25}
                 alt="dashboard-logo"
               />
-              <p className="text-base font-medium ml-1`````````">Dashboard</p>
+              <p className="text-base font-medium ml-1">Dashboard</p>
             </div>
           </li>
           <li>
