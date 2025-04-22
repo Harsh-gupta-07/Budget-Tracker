@@ -13,7 +13,7 @@ const page = () => {
           <div className="flex flex-1">
             {/* Sidebar: Only visible on large screens and up */}
             <div className="hidden lg:block w-65 bg-base-200">
-              <Sidebar />
+              <Sidebar page="categories"/>
             </div>
     
             {/* Main content */}
