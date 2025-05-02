@@ -10,8 +10,6 @@ const BudgetHeaderDashboard = () => {
         </h1>
       </div>
       <button
-        type="button"
-        aria-label="Add a new category"
         className="flex flex-row items-center"
       >
         <div className="w-6 h-6 bg-[#459df5] rounded-full flex justify-center items-center mr-2">
