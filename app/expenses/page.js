@@ -1,6 +1,8 @@
+"use client"
 import React from 'react'
 import Navbar from '../Components/Navbar';
 import Sidebar from '../Components/Sidebar';
+import ExpenseList from '../Components/ExpenseList';
 
 const page = () => {
     return (
@@ -14,10 +16,8 @@ const page = () => {
               <Sidebar page="expenses"/>
             </div>
             {/* Main content */}
-            <div className="w-full h-full">
-              <div className="flex flex-row bg-base-100 p-6  justify-between align-middle">
-                <h1 className="text-2xl font-bold inline align-middle mt-[5px]">expenses</h1>
-              </div>
+            <div className="w-full h-full py-5 bg-base-100">
+              <ExpenseList/>
             </div>
           </div>
         </div>

@@ -6,6 +6,7 @@ import DashboardCards from "./Components/DashboardCards";
 import CategoriesWiseExpenseCards from "./Components/CategoriesWiseExpenseCards";
 import { useEffect, useState } from "react";
 import ExpenseList from "./Components/ExpenseList";
+import Reminders from "./Components/Reminders";
 
 export default function Home() {
   const [category, setCategories] = useState({
@@ -32,6 +33,7 @@ export default function Home() {
           <DashboardCards />
           <CategoriesWiseExpenseCards />
           <ExpenseList />
+          <Reminders/>
         </div>
       </div>
     </div>

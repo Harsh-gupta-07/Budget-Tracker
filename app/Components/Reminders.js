@@ -1,0 +1,110 @@
+import React, { useState } from "react";
+import Image from "next/image";
+
+const Reminders = () => {
+  const [reminders, setReminders] = useState([
+    // {
+    //   title: "Rent Payment",
+    //   timeInterval: "Monthly",
+    //   amount: 950,
+    //   dueTime: "Due in 30 Days",
+    //   date: "1 June, 2025",
+    // },
+    // {
+    //   title: "Electricity",
+    //   timeInterval: "Monthly",
+    //   amount: 500,
+    //   dueTime: "Due in 25 Days",
+    //   date: "5 June, 2025",
+    // },
+    // {
+    //   title: "Mobile Recharge",
+    //   timeInterval: "Monthly",
+    //   amount: 59.99,
+    //   dueTime: "Due in 20 Days",
+    //   date: "20 May, 2025",
+    // },
+  ]);
+  return (
+    <div>
+      <div className="flex flex-row bg-base-100 py-3   justify-between align-middle px-12">
+        <div>
+          <h1 className="text-lg font-semibold inline align-middle mt-[5px]">
+            Upcoming Reminders
+          </h1>
+        </div>
+        <button className="flex flex-row items-center">
+          <div className="w-6 h-6 bg-[#459df5] rounded-full flex justify-center items-center mr-2">
+            <Image
+              src="/plus-black.svg"
+              alt="plus icon"
+              width={12}
+              height={12}
+            />
+          </div>
+          <p className="text-[#459df5] text-sm">Add Reminders</p>
+        </button>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 px-12 pb-5">
+        {reminders.length === 0 ? (
+          <div className="col-span-full flex flex-col items-center justify-center p-8 bg-base-300 rounded-2xl">
+            <p className="text-gray-500 mb-4">No reminders found</p>
+            <button className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+              Create your first reminder
+            </button>
+          </div>
+        ) : (
+          reminders.map((val, ind) => {
+            return (
+              <div
+                key={ind}
+                className=" p-5 rounded-lg shadow-sm border border-gray-700 bg-base-200"
+              >
+                <div className="flex justify-between items-start mb-3">
+                  <div className="flex items-center gap-2">
+                    <Image
+                      src="./notifications.svg"
+                      alt="noti"
+                      width={20}
+                      height={20}
+                    />
+                    <h4 className="font-medium text-gray-300">{val.title}</h4>
+                  </div>
+                  <span className="text-xs bg-gray-800 text-[#449ff6] px-2 py-1 rounded-full">
+                    {val.timeInterval}
+                  </span>
+                </div>
+                <p className="text-sm text-gray-400 mb-3">
+                  {`${val.dueTime}, (${val.date})`}
+                </p>
+                <div className="flex justify-between items-center">
+                  <span className="text-base font-medium font-mono">{`$${val.amount}`}</span>
+                  <div className="flex space-x-2">
+                    <button className="text-gray-400 hover:text-gray-600 cursor-pointer">
+                      <Image
+                        src="./edit.svg"
+                        alt="edit"
+                        width={24}
+                        height={24}
+                      />
+                    </button>
+                    <button className="text-gray-400 hover:text-gray-600 cursor-pointer">
+                      <Image
+                        src="./delete.svg"
+                        alt="edit"
+                        width={24}
+                        height={24}
+                      />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default Reminders;

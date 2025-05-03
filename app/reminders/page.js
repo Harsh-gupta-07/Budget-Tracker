@@ -1,6 +1,8 @@
+"use client"
 import React from "react";
 import Navbar from "../Components/Navbar";
 import Sidebar from "../Components/Sidebar";
+import Reminders from "../Components/Reminders";
 
 const page = () => {
   return (
@@ -16,9 +18,7 @@ const page = () => {
 
         <div className="w-full h-full">
           <div className="flex flex-row bg-base-100 p-6  justify-between align-middle">
-            <h1 className="text-2xl font-bold inline align-middle mt-[5px]">
-              reminders
-            </h1>
+            <Reminders/>
           </div>
         </div>
       </div>
