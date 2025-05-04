@@ -31,9 +31,9 @@ const page = () => {
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 className=" cursor-pointer mr-2 h-4 w-4"
               >
                 <path d="M5 12h14"></path>
@@ -43,6 +43,38 @@ const page = () => {
             </button>
           </div>
 
+          <div className="bg-base-200 rounded-md p-5 mx-12 mb-3 border border-solid border-gray-500">
+            <h2 className="text-xl font-semibold mb-4">Filter Expenses</h2>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <input
+                type="text"
+                placeholder="Search by description"
+                className="input input-bordered w-full focus:outline-none"
+              />
+              <div className="dropdown dropdown-end w-full sm:w-64 border rounded border-solid border-gray-500">
+                <label tabIndex={0} className="btn w-full justify-between">
+                  All Categories
+                  <svg
+                    className="ml-2 h-4 w-4 fill-current"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                  >
+                    <path d="M5.25 7.5L10 12.25L14.75 7.5H5.25Z" />
+                  </svg>
+                </label>
+                <ul
+                  tabIndex={0}
+                  className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-full border rounded border-solid border-gray-500"
+                >
+                  <li><a>All Categories</a></li>
+                  <li><a>Food</a></li>
+                  <li><a>Transport</a></li>
+                  <li><a>Entertainment</a></li>
+                  <li><a>Other</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
           <ExpenseList />
         </div>
       </div>

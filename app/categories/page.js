@@ -1,11 +1,13 @@
 "use client";
-import React from "react";
+import React,{useState} from "react";
 import Navbar from "../Components/Navbar";
 import Sidebar from "../Components/Sidebar";
 import CategoriesWiseExpenseCards from "../Components/CategoriesWiseExpenseCards";
 import Image from "next/image";
+import AddCategoryModal from "../Components/AddCategoryModal";
 
 const page = () => {
+  const [showCategoryModal, setShowCategoryModal] = useState(false);
   return (
     <div className="h-screen flex flex-col ">
       <div className="block lg:hidden">
@@ -24,7 +26,10 @@ const page = () => {
                 Budget Categories
               </h1>
             </div>
-            <button className="bg-[#0845a6] cursor-pointer hover:opacity-80 justify-center gap-2 rounded-md text-sm font-medium h-10 px-4 py-2 flex items-center">
+            <button
+              className="bg-[#0845a6] cursor-pointer hover:opacity-80 justify-center gap-2 rounded-md text-sm font-medium h-10 px-4 py-2 flex items-center"
+              onClick={() => setShowCategoryModal(true)}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -32,9 +37,9 @@ const page = () => {
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 className=" cursor-pointer mr-2 h-4 w-4"
               >
                 <path d="M5 12h14"></path>
@@ -46,6 +51,9 @@ const page = () => {
           <div className="flex flex-row bg-base-100 p-6  justify-between align-middle">
             <CategoriesWiseExpenseCards />
           </div>
+          {showCategoryModal && (
+            <AddCategoryModal visible={()=>setShowCategoryModal(!showCategoryModal)}/>
+          )}
         </div>
       </div>
     </div>
