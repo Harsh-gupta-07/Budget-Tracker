@@ -32,9 +32,9 @@ const ExpenseList = () => {
   ]);
 
   return (
-    <div className="bg-base-100 py-3 px-12">
-      <div>
-        <table className="w-full caption-bottom text-sm">
+    <div className="bg-base-100 py-3 px-12 ">
+      <div className="overflow-x-auto">
+        <table className="min-w-full caption-bottom text-sm">
           <thead className="">
             <tr className="border-b border-gray-600 bg-base-100 ">
               <th className="h-12 px-4 text-left text-gray-300 align-middle font-medium text-xs uppercase">
