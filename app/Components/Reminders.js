@@ -3,48 +3,30 @@ import Image from "next/image";
 
 const Reminders = () => {
   const [reminders, setReminders] = useState([
-    // {
-    //   title: "Rent Payment",
-    //   timeInterval: "Monthly",
-    //   amount: 950,
-    //   dueTime: "Due in 30 Days",
-    //   date: "1 June, 2025",
-    // },
-    // {
-    //   title: "Electricity",
-    //   timeInterval: "Monthly",
-    //   amount: 500,
-    //   dueTime: "Due in 25 Days",
-    //   date: "5 June, 2025",
-    // },
-    // {
-    //   title: "Mobile Recharge",
-    //   timeInterval: "Monthly",
-    //   amount: 59.99,
-    //   dueTime: "Due in 20 Days",
-    //   date: "20 May, 2025",
-    // },
+    {
+      title: "Rent Payment",
+      timeInterval: "Monthly",
+      amount: 950,
+      dueTime: "Due in 30 Days",
+      date: "1 June, 2025",
+    },
+    {
+      title: "Electricity",
+      timeInterval: "Monthly",
+      amount: 500,
+      dueTime: "Due in 25 Days",
+      date: "5 June, 2025",
+    },
+    {
+      title: "Mobile Recharge",
+      timeInterval: "Monthly",
+      amount: 59.99,
+      dueTime: "Due in 20 Days",
+      date: "20 May, 2025",
+    },
   ]);
   return (
-    <div>
-      <div className="flex flex-row bg-base-100 py-3   justify-between align-middle px-12">
-        <div>
-          <h1 className="text-lg font-semibold inline align-middle mt-[5px]">
-            Upcoming Reminders
-          </h1>
-        </div>
-        <button className="flex flex-row items-center">
-          <div className="w-6 h-6 bg-[#459df5] rounded-full flex justify-center items-center mr-2">
-            <Image
-              src="/plus-black.svg"
-              alt="plus icon"
-              width={12}
-              height={12}
-            />
-          </div>
-          <p className="text-[#459df5] text-sm">Add Reminders</p>
-        </button>
-      </div>
+    <div className="w-full">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 px-12 pb-5">
         {reminders.length === 0 ? (
           <div className="col-span-full flex flex-col items-center justify-center p-8 bg-base-300 rounded-2xl">

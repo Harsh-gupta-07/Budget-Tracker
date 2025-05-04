@@ -28,26 +28,11 @@ const ExpenseList = () => {
       description: "Dinner with friends",
       amount: 48.75,
     },
+    
   ]);
 
   return (
     <div className="bg-base-100 py-3 px-12">
-      <div className="flex flex-row justify-between align-middle">
-        <div>
-          <h1 className="text-lg font-semibold inline align-middle mt-[5px]">
-            Recent Expenses
-          </h1>
-        </div>
-        <Link
-          href="/expenses"
-          className="flex flex-row items-center cursor-pointer"
-        >
-          <p className="text-[#459df5] text-sm ">View all</p>
-          <div className="w-6 h-6 rounded-full flex justify-center items-center mr-2">
-            <Image src="./arrow.svg" alt="plus icon" width={24} height={24} />
-          </div>
-        </Link>
-      </div>
       <div>
         <table className="w-full caption-bottom text-sm">
           <thead className="">
@@ -70,9 +55,9 @@ const ExpenseList = () => {
             </tr>
           </thead>
           <tbody className="bg-base-200">
-            {expenses.map((val) => {
+            {expenses.map((val,ind) => {
               return (
-                <tr className="border-b border-gray-600 text-gray-400">
+                <tr key={ind} className="border-b border-gray-600 text-gray-400">
                   <td className="p-4 align-middle text-sm ">{val.date}</td>
                   <td className="p-4 align-middle">
                     <div className="flex items-center">{val.category}</div>
