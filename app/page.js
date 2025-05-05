@@ -36,7 +36,7 @@ export default function Home() {
         <div className="lg:ml-64 w-full h-full">
           <DashboardCards />
 
-          <div className="flex flex-row bg-base-100 py-5 justify-between align-middle px-12 sm-px-5 w-full">
+          <div className="flex flex-row bg-base-100 py-5 justify-between align-middle px-12 w-full">
             <div>
               <h1 className="text-lg font-semibold inline align-middle mt-[5px]">
                 Budget Categories
