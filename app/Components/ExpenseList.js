@@ -54,10 +54,10 @@ const ExpenseList = () => {
               </th>
             </tr>
           </thead>
-          <tbody className="bg-base-200">
+          <tbody className="bg-base-200 ">
             {expenses.map((val,ind) => {
               return (
-                <tr key={ind} className="border-b border-gray-600 text-gray-400">
+                <tr key={ind} className="border-b border-gray-600 text-gray-400 hover:bg-base-300">
                   <td className="p-4 align-middle text-sm ">{val.date}</td>
                   <td className="p-4 align-middle">
                     <div className="flex items-center">{val.category}</div>

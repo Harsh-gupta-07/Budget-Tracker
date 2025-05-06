@@ -1,6 +1,9 @@
-import React from "react";
+"use client"
+import React, { useState } from "react";
+import Image from "next/image";
 
 const AddCategoryModal = ({visible}) => {
+  const [select, setSelect] = useState(0)
   return (
     <dialog
       id="add_category_modal"
@@ -52,27 +55,32 @@ const AddCategoryModal = ({visible}) => {
                 "bulb",
                 "car",
                 "fork-knife",
-                "film",
                 "bag",
-                "home",
-                "dumbbell",
-                "graduation-cap",
-                "hospital",
-                "credit-card",
-                "dollar-sign",
                 "piggy-bank",
-                "gift",
-                "paw",
-                "smile",
-                "plane",
-                "wifi",
-                "mobile",
+                "basket",
+                "bulb",
+                "car",
+                "fork-knife",
+                "bag",
+                "piggy-bank",
+                "basket",
+                "bulb",
+                "car",
+                "fork-knife",
+                "bag",
+                "piggy-bank",
+                "basket",
+                "bulb",
+                "car",
+                "fork-knife",
+
               ].map((icon, idx) => (
                 <button
                   key={idx}
-                  className="btn btn-square btn-sm bg-base-100 hover:bg-primary-focus"
+                  className={`w-10 h-10 flex items-center justify-around hover:bg-black rounded-xl cursor-pointer ${select===idx?"bg-black":""}`}
+                  onClick={()=>{setSelect(idx)}}
                 >
-                  <i className={`icon-${icon}`}></i>
+                  <Image src={`${icon}.svg`} alt="icon" width={24} height={24}/>
                 </button>
               ))}
             </div>
