@@ -1,11 +1,13 @@
 "use client";
-import React from "react";
+import React,{useState} from "react";
 import Navbar from "../Components/Navbar";
 import Sidebar from "../Components/Sidebar";
 import Reminders from "../Components/Reminders";
 import Image from "next/image";
+import AddReminderModal from "../Components/modals/AddReminder";
 
 const page = () => {
+  const [showReminderModal, setShowReminderModal] = useState(false);
   return (
     <div className="h-screen flex flex-col">
       <div className="block lg:hidden">
@@ -24,7 +26,7 @@ const page = () => {
                 Reminders
               </h1>
             </div>
-            <button className="bg-[#0845a6] cursor-pointer hover:opacity-80 justify-center gap-2 rounded-md text-sm font-medium h-10 px-4 py-2 flex items-center">
+            <button onClick={()=>setShowReminderModal(!showReminderModal)} className="bg-[#0845a6] cursor-pointer hover:opacity-80 justify-center gap-2 rounded-md text-sm font-medium h-10 px-4 py-2 flex items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -45,6 +47,9 @@ const page = () => {
           </div>
           <div className="h-full flex flex-row bg-base-100 p-6  justify-between align-middle">
             <Reminders />
+            {showReminderModal && (
+            <AddReminderModal visible={()=>setShowReminderModal(!showReminderModal)}/>
+          )}
           </div>
         </div>
       </div>

@@ -4,7 +4,7 @@ import Navbar from "../Components/Navbar";
 import Sidebar from "../Components/Sidebar";
 import CategoriesWiseExpenseCards from "../Components/CategoriesWiseExpenseCards";
 import Image from "next/image";
-import AddCategoryModal from "../Components/AddCategoryModal";
+import AddCategoryModal from "../Components/modals/AddCategory";
 
 const page = () => {
   const [showCategoryModal, setShowCategoryModal] = useState(false);

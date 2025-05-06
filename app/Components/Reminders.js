@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import Image from "next/image";
+import EditReminder from "./modals/EditReminder";
 
 const Reminders = () => {
   const [reminders, setReminders] = useState([
@@ -9,6 +10,7 @@ const Reminders = () => {
       amount: 950,
       dueTime: "Due in 30 Days",
       date: "1 June, 2025",
+      category: "Entertainment"
     },
     {
       title: "Electricity",
@@ -16,6 +18,7 @@ const Reminders = () => {
       amount: 500,
       dueTime: "Due in 25 Days",
       date: "5 June, 2025",
+      category:"DiningOut"
     },
     {
       title: "Mobile Recharge",
@@ -23,8 +26,15 @@ const Reminders = () => {
       amount: 59.99,
       dueTime: "Due in 20 Days",
       date: "20 May, 2025",
+      category:""
     },
   ]);
+const [editReminder,setEditReminder] = useState(false)
+const [name,setName] = useState("")
+const [interval,setInt] = useState("")
+const [val,setVal] = useState(0)
+const [cat,setCat] = useState("")
+
   return (
     <div className="w-full">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 px-12 pb-5">
@@ -62,20 +72,26 @@ const Reminders = () => {
                 <div className="flex justify-between items-center">
                   <span className="text-base font-medium font-mono">{`$${val.amount}`}</span>
                   <div className="flex space-x-2">
-                    <button className="text-gray-400 hover:text-gray-600 cursor-pointer">
+                    <button onClick={()=>{
+                      setInt(val.timeInterval)
+                      setName(val.title)
+                      setVal(Number(val.amount))
+                      setCat(val.category)
+                      setEditReminder(!editReminder)
+                      }} className="w-8 h-8 text-gray-400 hover:bg-black cursor-pointer flex justify-around items-center rounded-lg">
                       <Image
                         src="./edit.svg"
                         alt="edit"
-                        width={24}
-                        height={24}
+                        width={20}
+                        height={20}
                       />
                     </button>
-                    <button className="text-gray-400 hover:text-gray-600 cursor-pointer">
+                    <button className="w-8 h-8 text-gray-400 hover:bg-black cursor-pointer flex justify-around items-center rounded-lg">
                       <Image
                         src="./delete.svg"
                         alt="edit"
-                        width={24}
-                        height={24}
+                        width={20}
+                        height={20}
                       />
                     </button>
                   </div>
@@ -85,6 +101,8 @@ const Reminders = () => {
           })
         )}
       </div>
+      {editReminder && 
+      (<EditReminder visible={()=>setEditReminder(!editReminder)} title={name} amount={val} int={interval} category={cat} />)}
     </div>
   );
 };

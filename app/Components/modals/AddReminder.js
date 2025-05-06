@@ -5,11 +5,15 @@ import React, { useState } from "react";
 const AddReminderModal = ({ visible }) => {
   const [catDropDown, setcatDropDown] = useState(false);
   const [freqDropDown, setFreqDropDown] = useState(false);
+  const [time, setTime] = useState("Monthly");
+  const [cat, setCat] = useState("Select a category");
   return (
     <dialog
       id="add_reminder_modal"
       className="modal modal-open"
-      onClick={() => {visible()}}
+      onClick={() => {
+        visible();
+      }}
     >
       <div
         className="modal-box max-w-md w-full sm:w-11/12 bg-base-100 text-white"
@@ -73,12 +77,22 @@ const AddReminderModal = ({ visible }) => {
               {freqDropDown && (
                 <ul className=" absolute mt-1 w-full rounded-md shadow-lg bg-base-100 z-10 border border-gray-700 max-h-62 overflow-y-auto">
                   {[
-                    "One-Time","Weekly", "Bi-Weekly","Monthly", "Quarterly","Anually"
+                    "One-Time",
+                    "Weekly",
+                    "Bi-Weekly",
+                    "Monthly",
+                    "Quarterly",
+                    "Anually",
                   ].map((item, index) => (
                     <li
                       key={index}
-                      className="flex items-center px-4 py-2 hover:bg-base-300 cursor-pointer"
-                      onClick={() => setFreqDropDown(false)}
+                      className={`flex items-center px-4 py-2 hover:bg-base-300 cursor-pointer ${
+                        item === time ? "bg-black" : ""
+                      }`}
+                      onClick={() => {
+                        setFreqDropDown(false);
+                        setTime(item);
+                      }}
                     >
                       <span className="text-sm">{item}</span>
                     </li>
@@ -119,8 +133,13 @@ const AddReminderModal = ({ visible }) => {
                   ].map((item, index) => (
                     <li
                       key={index}
-                      className="flex items-center px-4 py-2 hover:bg-base-300 cursor-pointer"
-                      onClick={() => setcatDropDown(false)}
+                      className={`flex items-center px-4 py-2 hover:bg-base-300 cursor-pointer ${
+                        item === cat ? "bg-base-300" : ""
+                      }`}
+                      onClick={() => {
+                        setcatDropDown(false);
+                        setCat(item.label);
+                      }}
                     >
                       <Image
                         src={`./${item.icon}.svg`}

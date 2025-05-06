@@ -8,8 +8,9 @@ import { useEffect, useState } from "react";
 import ExpenseList from "./Components/ExpenseList";
 import Reminders from "./Components/Reminders";
 import Link from "next/link";
-import AddCategoryModal from "./Components/AddCategoryModal";
-import AddReminderModal from "./Components/AddReminderModal";
+import AddCategoryModal from "./Components/modals/AddCategory";
+import AddReminderModal from "./Components/modals/AddReminder";
+import EditCategory from "./Components/modals/EditCategory";
 
 export default function Home() {
   const [category, setCategories] = useState({
@@ -44,7 +45,7 @@ export default function Home() {
               </h1>
             </div>
             <button
-              className="flex flex-row items-center"
+              className="flex flex-row items-center cursor-pointer"
               onClick={() => setShowCategoryModal(true)}
             >
               <div className="w-6 h-6 bg-[#459df5] rounded-full flex justify-center items-center mr-2">
@@ -93,7 +94,7 @@ export default function Home() {
               </h1>
             </div>
             <button
-              className="flex flex-row items-center"
+              className="flex flex-row items-center cursor-pointer"
               onClick={() => setShowReminderModal(true)}
             >
               <div className="w-6 h-6 bg-[#459df5] rounded-full flex justify-center items-center mr-2">

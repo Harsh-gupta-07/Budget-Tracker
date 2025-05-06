@@ -1,8 +1,9 @@
 "use client";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { use, useState } from "react";
+import EditCategory from "./modals/EditCategory";
 
-const CategoriesWiseExpenseCards = () => {
+const CategoriesWiseExpenseCards = ({ visible }) => {
   const [category, setCategories] = useState([
     { category: "Personal", budget: 400, spent: 400, icon: "basket" },
     { category: "Utilities", budget: 600, spent: 500, icon: "bulb" },
@@ -10,8 +11,11 @@ const CategoriesWiseExpenseCards = () => {
     { category: "DiningOut", budget: 100, spent: 0, icon: "fork-knife" },
     { category: "Entertainment", budget: 1000, spent: 143, icon: "play" },
     { category: "Shopping", budget: 200, spent: 99, icon: "bag" },
-    
   ]);
+
+  const [editCategory, setEditCategory] = useState(false);
+  let [cat,setCat] = useState("");
+  let [bud,setBud] = useState(0);
 
   return (
     <div className="w-full">
@@ -37,7 +41,14 @@ const CategoriesWiseExpenseCards = () => {
                   </span>
                   <h4 className="font-medium text-gray-300">{val.category}</h4>
                 </div>
-                <button className="rounded-md h-8 w-8 flex items-center justify-center cursor-pointer hover:bg-base-300">
+                <button
+                  onClick={()=>{
+                    setCat(val.category)
+                    setBud(Number(val.budget))
+                    setEditCategory(!editCategory)
+                  }}
+                  className="rounded-md h-8 w-8 flex items-center justify-center cursor-pointer hover:bg-base-300"
+                >
                   <Image src="./edit.svg" alt="edit" width={22} height={22} />
                 </button>
               </div>
@@ -65,6 +76,9 @@ const CategoriesWiseExpenseCards = () => {
           );
         })}
       </div>
+      {editCategory && (
+        <EditCategory visible={() => setEditCategory(!editCategory)} category={cat} budget={bud}/>
+      )}
     </div>
   );
 };

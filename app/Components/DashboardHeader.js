@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React, { useState } from "react";
-import AddExpenseModal from "./AddExpenseModal";
+import AddExpenseModal from "./modals/AddExpense";
 
 const DashboardHeader = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
