@@ -9,6 +9,7 @@ import ExpenseList from "./Components/ExpenseList";
 import Reminders from "./Components/Reminders";
 import Link from "next/link";
 import AddCategoryModal from "./Components/AddCategoryModal";
+import AddReminderModal from "./Components/AddReminderModal";
 
 export default function Home() {
   const [category, setCategories] = useState({
@@ -108,36 +109,7 @@ export default function Home() {
           </div>
           <Reminders />
           {showReminderModal && (
-            <dialog
-              id="add_reminder_modal"
-              className="modal modal-open"
-              onClick={() => setShowReminderModal(false)}
-            >
-              <div className="modal-box max-w-md w-full sm:w-11/12" onClick={(e) => e.stopPropagation()}>
-                <button
-                  className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
-                  onClick={() => setShowReminderModal(false)}
-                >
-                  ✕
-                </button>
-                <h3 className="font-bold text-lg">Add New Reminder</h3>
-                {/* Add your form inputs here */}
-                <div className="modal-action">
-                  <button
-                    className="btn"
-                    onClick={() => setShowReminderModal(false)}
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    className="btn btn-primary"
-                    onClick={() => setShowReminderModal(false)}
-                  >
-                    Save
-                  </button>
-                </div>
-              </div>
-            </dialog>
+            <AddReminderModal visible={()=>setShowReminderModal(!showReminderModal)}/>
           )}
         </div>
       </div>

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React, { useState } from "react";
 
 const AddExpenseModal = ({ visible }) => {
@@ -47,21 +48,27 @@ const AddExpenseModal = ({ visible }) => {
                 <span className="ml-2">▾</span>
               </button>
               {dropdownOpen && (
-                <ul className="absolute mt-1 w-full rounded-md shadow-lg bg-base-100 z-10 border border-gray-700">
+                <ul className="absolute mt-1 w-full rounded-md shadow-lg bg-base-100 z-10 border border-gray-700 max-h-62 overflow-y-auto">
                   {[
-                    { icon: "🛒", label: "Groceries" },
-                    { icon: "💡", label: "Utilities" },
-                    { icon: "🚗", label: "Transportation" },
-                    { icon: "🍽️", label: "Dining Out" },
-                    { icon: "🎬", label: "Entertainment" },
-                    { icon: "🛍️", label: "Shopping" }
+                    { icon: "basket", label: "Groceries" },
+                    { icon: "bulb", label: "Utilities" },
+                    { icon: "car", label: "Transportation" },
+                    { icon: "fork-knife", label: "Dining Out" },
+                    { icon: "play", label: "Entertainment" },
+                    { icon: "bag", label: "Shopping" },
+                    { icon: "fork-knife", label: "Dining Out" },
+                    { icon: "play", label: "Entertainment" },
+                    { icon: "bag", label: "Shopping" },
+                    { icon: "fork-knife", label: "Dining Out" },
+                    { icon: "play", label: "Entertainment" },
+                    { icon: "bag", label: "Shopping" }
                   ].map((item, index) => (
                     <li
                       key={index}
                       className="flex items-center px-4 py-2 hover:bg-base-300 cursor-pointer"
                       onClick={() => setDropdownOpen(false)}
                     >
-                      <span className="mr-3 text-lg">{item.icon}</span>
+                      <Image src={`./${item.icon}.svg`} width={24} height={24} alt={item.icon} className="mr-3 text-lg" />
                       <span>{item.label}</span>
                     </li>
                   ))}
