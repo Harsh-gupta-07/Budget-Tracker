@@ -1,10 +1,10 @@
 "use client";
 import React,{useState} from "react";
-import Navbar from "../Components/Navbar";
-import Sidebar from "../Components/Sidebar";
-import Reminders from "../Components/Reminders";
+import Navbar from "../../Components/Navbar";
+import Sidebar from "../../Components/Sidebar";
+import Reminders from "../../Components/Reminders";
 import Image from "next/image";
-import AddReminderModal from "../Components/modals/AddReminder";
+import AddReminderModal from "../../Components/modals/AddReminder";
 
 const page = () => {
   const [showReminderModal, setShowReminderModal] = useState(false);

@@ -1,8 +1,8 @@
 "use client";
 import React from "react";
-import Navbar from "../Components/Navbar";
-import Sidebar from "../Components/Sidebar";
-import ExpenseList from "../Components/ExpenseList";
+import Navbar from "../../Components/Navbar";
+import Sidebar from "../../Components/Sidebar";
+import ExpenseList from "../../Components/ExpenseList";
 
 const page = () => {
   return (

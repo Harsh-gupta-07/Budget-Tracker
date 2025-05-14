@@ -1,16 +1,16 @@
 "use client";
-import Navbar from "./Components/Navbar";
-import Sidebar from "./Components/Sidebar";
+import Navbar from "../Components/Navbar";
+import Sidebar from "../Components/Sidebar";
 import Image from "next/image";
-import DashboardCards from "./Components/DashboardCards";
-import CategoriesWiseExpenseCards from "./Components/CategoriesWiseExpenseCards";
+import DashboardCards from "../Components/DashboardCards";
+import CategoriesWiseExpenseCards from "../Components/CategoriesWiseExpenseCards";
 import { useEffect, useState } from "react";
-import ExpenseList from "./Components/ExpenseList";
-import Reminders from "./Components/Reminders";
+import ExpenseList from "../Components/ExpenseList";
+import Reminders from "../Components/Reminders";
 import Link from "next/link";
-import AddCategoryModal from "./Components/modals/AddCategory";
-import AddReminderModal from "./Components/modals/AddReminder";
-import EditCategory from "./Components/modals/EditCategory";
+import AddCategoryModal from "../Components/modals/AddCategory";
+import AddReminderModal from "../Components/modals/AddReminder";
+import EditCategory from "../Components/modals/EditCategory";
 
 export default function Home() {
   const [category, setCategories] = useState({
