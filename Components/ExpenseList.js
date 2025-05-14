@@ -37,7 +37,7 @@ const ExpenseList = () => {
     const [oth,setOth] = useState("")
 
   return (
-    <div className="bg-base-100 py-3 px-12 ">
+    <div className="bg-base-100 py-3 px-8 lg:px-12 ">
       <div className="overflow-x-auto">
         <table className="min-w-full caption-bottom text-sm">
           <thead className="">

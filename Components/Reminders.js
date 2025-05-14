@@ -37,7 +37,7 @@ const [cat,setCat] = useState("")
 
   return (
     <div className="w-full">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 px-12 pb-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 px-8 lg:px-12 pb-5">
         {reminders.length === 0 ? (
           <div className="col-span-full flex flex-col items-center justify-center p-8 bg-base-300 rounded-2xl">
             <p className="text-gray-500 mb-4">No reminders found</p>

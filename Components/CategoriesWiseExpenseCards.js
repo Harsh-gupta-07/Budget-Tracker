@@ -19,7 +19,7 @@ const CategoriesWiseExpenseCards = ({ visible }) => {
 
   return (
     <div className="w-full">
-      <div className="px-12 bg-base-100 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 pb-5">
+      <div className="px-8  bg-base-100 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 pb-5">
         {category.map((val) => {
           const percentage =
             val.budget > 0 ? (val.spent / val.budget) * 100 : 0;

@@ -3,6 +3,7 @@ import React, { useState } from "react";
 
 const AddExpenseModal = ({ visible }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [selectCat, setSelectCat] = useState("")
 
   return (
     <dialog
@@ -44,7 +45,12 @@ const AddExpenseModal = ({ visible }) => {
                 className="focus:outline-none input input-bordered w-full text-left text-white flex justify-between items-center"
                 onClick={() => setDropdownOpen(!dropdownOpen)}
               >
-                Select a category
+                {selectCat===""?"Select a Category":<p
+                      className="flex items-center pl-1 px-4 py-2 cursor-pointer"
+                    >
+                      <Image src={`./${selectCat.icon}.svg`} width={24} height={24} alt={selectCat.icon} className="mr-3 text-lg" />
+                      <span>{selectCat.label}</span>
+                    </p>}
                 <span className="ml-2">▾</span>
               </button>
               {dropdownOpen && (
@@ -66,7 +72,7 @@ const AddExpenseModal = ({ visible }) => {
                     <li
                       key={index}
                       className="flex items-center px-4 py-2 hover:bg-base-300 cursor-pointer"
-                      onClick={() => setDropdownOpen(false)}
+                      onClick={() => {setDropdownOpen(false); setSelectCat(item)}}
                     >
                       <Image src={`./${item.icon}.svg`} width={24} height={24} alt={item.icon} className="mr-3 text-lg" />
                       <span>{item.label}</span>

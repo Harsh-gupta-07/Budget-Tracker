@@ -4,13 +4,14 @@ import Sidebar from "../Components/Sidebar";
 import Image from "next/image";
 import DashboardCards from "../Components/DashboardCards";
 import CategoriesWiseExpenseCards from "../Components/CategoriesWiseExpenseCards";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ExpenseList from "../Components/ExpenseList";
 import Reminders from "../Components/Reminders";
 import Link from "next/link";
 import AddCategoryModal from "../Components/modals/AddCategory";
 import AddReminderModal from "../Components/modals/AddReminder";
 import EditCategory from "../Components/modals/EditCategory";
+import Dock from "@/Components/Dock";
 
 export default function Home() {
   const [category, setCategories] = useState({
@@ -35,10 +36,10 @@ export default function Home() {
           <Sidebar page="dashboard" />
         </div>
 
-        <div className="lg:ml-64 w-full h-full">
+        <div className="lg:ml-64 w-full h-full mb-[56px]">
           <DashboardCards />
 
-          <div className="flex flex-row bg-base-100 py-5 justify-between align-middle px-12 w-full">
+          <div className="flex flex-row bg-base-100 py-2 pb-4 lg:py-5 justify-between align-middle px-8 lg:px-12 w-full">
             <div>
               <h1 className="text-lg font-semibold inline align-middle mt-[5px]">
                 Budget Categories
@@ -64,7 +65,7 @@ export default function Home() {
             <AddCategoryModal visible={()=>setShowCategoryModal(!showCategoryModal)}/>
           )}
 
-          <div className="flex flex-row justify-between align-middle bg-base-100 py-3 px-12">
+          <div className="flex flex-row justify-between align-middle bg-base-100 py-1.5 lg:py-3 px-8 lg:px-12">
             <div>
               <h1 className="text-lg font-semibold inline align-middle mt-[5px]">
                 Recent Expenses
@@ -87,7 +88,7 @@ export default function Home() {
           </div>
           <ExpenseList />
 
-          <div className="flex flex-row bg-base-100 py-5  justify-between align-middle px-12">
+          <div className="flex flex-row bg-base-100 py-3 px-8 lg:py-5 justify-between align-middle lg:px-12">
             <div>
               <h1 className="text-lg font-semibold inline align-middle mt-[5px]">
                 Upcoming Reminders
@@ -112,6 +113,9 @@ export default function Home() {
           {showReminderModal && (
             <AddReminderModal visible={()=>setShowReminderModal(!showReminderModal)}/>
           )}
+        </div>
+        <div className="block lg:hidden">
+          <Dock />
         </div>
       </div>
     </div>

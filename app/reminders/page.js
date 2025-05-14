@@ -1,10 +1,11 @@
 "use client";
-import React,{useState} from "react";
+import React, { useState } from "react";
 import Navbar from "../../Components/Navbar";
 import Sidebar from "../../Components/Sidebar";
 import Reminders from "../../Components/Reminders";
 import Image from "next/image";
 import AddReminderModal from "../../Components/modals/AddReminder";
+import Dock from "@/Components/Dock";
 
 const page = () => {
   const [showReminderModal, setShowReminderModal] = useState(false);
@@ -19,14 +20,17 @@ const page = () => {
           <Sidebar page="reminders" />
         </div>
 
-        <div className="lg:ml-64 w-full h-[calc(100vh-64px)] overflow-y">
+        <div className="lg:ml-64 w-full h-[calc(100vh-64px)] overflow-y mb-[56px]">
           <div className="flex flex-row bg-base-100 py-8 pb-0 justify-between align-middle w-full px-18">
             <div>
               <h1 className="text-2xl font-semibold inline align-middle mt-[5px]">
                 Reminders
               </h1>
             </div>
-            <button onClick={()=>setShowReminderModal(!showReminderModal)} className="bg-[#0845a6] cursor-pointer hover:opacity-80 justify-center gap-2 rounded-md text-sm font-medium h-10 px-4 py-2 flex items-center">
+            <button
+              onClick={() => setShowReminderModal(!showReminderModal)}
+              className="bg-[#0845a6] cursor-pointer hover:opacity-80 justify-center gap-2 rounded-md text-sm font-medium h-10 px-4 py-2 flex items-center"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -48,9 +52,14 @@ const page = () => {
           <div className="h-full flex flex-row bg-base-100 p-6  justify-between align-middle">
             <Reminders />
             {showReminderModal && (
-            <AddReminderModal visible={()=>setShowReminderModal(!showReminderModal)}/>
-          )}
+              <AddReminderModal
+                visible={() => setShowReminderModal(!showReminderModal)}
+              />
+            )}
           </div>
+        </div>
+        <div className="block lg:hidden">
+          <Dock />
         </div>
       </div>
     </div>

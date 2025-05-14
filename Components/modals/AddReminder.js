@@ -71,7 +71,7 @@ const AddReminderModal = ({ visible }) => {
                 className="focus:outline-none input input-bordered w-full text-left text-white flex justify-between items-center"
                 onClick={() => setFreqDropDown(!freqDropDown)}
               >
-                Monthly
+                {time}
                 <span className="ml-2">▾</span>
               </button>
               {freqDropDown && (

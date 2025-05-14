@@ -1,10 +1,12 @@
 "use client";
-import React,{useState} from "react";
+import React, { useState } from "react";
 import Navbar from "../../Components/Navbar";
 import Sidebar from "../../Components/Sidebar";
 import CategoriesWiseExpenseCards from "../../Components/CategoriesWiseExpenseCards";
 import Image from "next/image";
 import AddCategoryModal from "../../Components/modals/AddCategory";
+import Dock from "@/Components/Dock";
+
 
 const page = () => {
   const [showCategoryModal, setShowCategoryModal] = useState(false);
@@ -19,7 +21,7 @@ const page = () => {
           <Sidebar page="categories" />
         </div>
 
-        <div className="flex-1 lg:ml-64 h-[calc(100vh)] overflow-y-auto bg-base-100">
+        <div className="mb-[56px] flex-1 lg:ml-64 h-[calc(100vh)] overflow-y-auto bg-base-100">
           <div className="flex flex-row bg-base-100 py-8 pb-0 justify-between align-middle px-18 w-full">
             <div>
               <h1 className="text-2xl font-semibold inline align-middle mt-[5px]">
@@ -52,8 +54,13 @@ const page = () => {
             <CategoriesWiseExpenseCards />
           </div>
           {showCategoryModal && (
-            <AddCategoryModal visible={()=>setShowCategoryModal(!showCategoryModal)}/>
+            <AddCategoryModal
+              visible={() => setShowCategoryModal(!showCategoryModal)}
+            />
           )}
+        </div>
+        <div className="block lg:hidden">
+          <Dock />
         </div>
       </div>
     </div>
