@@ -14,8 +14,7 @@ const CategoriesWiseExpenseCards = ({ visible }) => {
   ]);
 
   const [editCategory, setEditCategory] = useState(false);
-  let [cat,setCat] = useState("");
-  let [bud,setBud] = useState(0);
+  const [details,setDetails] = useState(null);
 
   return (
     <div className="w-full">
@@ -43,8 +42,7 @@ const CategoriesWiseExpenseCards = ({ visible }) => {
                 </div>
                 <button
                   onClick={()=>{
-                    setCat(val.category)
-                    setBud(Number(val.budget))
+                    setDetails({category: val.category, budget: val.budget, icon: val.icon})
                     setEditCategory(!editCategory)
                   }}
                   className="rounded-md h-8 w-8 flex items-center justify-center cursor-pointer hover:bg-base-300"
@@ -77,7 +75,7 @@ const CategoriesWiseExpenseCards = ({ visible }) => {
         })}
       </div>
       {editCategory && (
-        <EditCategory visible={() => setEditCategory(!editCategory)} category={cat} budget={bud}/>
+        <EditCategory visible={() => setEditCategory(!editCategory)} details={details}/>
       )}
     </div>
   );

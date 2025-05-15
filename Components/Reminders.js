@@ -30,10 +30,7 @@ const Reminders = () => {
     },
   ]);
 const [editReminder,setEditReminder] = useState(false)
-const [name,setName] = useState("")
-const [interval,setInt] = useState("")
-const [val,setVal] = useState(0)
-const [cat,setCat] = useState("")
+const [details, setDetails] = useState(null)
 
   return (
     <div className="w-full">
@@ -73,10 +70,7 @@ const [cat,setCat] = useState("")
                   <span className="text-base font-medium font-mono">{`$${val.amount}`}</span>
                   <div className="flex space-x-2">
                     <button onClick={()=>{
-                      setInt(val.timeInterval)
-                      setName(val.title)
-                      setVal(Number(val.amount))
-                      setCat(val.category)
+                      setDetails({timeInterval: val.timeInterval, title: val.title, amount: val.amount, category: val.category})
                       setEditReminder(!editReminder)
                       }} className="w-8 h-8 text-gray-400 hover:bg-black cursor-pointer flex justify-around items-center rounded-lg">
                       <Image
@@ -102,7 +96,7 @@ const [cat,setCat] = useState("")
         )}
       </div>
       {editReminder && 
-      (<EditReminder visible={()=>setEditReminder(!editReminder)} title={name} amount={val} int={interval} category={cat} />)}
+      (<EditReminder visible={()=>setEditReminder(!editReminder)} details={details} />)}
     </div>
   );
 };

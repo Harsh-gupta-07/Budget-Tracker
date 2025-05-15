@@ -1,9 +1,16 @@
 "use client"
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Image from "next/image";
 
 const AddCategoryModal = ({visible}) => {
-  const [select, setSelect] = useState(0)
+  const [icon, setIcon] = useState("basket")
+  const catName = useRef("")
+  const amount = useRef(0)
+
+  function handle(){
+    console.log({"icon": icon, category: catName.current.value}, amount.current.value);
+    
+  }
   return (
     <dialog
       id="add_category_modal"
@@ -31,6 +38,7 @@ const AddCategoryModal = ({visible}) => {
               type="text"
               placeholder="e.g. Groceries"
               className="input input-bordered w-full focus:outline-none"
+              ref={catName}
             />
           </div>
 
@@ -42,12 +50,13 @@ const AddCategoryModal = ({visible}) => {
               type="number"
               placeholder="0.00"
               className="input input-bordered w-full focus:outline-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+              ref={amount}
             />
           </div>
 
           <div>
             <label className="label">
-              <span className="label-text mb-2">Icon</span>
+              <span className="label-text mb-2">item</span>
             </label>
             <div className="grid grid-cols-6 gap-3 bg-base-200 p-4 rounded">
               {[
@@ -55,32 +64,29 @@ const AddCategoryModal = ({visible}) => {
                 "bulb",
                 "car",
                 "fork-knife",
+                "play",
                 "bag",
                 "piggy-bank",
-                "basket",
-                "bulb",
-                "car",
-                "fork-knife",
-                "bag",
-                "piggy-bank",
-                "basket",
-                "bulb",
-                "car",
-                "fork-knife",
-                "bag",
-                "piggy-bank",
-                "basket",
-                "bulb",
-                "car",
-                "fork-knife",
-
-              ].map((icon, idx) => (
+                "home",
+                "dumbbell",
+                "eduCap",
+                "health",
+                "creditCard",
+                "dollar",
+                "gift",
+                "paw",
+                "child",
+                "plane",
+                "wifi",
+                "phone",
+                "dots"
+              ].map((item, idx) => (
                 <button
                   key={idx}
-                  className={`w-10 h-10 flex items-center justify-around hover:bg-black rounded-xl cursor-pointer ${select===idx?"bg-black":""}`}
-                  onClick={()=>{setSelect(idx)}}
+                  className={`w-10 h-10 flex items-center justify-around hover:bg-black rounded-xl cursor-pointer ${icon===item?"bg-black":""}`}
+                  onClick={()=>{setIcon(item)}}
                 >
-                  <Image src={`${icon}.svg`} alt="icon" width={24} height={24}/>
+                  <Image src={`${item}.svg`} alt="item" width={24} height={24}/>
                 </button>
               ))}
             </div>
@@ -91,7 +97,7 @@ const AddCategoryModal = ({visible}) => {
           <button className="btn" onClick={() => visible()}>
             Cancel
           </button>
-          <button className="btn btn-primary">Create Category</button>
+          <button className="btn btn-primary" onClick={handle}>Create Category</button>
         </div>
       </div>
     </dialog>

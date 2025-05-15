@@ -1,12 +1,20 @@
 "use client";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 
 const AddReminderModal = ({ visible }) => {
   const [catDropDown, setcatDropDown] = useState(false);
   const [freqDropDown, setFreqDropDown] = useState(false);
   const [time, setTime] = useState("Monthly");
-  const [cat, setCat] = useState("Select a category");
+  const [cat, setCat] = useState(null);
+  const amount = useRef(0)
+  const remName = useRef("")
+
+  function handle(){
+    console.log(amount.current.value, remName.current.value, cat,time);
+    
+  }
+  
   return (
     <dialog
       id="add_reminder_modal"
@@ -36,6 +44,7 @@ const AddReminderModal = ({ visible }) => {
               type="text"
               placeholder="e.g. Rent Payment"
               className="input input-bordered w-full text-white focus:outline-none"
+              ref={remName}
             />
           </div>
 
@@ -47,6 +56,7 @@ const AddReminderModal = ({ visible }) => {
               type="number"
               placeholder="0.00"
               className="input input-bordered w-full text-white focus:outline-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+              ref={amount}
             />
           </div>
 
@@ -75,7 +85,7 @@ const AddReminderModal = ({ visible }) => {
                 <span className="ml-2">▾</span>
               </button>
               {freqDropDown && (
-                <ul className=" absolute mt-1 w-full rounded-md shadow-lg bg-base-100 z-10 border border-gray-700 max-h-62 overflow-y-auto">
+                <ul className="bottom-full absolute mt-1 w-full rounded-md shadow-lg bg-base-100 z-10 border border-gray-700 max-h-62 overflow-y-auto">
                   {[
                     "One-Time",
                     "Weekly",
@@ -112,11 +122,22 @@ const AddReminderModal = ({ visible }) => {
                 className="focus:outline-none input input-bordered w-full text-left text-white flex justify-between items-center"
                 onClick={() => setcatDropDown(!catDropDown)}
               >
-                Select a category
+                {cat===null?"Select a Category":<div
+                      className="flex items-center px-4 py-2 pl-1 cursor-pointer"
+                    >
+                      <Image
+                        src={`./${cat.icon}.svg`}
+                        width={24}
+                        height={24}
+                        alt={cat.icon}
+                        className="mr-3 text-lg"
+                      />
+                      <span>{cat.label}</span>
+                    </div>}
                 <span className="ml-2">▾</span>
               </button>
               {catDropDown && (
-                <ul className=" absolute mt-1 w-full rounded-md shadow-lg bg-base-100 z-10 border border-gray-700 max-h-62 overflow-y-auto">
+                <ul className="absolute bottom-full mb-1 w-full rounded-md shadow-lg bg-base-100 z-10 border border-gray-700 max-h-62 overflow-y-auto">
                   {[
                     { icon: "basket", label: "Groceries" },
                     { icon: "bulb", label: "Utilities" },
@@ -138,7 +159,7 @@ const AddReminderModal = ({ visible }) => {
                       }`}
                       onClick={() => {
                         setcatDropDown(false);
-                        setCat(item.label);
+                        setCat(item);
                       }}
                     >
                       <Image
@@ -161,7 +182,7 @@ const AddReminderModal = ({ visible }) => {
           <button className="btn" onClick={() => visible()}>
             Cancel
           </button>
-          <button className="btn btn-primary">Save Reminder</button>
+          <button className="btn btn-primary" onClick={handle}>Save Reminder</button>
         </div>
       </div>
     </dialog>

@@ -2,11 +2,13 @@
 import Image from "next/image";
 import React,{ useState} from "react";
 
-const EditExpense = ({ visible,amount,category,dsc }) => {
+const EditExpense = ({ visible, details }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [val,setVal] = useState(amount)
-  const [cat,setCat] = useState(category===""?"Select a Category":category)
-  const [oth,setOth] = useState(dsc)
+  const [val,setVal] = useState(details.amount)
+  const [cat,setCat] = useState(details.category===""?"Select a Category":details.category)
+  const [oth,setOth] = useState(details.desc)
+  const [date,setDate] = useState(details.date)
+  console.log(details.date)
   return (
     <dialog
       id="add_expense_modal"
@@ -108,18 +110,9 @@ const EditExpense = ({ visible,amount,category,dsc }) => {
             <input
               type="date"
               className="input input-bordered w-full focus:outline-none text-white"
-              defaultValue={new Date().toISOString().split("T")[0]}
+              value={date}
+              onChange={(e)=>{setDate(e.target.value)}}
             />
-          </div>
-
-          <div className="form-control">
-            <label className="cursor-pointer label">
-              <input type="checkbox" className="checkbox checkbox-primary" 
-              />
-              <span className="label-text ml-3 text-white">
-                This is a recurring expense
-              </span>
-            </label>
           </div>
         </div>
 

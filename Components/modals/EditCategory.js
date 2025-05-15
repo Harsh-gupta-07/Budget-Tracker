@@ -1,11 +1,11 @@
-"use client"
+"use client";
 import React, { use, useState } from "react";
 import Image from "next/image";
 
-const EditCategory = ({visible, category, budget}) => {
-  const [select, setSelect] = useState(0)
-  const [name,setName] = useState(category)
-  const [bud,setbud] = useState(budget)
+const EditCategory = ({ visible, details }) => {
+  const [icon, setIcon] = useState(details.icon);
+  const [name, setName] = useState(details.category);
+  const [bud, setbud] = useState(details.budget);
 
   return (
     <dialog
@@ -35,7 +35,7 @@ const EditCategory = ({visible, category, budget}) => {
               placeholder="e.g. Groceries"
               className="input input-bordered w-full focus:outline-none"
               value={name}
-              onChange={(e)=>setName(e.target.value)}
+              onChange={(e) => setName(e.target.value)}
             />
           </div>
 
@@ -48,7 +48,7 @@ const EditCategory = ({visible, category, budget}) => {
               placeholder="0.00"
               className="input input-bordered w-full focus:outline-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
               value={bud}
-              onChange={(e)=>setbud(Number(e.target.value))}
+              onChange={(e) => setbud(Number(e.target.value))}
             />
           </div>
 
@@ -62,32 +62,38 @@ const EditCategory = ({visible, category, budget}) => {
                 "bulb",
                 "car",
                 "fork-knife",
+                "play",
                 "bag",
                 "piggy-bank",
-                "basket",
-                "bulb",
-                "car",
-                "fork-knife",
-                "bag",
-                "piggy-bank",
-                "basket",
-                "bulb",
-                "car",
-                "fork-knife",
-                "bag",
-                "piggy-bank",
-                "basket",
-                "bulb",
-                "car",
-                "fork-knife",
-
-              ].map((icon, idx) => (
+                "home",
+                "dumbbell",
+                "eduCap",
+                "health",
+                "creditCard",
+                "dollar",
+                "gift",
+                "paw",
+                "child",
+                "plane",
+                "wifi",
+                "phone",
+                "dots",
+              ].map((item, idx) => (
                 <button
                   key={idx}
-                  className={`w-10 h-10 flex items-center justify-around hover:bg-black rounded-xl cursor-pointer ${select===idx?"bg-black":""}`}
-                  onClick={()=>{setSelect(idx)}}
+                  className={`w-10 h-10 flex items-center justify-around hover:bg-black rounded-xl cursor-pointer ${
+                    icon === item ? "bg-black" : ""
+                  }`}
+                  onClick={() => {
+                    setIcon(item);
+                  }}
                 >
-                  <Image src={`${icon}.svg`} alt="icon" width={24} height={24}/>
+                  <Image
+                    src={`${item}.svg`}
+                    alt="item"
+                    width={24}
+                    height={24}
+                  />
                 </button>
               ))}
             </div>
@@ -98,7 +104,7 @@ const EditCategory = ({visible, category, budget}) => {
           <button className="btn" onClick={() => visible()}>
             Cancel
           </button>
-          <button className="btn btn-primary">Create Category</button>
+          <button className="btn btn-primary">Save Changes</button>
         </div>
       </div>
     </dialog>

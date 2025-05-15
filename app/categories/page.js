@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import Navbar from "../../Components/Navbar";
 import Sidebar from "../../Components/Sidebar";
 import CategoriesWiseExpenseCards from "../../Components/CategoriesWiseExpenseCards";
-import Image from "next/image";
 import AddCategoryModal from "../../Components/modals/AddCategory";
 import Dock from "@/Components/Dock";
 

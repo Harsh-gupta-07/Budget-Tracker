@@ -10,7 +10,6 @@ import Reminders from "../Components/Reminders";
 import Link from "next/link";
 import AddCategoryModal from "../Components/modals/AddCategory";
 import AddReminderModal from "../Components/modals/AddReminder";
-import EditCategory from "../Components/modals/EditCategory";
 import Dock from "@/Components/Dock";
 
 export default function Home() {

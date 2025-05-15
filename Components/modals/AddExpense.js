@@ -1,10 +1,16 @@
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { use, useRef, useState } from "react";
 
 const AddExpenseModal = ({ visible }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [selectCat, setSelectCat] = useState("")
+  const desc = useRef("")
+  const date = useRef("")
+  const amount = useRef(0.0)
 
+  function handle(){
+    console.log(desc.current.value,date.current.value,amount.current.value,selectCat)
+  }
   return (
     <dialog
       id="add_expense_modal"
@@ -32,6 +38,7 @@ const AddExpenseModal = ({ visible }) => {
               type="number"
               placeholder="0.00"
               className="input input-bordered w-full focus:outline-none text-white [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+              ref={amount}
             />
           </div>
 
@@ -91,6 +98,7 @@ const AddExpenseModal = ({ visible }) => {
               type="text"
               placeholder="Describe this expense"
               className="input input-bordered w-full focus:outline-none text-white"
+              ref={desc}
             />
           </div>
 
@@ -102,24 +110,18 @@ const AddExpenseModal = ({ visible }) => {
               type="date"
               className="input input-bordered w-full focus:outline-none text-white"
               defaultValue={new Date().toISOString().split("T")[0]}
+              ref={date}
             />
           </div>
 
-          <div className="form-control">
-            <label className="cursor-pointer label">
-              <input type="checkbox" className="checkbox checkbox-primary" />
-              <span className="label-text ml-3 text-white">
-                This is a recurring expense
-              </span>
-            </label>
-          </div>
+          
         </div>
 
         <div className="modal-action">
           <button className="btn" onClick={() => visible()}>
             Cancel
           </button>
-          <button className="btn btn-primary">Save Expense</button>
+          <button className="btn btn-primary" onClick={handle}>Save Expense</button>
         </div>
       </div>
     </dialog>

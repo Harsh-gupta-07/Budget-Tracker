@@ -1,13 +1,13 @@
 import Image from "next/image";
 import React,{use, useState} from "react";
 
-const EditReminder = ({visible,title, amount,int,category}) => {
+const EditReminder = ({visible, details}) => {
   const [catDropDown, setcatDropDown] = useState(false);
   const [freqDropDown, setFreqDropDown] = useState(false);
-  const [time,setTime] = useState(int)
-  const [cat, setCat]=useState(category?category:"Select a category")
-  const [name,setName] = useState(title)
-  const [val,setVal] = useState(amount)
+  const [time,setTime] = useState(details.timeInterval)
+  const [cat, setCat]=useState(details.category?details.category:"Select a category")
+  const [name,setName] = useState(details.title)
+  const [val,setVal] = useState(details.amount)
 
   return (
     <dialog
@@ -81,7 +81,7 @@ const EditReminder = ({visible,title, amount,int,category}) => {
                 <span className="ml-2">▾</span>
               </button>
               {freqDropDown && (
-                <ul className=" absolute mt-1 w-full rounded-md shadow-lg bg-base-100 z-10 border border-gray-700 max-h-62 overflow-y-auto">
+                <ul className="bottom-full absolute mt-1 w-full rounded-md shadow-lg bg-base-100 z-10 border border-gray-700 max-h-62 overflow-y-auto">
                   {[
                     "One-Time",
                     "Weekly",
@@ -117,7 +117,7 @@ const EditReminder = ({visible,title, amount,int,category}) => {
                 <span className="ml-2">▾</span>
               </button>
               {catDropDown && (
-                <ul className=" absolute mt-1 w-full rounded-md shadow-lg bg-base-100 z-10 border border-gray-700 max-h-62 overflow-y-auto">
+                <ul className=" absolute bottom-full mt-1 w-full rounded-md shadow-lg bg-base-100 z-10 border border-gray-700 max-h-62 overflow-y-auto">
                   {[
                     { icon: "basket", label: "Groceries" },
                     { icon: "bulb", label: "Utilities" },
