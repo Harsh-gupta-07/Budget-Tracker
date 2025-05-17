@@ -1,15 +1,32 @@
-"use client"
+"use client";
 import React, { useRef, useState } from "react";
 import Image from "next/image";
 
-const AddCategoryModal = ({visible}) => {
-  const [icon, setIcon] = useState("basket")
-  const catName = useRef("")
-  const amount = useRef(0)
+const AddCategoryModal = ({ visible }) => {
+  const [icon, setIcon] = useState("basket");
+  const catName = useRef("");
+  const amount = useRef(0);
+  const [emtCat, setEmtCat] = useState(false);
+  const [emtAmt, setAmtCat] = useState(false);
+  function handle() {
+    console.log(
+      { icon: icon, category: catName.current.value },
+      amount.current.value
+    );
+    if (catName.current.value === "" || catName.current.value.length <3) {
+      setEmtCat(true);
+      return;
+    }else{
+      setEmtCat(false)
+    }
 
-  function handle(){
-    console.log({"icon": icon, category: catName.current.value}, amount.current.value);
-    
+    const amountValue = parseFloat(amount.current.value);
+    if (isNaN(amountValue) || amountValue === 0) {
+      setAmtCat(true);
+      return;
+    }else{
+      setAmtCat(false)
+    }
   }
   return (
     <dialog
@@ -40,6 +57,11 @@ const AddCategoryModal = ({visible}) => {
               className="input input-bordered w-full focus:outline-none"
               ref={catName}
             />
+            {emtCat && (
+              <p className="text-xs text-red-600 py-1">
+                Please Enter a Category Name of length 3 or more.
+              </p>
+            )}
           </div>
 
           <div>
@@ -52,6 +74,9 @@ const AddCategoryModal = ({visible}) => {
               className="input input-bordered w-full focus:outline-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
               ref={amount}
             />
+            {emtAmt && (
+              <p className="text-xs text-red-600 py-1">Enter a Valid Amount</p>
+            )}
           </div>
 
           <div>
@@ -79,14 +104,23 @@ const AddCategoryModal = ({visible}) => {
                 "plane",
                 "wifi",
                 "phone",
-                "dots"
+                "dots",
               ].map((item, idx) => (
                 <button
                   key={idx}
-                  className={`w-10 h-10 flex items-center justify-around hover:bg-black rounded-xl cursor-pointer ${icon===item?"bg-black":""}`}
-                  onClick={()=>{setIcon(item)}}
+                  className={`w-10 h-10 flex items-center justify-around hover:bg-black rounded-xl cursor-pointer ${
+                    icon === item ? "bg-black" : ""
+                  }`}
+                  onClick={() => {
+                    setIcon(item);
+                  }}
                 >
-                  <Image src={`${item}.svg`} alt="item" width={24} height={24}/>
+                  <Image
+                    src={`${item}.svg`}
+                    alt="item"
+                    width={24}
+                    height={24}
+                  />
                 </button>
               ))}
             </div>
@@ -97,7 +131,9 @@ const AddCategoryModal = ({visible}) => {
           <button className="btn" onClick={() => visible()}>
             Cancel
           </button>
-          <button className="btn btn-primary" onClick={handle}>Create Category</button>
+          <button className="btn btn-primary" onClick={handle}>
+            Create Category
+          </button>
         </div>
       </div>
     </dialog>

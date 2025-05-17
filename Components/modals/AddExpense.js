@@ -5,11 +5,42 @@ const AddExpenseModal = ({ visible }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [selectCat, setSelectCat] = useState("")
   const desc = useRef("")
-  const date = useRef("")
+  const date = useRef(null)
   const amount = useRef(0.0)
-
+  const [emtCat,setEmtCat] = useState(false)
+  const [emtAmt, setEmtAmt] = useState(false)
+  const [emtDate, setEmtDate] = useState(false)
+  const [emtdesc,setEmtDesc] = useState(false)
   function handle(){
     console.log(desc.current.value,date.current.value,amount.current.value,selectCat)
+    const temp = parseInt(amount.current.value)
+    if (temp===0|| isNaN(temp)){
+      setEmtAmt(true)
+      return
+    }else{
+      setEmtAmt(false)
+    }
+
+    if(!selectCat){
+      setEmtCat(true)
+      return
+    }else{
+      setEmtCat(false)
+    }
+
+    if(!desc){
+      setEmtDesc(true)
+      return
+    }else{
+      setEmtDesc(false)
+    }
+
+    if (!date.current.value){
+      setEmtDate(true)
+      return
+    }else{
+      setEmtDate(false)
+    }
   }
   return (
     <dialog
@@ -40,6 +71,9 @@ const AddExpenseModal = ({ visible }) => {
               className="input input-bordered w-full focus:outline-none text-white [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
               ref={amount}
             />
+            {emtAmt&&<p className="text-xs text-red-600 py-1">
+                Please Enter a Valid Amount.
+              </p>}
           </div>
 
           <div>
@@ -88,6 +122,9 @@ const AddExpenseModal = ({ visible }) => {
                 </ul>
               )}
             </div>
+            {emtCat&&<p className="text-xs text-red-600 py-1">
+                Please Select a Category.
+              </p>}
           </div>
 
           <div>
@@ -100,6 +137,9 @@ const AddExpenseModal = ({ visible }) => {
               className="input input-bordered w-full focus:outline-none text-white"
               ref={desc}
             />
+            {emtdesc&&<p className="text-xs text-red-600 py-1">
+                Please Enter a Description.
+              </p>}
           </div>
 
           <div>
@@ -109,9 +149,11 @@ const AddExpenseModal = ({ visible }) => {
             <input
               type="date"
               className="input input-bordered w-full focus:outline-none text-white"
-              defaultValue={new Date().toISOString().split("T")[0]}
               ref={date}
             />
+            {emtDate&&<p className="text-xs text-red-600 py-1">
+                Please Select a Date.
+              </p>}
           </div>
 
           

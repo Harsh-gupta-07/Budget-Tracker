@@ -1,20 +1,60 @@
 "use client";
 import Image from "next/image";
-import React, { useRef, useState } from "react";
+import React, { use, useRef, useState } from "react";
 
 const AddReminderModal = ({ visible }) => {
   const [catDropDown, setcatDropDown] = useState(false);
   const [freqDropDown, setFreqDropDown] = useState(false);
   const [time, setTime] = useState("Monthly");
   const [cat, setCat] = useState(null);
-  const amount = useRef(0)
-  const remName = useRef("")
+  const amount = useRef(0);
+  const remName = useRef("");
+  const date = useRef(null);
+  const [emtName, setEmtName] = useState(false);
+  const [emtAmt, setEmtAmt] = useState(false);
+  const [emtCat, setEmtCat] = useState(false);
+  const [emtDate, setEmtDate] = useState(false);
 
-  function handle(){
-    console.log(amount.current.value, remName.current.value, cat,time);
+  function handle() {
+    console.log(amount.current.value, remName.current.value, cat, time);
+    if (!remName.current.value){
+      setEmtName(true)
+      return
+    }else{
+      setEmtName(false)
+    }
+
+    const temp = parseInt(amount.current.value)
+    if (temp===0|| isNaN(temp)){
+      setEmtAmt(true)
+      return
+    }else{
+      setEmtAmt(false)
+    }
+
+    if (!date.current.value){
+      setEmtDate(true)
+      return
+    }else{
+      setEmtDate(false)
+    }
+
+    if(!cat){
+      setEmtCat(true)
+      return
+    }else{
+      setEmtCat(false)
+    }
+
     
   }
+
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  const minDate = tomorrow.toISOString().split('T')[0];
+  console.log(tomorrow,minDate);
   
+
   return (
     <dialog
       id="add_reminder_modal"
@@ -46,6 +86,11 @@ const AddReminderModal = ({ visible }) => {
               className="input input-bordered w-full text-white focus:outline-none"
               ref={remName}
             />
+            {emtName && (
+              <p className="text-xs text-red-600 py-1">
+                Please Enter a Name for the Reminder
+              </p>
+            )}
           </div>
 
           <div>
@@ -58,6 +103,11 @@ const AddReminderModal = ({ visible }) => {
               className="input input-bordered w-full text-white focus:outline-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
               ref={amount}
             />
+            {emtAmt && (
+              <p className="text-xs text-red-600 py-1">
+                Please Enter a Valid Amount.
+              </p>
+            )}
           </div>
 
           <div>
@@ -67,8 +117,12 @@ const AddReminderModal = ({ visible }) => {
             <input
               type="date"
               className="input input-bordered w-full text-white focus:outline-none"
-              defaultValue={new Date().toISOString().split("T")[0]}
+              ref={date}
+              min={minDate}
             />
+            {emtDate && (
+              <p className="text-xs text-red-600 py-1">Please Select a Date.</p>
+            )}
           </div>
 
           <div>
@@ -122,18 +176,20 @@ const AddReminderModal = ({ visible }) => {
                 className="focus:outline-none input input-bordered w-full text-left text-white flex justify-between items-center"
                 onClick={() => setcatDropDown(!catDropDown)}
               >
-                {cat===null?"Select a Category":<div
-                      className="flex items-center px-4 py-2 pl-1 cursor-pointer"
-                    >
-                      <Image
-                        src={`./${cat.icon}.svg`}
-                        width={24}
-                        height={24}
-                        alt={cat.icon}
-                        className="mr-3 text-lg"
-                      />
-                      <span>{cat.label}</span>
-                    </div>}
+                {cat === null ? (
+                  "Select a Category"
+                ) : (
+                  <div className="flex items-center px-4 py-2 pl-1 cursor-pointer">
+                    <Image
+                      src={`./${cat.icon}.svg`}
+                      width={24}
+                      height={24}
+                      alt={cat.icon}
+                      className="mr-3 text-lg"
+                    />
+                    <span>{cat.label}</span>
+                  </div>
+                )}
                 <span className="ml-2">▾</span>
               </button>
               {catDropDown && (
@@ -175,6 +231,11 @@ const AddReminderModal = ({ visible }) => {
                 </ul>
               )}
             </div>
+            {emtCat && (
+              <p className="text-xs text-red-600 py-1">
+                Please Select a Category.
+              </p>
+            )}
           </div>
         </div>
 
@@ -182,7 +243,9 @@ const AddReminderModal = ({ visible }) => {
           <button className="btn" onClick={() => visible()}>
             Cancel
           </button>
-          <button className="btn btn-primary" onClick={handle}>Save Reminder</button>
+          <button className="btn btn-primary" onClick={handle}>
+            Save Reminder
+          </button>
         </div>
       </div>
     </dialog>
