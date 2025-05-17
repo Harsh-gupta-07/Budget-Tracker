@@ -16,7 +16,7 @@ const EditExpense = ({ visible, details }) => {
       onClick={() => visible()}
     >
       <div
-        className="modal-box max-w-md w-full sm:w-11/12 bg-base-100 text-white"
+        className="modal-box max-w-md w-full sm:w-11/12 bg-[#1c1e1f] text-white"
         onClick={(e) => e.stopPropagation()}
       >
         <button
@@ -35,7 +35,7 @@ const EditExpense = ({ visible, details }) => {
             <input
               type="number"
               placeholder="0.00"
-              className="input input-bordered w-full focus:outline-none text-white [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+              className="input bg-[#181a1b] input-bordered w-full focus:outline-none text-white [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
               value={val}
               onChange={(e)=>{setVal(Number(e.target.value))}}
             />
@@ -48,31 +48,25 @@ const EditExpense = ({ visible, details }) => {
             <div className="relative">
               <button
                 type="button"
-                className="focus:outline-none input input-bordered w-full text-left text-white flex justify-between items-center"
+                className="focus:outline-none bg-[#181a1b] input input-bordered w-full text-left text-white flex justify-between items-center"
                 onClick={() => setDropdownOpen(!dropdownOpen)}
               >
                 {cat}
                 <span className="ml-2">▾</span>
               </button>
               {dropdownOpen && (
-                <ul className="absolute mt-1 w-full rounded-md shadow-lg bg-base-100 z-10 border border-gray-700 max-h-62 overflow-y-auto">
+                <ul className="absolute mt-1 w-full rounded-md shadow-lg bg-[#181a1b] z-10 border border-gray-700 max-h-62 overflow-y-auto">
                   {[
-                    { icon: "basket", label: "Groceries" },
+                    {icon: "basket", label:"Personal"},
                     { icon: "bulb", label: "Utilities" },
                     { icon: "car", label: "Transportation" },
-                    { icon: "fork-knife", label: "Dining Out" },
-                    { icon: "play", label: "Entertainment" },
-                    { icon: "bag", label: "Shopping" },
-                    { icon: "fork-knife", label: "Dining Out" },
-                    { icon: "play", label: "Entertainment" },
-                    { icon: "bag", label: "Shopping" },
                     { icon: "fork-knife", label: "Dining Out" },
                     { icon: "play", label: "Entertainment" },
                     { icon: "bag", label: "Shopping" },
                   ].map((item, index) => (
                     <li
                       key={index}
-                      className={`flex items-center px-4 py-2 hover:bg-base-300 cursor-pointer ${cat===item.label?"bg-black":""}`}
+                      className={`flex items-center px-4 py-2 hover:bg-[#2e3132] cursor-pointer ${cat===item.label?"bg-black":""}`}
                       onClick={() => {setDropdownOpen(false),setCat(item.label)}}
                     >
                       <Image
@@ -97,7 +91,7 @@ const EditExpense = ({ visible, details }) => {
             <input
               type="text"
               placeholder="Describe this expense"
-              className="input input-bordered w-full focus:outline-none text-white"
+              className="input bg-[#181a1b] input-bordered w-full focus:outline-none text-white"
               value={oth}
               onChange={(e)=>{setOth(e.target.value)}}
             />
@@ -109,7 +103,7 @@ const EditExpense = ({ visible, details }) => {
             </label>
             <input
               type="date"
-              className="input input-bordered w-full focus:outline-none text-white"
+              className="input bg-[#181a1b] input-bordered w-full focus:outline-none text-white"
               value={date}
               onChange={(e)=>{setDate(e.target.value)}}
             />

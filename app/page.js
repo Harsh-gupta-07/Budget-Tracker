@@ -35,7 +35,7 @@ export default function Home() {
         <div className="hidden lg:block fixed top-0 left-0 h-screen w-64 bg-base-200 z-10">
           <Sidebar page="dashboard" />
         </div>
-        <div className="lg:ml-[260px] w-full h-full mb-[56px]">
+        <div className="lg:ml-[260px] w-full h-full mb-[56px] bg-[#1c1e1f]">
           <AnimatePresence mode="wait">
             <motion.div
               key={0}
@@ -46,7 +46,7 @@ export default function Home() {
             >
               <DashboardCards />
 
-              <div className="flex flex-row bg-base-100 py-2 pb-4 lg:py-5 justify-between align-middle px-8 lg:px-12 w-full">
+              <div className="flex flex-row bg-[#1c1e1f] py-2 pb-4 lg:py-5 justify-between align-middle px-8 lg:px-12 w-full">
                 <div>
                   <h1 className="text-lg font-semibold inline align-middle mt-[5px]">
                     Budget Categories
@@ -77,7 +77,7 @@ export default function Home() {
                 />
               )}
 
-              <div className="flex flex-row justify-between align-middle bg-base-100 py-1.5 lg:py-3 px-8 lg:px-12">
+              <div className="flex flex-row justify-between align-middle bg-[#1c1e1f] py-1.5 lg:py-3 px-8 lg:px-12">
                 <div>
                   <h1 className="text-lg font-semibold inline align-middle mt-[5px]">
                     Recent Expenses
@@ -100,7 +100,7 @@ export default function Home() {
               </div>
               <ExpenseList />
 
-              <div className="flex flex-row bg-base-100 py-3 px-8 lg:py-5 justify-between align-middle lg:px-12">
+              <div className="flex flex-row bg-[#1c1e1f] py-3 px-8 lg:py-5 justify-between align-middle lg:px-12">
                 <div>
                   <h1 className="text-lg font-semibold inline align-middle mt-[5px]">
                     Upcoming Reminders

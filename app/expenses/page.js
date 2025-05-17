@@ -20,7 +20,7 @@ const page = () => {
           <Sidebar page="expenses" />
         </div>
 
-        <div className="lg:ml-64 w-full h-full pb-5 bg-base-100 mb-[56px]">
+        <div className="lg:ml-64 w-full h-full pb-5 bg-[#1b1d1e] mb-[56px]">
           <AnimatePresence mode="wait">
             <motion.div
               key={0}
@@ -29,7 +29,7 @@ const page = () => {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3, ease: "easeOut" }}
             >
-              <div className="flex flex-row bg-base-100 py-5 justify-between align-middle w-full px-8">
+              <div className="flex flex-row bg-[#1b1d1e] py-5 justify-between align-middle w-full px-8">
                 <div>
                   <h1 className="text-2xl font-semibold inline align-middle mt-[5px]">
                     Expenses
@@ -60,16 +60,16 @@ const page = () => {
                 </button>
               </div>
 
-              <div className="bg-base-200 rounded-md p-5 mx-8 mb-3 border border-solid border-gray-500">
+              <div className="bg-[#080808] rounded-md p-5 mx-8 mb-3 border border-solid border-gray-500">
                 <h2 className="text-xl font-semibold mb-4">Filter Expenses</h2>
                 <div className="flex flex-col sm:flex-row gap-4">
                   <input
                     type="text"
                     placeholder="Search by description"
-                    className="input input-bordered w-full focus:outline-none"
+                    className="input input-bordered w-full focus:outline-none bg-[#080808]"
                   />
-                  <div className="dropdown dropdown-end w-full sm:w-64 border rounded border-solid border-gray-500">
-                    <label tabIndex={0} className="btn w-full justify-between">
+                  <div className="dropdown dropdown-end w-full bg-[#080808] sm:w-64 border rounded border-solid border-gray-500">
+                    <label tabIndex={0} className="btn w-full justify-between bg-[#080808]">
                       All Categories
                       <svg
                         className="ml-2 h-4 w-4 fill-current"
@@ -81,7 +81,7 @@ const page = () => {
                     </label>
                     <ul
                       tabIndex={0}
-                      className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-full border rounded border-solid border-gray-500"
+                      className="dropdown-content z-[1] menu p-2 shadow bg-[#080808] rounded-box w-full border rounded border-solid border-gray-500"
                     >
                       <li>
                         <a>All Categories</a>

@@ -35,7 +35,7 @@ const AddCategoryModal = ({ visible }) => {
       onClick={() => visible()}
     >
       <div
-        className="modal-box max-w-md w-full sm:w-11/12"
+        className="modal-box bg-[#1c1e1f] max-w-md w-full sm:w-11/12"
         onClick={(e) => e.stopPropagation()}
       >
         <button
@@ -54,7 +54,7 @@ const AddCategoryModal = ({ visible }) => {
             <input
               type="text"
               placeholder="e.g. Groceries"
-              className="input input-bordered w-full focus:outline-none"
+              className="input input-bordered w-full focus:outline-none bg-[#181a1b]"
               ref={catName}
             />
             {emtCat && (
@@ -71,7 +71,7 @@ const AddCategoryModal = ({ visible }) => {
             <input
               type="number"
               placeholder="0.00"
-              className="input input-bordered w-full focus:outline-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+              className="input bg-[#181a1b] input-bordered w-full focus:outline-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
               ref={amount}
             />
             {emtAmt && (
@@ -83,7 +83,7 @@ const AddCategoryModal = ({ visible }) => {
             <label className="label">
               <span className="label-text mb-2">item</span>
             </label>
-            <div className="grid grid-cols-6 gap-3 bg-base-200 p-4 rounded">
+            <div className="grid grid-cols-6 gap-3 bg-[#181a1b] p-4 rounded">
               {[
                 "basket",
                 "bulb",

@@ -14,7 +14,7 @@ const EditCategory = ({ visible, details }) => {
       onClick={() => visible()}
     >
       <div
-        className="modal-box max-w-md w-full sm:w-11/12"
+        className="modal-box max-w-md w-full bg-[#1c1e1f] sm:w-11/12"
         onClick={(e) => e.stopPropagation()}
       >
         <button
@@ -33,7 +33,7 @@ const EditCategory = ({ visible, details }) => {
             <input
               type="text"
               placeholder="e.g. Groceries"
-              className="input input-bordered w-full focus:outline-none"
+              className="input bg-[#181a1b] input-bordered w-full focus:outline-none"
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
@@ -46,7 +46,7 @@ const EditCategory = ({ visible, details }) => {
             <input
               type="number"
               placeholder="0.00"
-              className="input input-bordered w-full focus:outline-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+              className="input bg-[#181a1b] input-bordered w-full focus:outline-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
               value={bud}
               onChange={(e) => setbud(Number(e.target.value))}
             />
@@ -56,7 +56,7 @@ const EditCategory = ({ visible, details }) => {
             <label className="label">
               <span className="label-text mb-2">Icon</span>
             </label>
-            <div className="grid grid-cols-6 gap-3 bg-base-200 p-4 rounded">
+            <div className="grid grid-cols-6 bg-[#181a1b] gap-3  p-4 rounded">
               {[
                 "basket",
                 "bulb",

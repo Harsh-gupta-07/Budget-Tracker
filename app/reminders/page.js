@@ -22,7 +22,7 @@ const page = () => {
         <div className="hidden lg:block fixed top-0 left-0 h-screen w-64 bg-base-200 z-10">
           <Sidebar page="categories" />
         </div>
-        <div className="lg:ml-64 w-full h-full py-5 bg-base-100 mb-[56px]">
+        <div className="lg:ml-64 w-full h-full py-5 bg-[#1b1d1e] mb-[56px]">
           <AnimatePresence mode="wait">
             <motion.div
               key={0}
@@ -31,7 +31,7 @@ const page = () => {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3, ease: "easeOut" }}
             >
-              <div className="flex flex-row bg-base-100 justify-between align-middle w-full px-8">
+              <div className="flex flex-row bg-[#1b1d1e] justify-between align-middle w-full px-8">
                 <div>
                   <h1 className="text-2xl font-semibold inline align-middle mt-[5px]">
                     Reminders
@@ -59,7 +59,7 @@ const page = () => {
                   Add Reminder
                 </button>
               </div>
-              <div className="h-full flex flex-row bg-base-100 py-6  justify-between align-middle">
+              <div className="h-full flex flex-row bg-[#1b1d1e] py-6  justify-between align-middle">
                 <Reminders />
                 {showReminderModal && (
                   <AddReminderModal

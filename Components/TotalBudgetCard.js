@@ -4,7 +4,7 @@ Image;
 
 const TotalBudgetCard = ({title, head ,primary, secondary,pic}) => {
   return (
-    <div className="bg-base-200 p-5 rounded-lg shadow-sm border border-gray-700">
+    <div className="bg-[#181a1b] p-5 rounded-lg shadow-sm border border-gray-700">
       <div className="flex justify-between items-start mb-4">
         <div>
           <p className="text-gray-300 text-sm mb-2">{title}</p>

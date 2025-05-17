@@ -5,13 +5,13 @@ import { usePathname } from "next/navigation";
 
 const Sidebar = () => {
   return (
-    <ul className="bg-base-200 h-screen w-65 py-4 px-0 text-gray-300">
-      <li className="pointer-events-none border-b  border-gray-400 p-[16px] pt-0 w">
+    <ul className="bg-[#181a1b] h-screen w-65 py-4 px-0 text-gray-300 border-r-1 border-gray-700">
+      <li className="pointer-events-none border-b  border-gray-700 p-[16px] pt-0 w">
         <h1 className="text-xl m-auto text-center font-bold">Budget Tracker</h1>
       </li>
       <li
         className={`mt-5 ${
-          usePathname() === "/" ? "bg-gray-800" : "hover:bg-gray-700"
+          usePathname() === "/" ? "bg-[#1e2022]" : "hover:bg-[#202223]"
         } cursor-pointer`}
       >
         <Link href="/">
@@ -57,7 +57,7 @@ const Sidebar = () => {
       </li>
       <li
         className={`cursor-pointer ${
-          usePathname() === "/categories" ? "bg-gray-800" : "hover:bg-gray-700"
+          usePathname() === "/categories" ? "bg-[#1e2022]" : "hover:bg-[#202223]"
         }`}
       >
         <Link href="/categories">
@@ -113,7 +113,7 @@ const Sidebar = () => {
       </li>
       <li
         className={`cursor-pointer ${
-          usePathname() === "/expenses" ? "bg-gray-800" : "hover:bg-gray-700"
+          usePathname() === "/expenses" ? "bg-[#1e2022]" : "hover:bg-[#202223]"
         }`}
       >
         <Link href="/expenses">
@@ -166,7 +166,7 @@ const Sidebar = () => {
       </li>
       <li
         className={`cursor-pointer ${
-          usePathname() === "/reminders" ? "bg-gray-800" : "hover:bg-gray-700"
+          usePathname() === "/reminders" ? "bg-[#1e2022]" : "hover:bg-[#202223]"
         }`}
       >
         <Link href="/reminders">

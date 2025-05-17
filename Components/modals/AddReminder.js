@@ -6,7 +6,7 @@ const AddReminderModal = ({ visible }) => {
   const [catDropDown, setcatDropDown] = useState(false);
   const [freqDropDown, setFreqDropDown] = useState(false);
   const [time, setTime] = useState("Monthly");
-  const [cat, setCat] = useState(null);
+  const [cat, setCat] = useState({icon: "basket", label:"Personal"});
   const amount = useRef(0);
   const remName = useRef("");
   const date = useRef(null);
@@ -64,7 +64,7 @@ const AddReminderModal = ({ visible }) => {
       }}
     >
       <div
-        className="modal-box max-w-md w-full sm:w-11/12 bg-base-100 text-white"
+        className="modal-box max-w-md w-full sm:w-11/12 bg-[#1c1e1f] text-white"
         onClick={(e) => e.stopPropagation()}
       >
         <button
@@ -83,7 +83,7 @@ const AddReminderModal = ({ visible }) => {
             <input
               type="text"
               placeholder="e.g. Rent Payment"
-              className="input input-bordered w-full text-white focus:outline-none"
+              className="input bg-[#181a1b] input-bordered w-full text-white focus:outline-none"
               ref={remName}
             />
             {emtName && (
@@ -100,7 +100,7 @@ const AddReminderModal = ({ visible }) => {
             <input
               type="number"
               placeholder="0.00"
-              className="input input-bordered w-full text-white focus:outline-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+              className="input bg-[#181a1b] input-bordered w-full text-white focus:outline-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
               ref={amount}
             />
             {emtAmt && (
@@ -116,7 +116,7 @@ const AddReminderModal = ({ visible }) => {
             </label>
             <input
               type="date"
-              className="input input-bordered w-full text-white focus:outline-none"
+              className="input bg-[#181a1b] input-bordered w-full text-white focus:outline-none"
               ref={date}
               min={minDate}
             />
@@ -132,14 +132,14 @@ const AddReminderModal = ({ visible }) => {
             <div className="relative">
               <button
                 type="button"
-                className="focus:outline-none input input-bordered w-full text-left text-white flex justify-between items-center"
+                className="focus:outline-none bg-[#181a1b] input input-bordered w-full text-left text-white flex justify-between items-center"
                 onClick={() => setFreqDropDown(!freqDropDown)}
               >
                 {time}
                 <span className="ml-2">▾</span>
               </button>
               {freqDropDown && (
-                <ul className="bottom-full absolute mt-1 w-full rounded-md shadow-lg bg-base-100 z-10 border border-gray-700 max-h-62 overflow-y-auto">
+                <ul className="bottom-full bg-[#181a1b] absolute mt-1 w-full rounded-md shadow-lg  z-10 border border-gray-700 max-h-62 overflow-y-auto">
                   {[
                     "One-Time",
                     "Weekly",
@@ -150,7 +150,7 @@ const AddReminderModal = ({ visible }) => {
                   ].map((item, index) => (
                     <li
                       key={index}
-                      className={`flex items-center px-4 py-2 hover:bg-base-300 cursor-pointer ${
+                      className={`flex items-center px-4 py-2 hover:bg-[#2e3132] cursor-pointer ${
                         item === time ? "bg-black" : ""
                       }`}
                       onClick={() => {
@@ -173,13 +173,13 @@ const AddReminderModal = ({ visible }) => {
             <div className="relative">
               <button
                 type="button"
-                className="focus:outline-none input input-bordered w-full text-left text-white flex justify-between items-center"
+                className="focus:outline-none bg-[#181a1b] input input-bordered w-full text-left text-white flex justify-between items-center"
                 onClick={() => setcatDropDown(!catDropDown)}
               >
                 {cat === null ? (
                   "Select a Category"
                 ) : (
-                  <div className="flex items-center px-4 py-2 pl-1 cursor-pointer">
+                  <div className="flex items-center px-4 py-2 pl-1  cursor-pointer">
                     <Image
                       src={`./${cat.icon}.svg`}
                       width={24}
@@ -193,25 +193,19 @@ const AddReminderModal = ({ visible }) => {
                 <span className="ml-2">▾</span>
               </button>
               {catDropDown && (
-                <ul className="absolute bottom-full mb-1 w-full rounded-md shadow-lg bg-base-100 z-10 border border-gray-700 max-h-62 overflow-y-auto">
+                <ul className="absolute bottom-full mb-1 w-full bg-[#181a1b] rounded-md shadow-lg  z-10 border border-gray-700 max-h-62 overflow-y-auto">
                   {[
-                    { icon: "basket", label: "Groceries" },
+                    {icon: "basket", label:"Personal"},
                     { icon: "bulb", label: "Utilities" },
                     { icon: "car", label: "Transportation" },
-                    { icon: "fork-knife", label: "Dining Out" },
-                    { icon: "play", label: "Entertainment" },
-                    { icon: "bag", label: "Shopping" },
-                    { icon: "fork-knife", label: "Dining Out" },
-                    { icon: "play", label: "Entertainment" },
-                    { icon: "bag", label: "Shopping" },
                     { icon: "fork-knife", label: "Dining Out" },
                     { icon: "play", label: "Entertainment" },
                     { icon: "bag", label: "Shopping" },
                   ].map((item, index) => (
                     <li
                       key={index}
-                      className={`flex items-center px-4 py-2 hover:bg-base-300 cursor-pointer ${
-                        item === cat ? "bg-base-300" : ""
+                      className={`flex items-center px-4 py-2 hover:bg-[#2e3132] cursor-pointer ${
+                        item.label === cat.label ? "bg-black" : ""
                       }`}
                       onClick={() => {
                         setcatDropDown(false);

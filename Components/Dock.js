@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const Dock = () => {
   return (
-    <div className="dock dock-sm">
+    <div className="dock dock-sm bg-[#181a1b]">
       <button className={usePathname() === "/" ? "dock-active" : ""}>
         <Link href="/">
           <svg

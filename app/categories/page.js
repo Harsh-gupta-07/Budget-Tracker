@@ -16,11 +16,11 @@ const page = () => {
       </div>
 
       <div className="flex flex-1">
-        <div className="hidden lg:block fixed top-0 left-0 h-screen w-64 bg-base-200 z-10">
+        <div className="hidden lg:block fixed top-0 left-0 h-screen w-64 bg-[#1b1d1e] z-10">
           <Sidebar page="categories" />
         </div>
 
-        <div className="lg:ml-64 w-full h-full py-5 bg-base-100 mb-[56px]">
+        <div className="lg:ml-64 w-full h-full py-5 mb-[56px] bg-[#1b1d1e]">
           <AnimatePresence mode="wait">
             <motion.div
               key={0}
@@ -29,7 +29,7 @@ const page = () => {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3, ease: "easeOut" }}
             >
-              <div className="flex flex-row bg-base-100 px-8 py-8 pt-0 pb-0 justify-between align-middle  w-full">
+              <div className="flex flex-row bg-[#1b1d1e] px-8 py-8 pt-0 pb-0 justify-between align-middle  w-full">
                 <div>
                   <h1 className="text-2xl font-semibold inline align-middle mt-[5px]">
                     Budget Categories
@@ -57,7 +57,7 @@ const page = () => {
                   <span className="hidden sm:inline">Add Category</span>
                 </button>
               </div>
-              <div className="flex flex-row bg-base-100 py-6  justify-between align-middle">
+              <div className="flex flex-row bg-[#1b1d1e] py-6  justify-between align-middle">
                 <CategoriesWiseExpenseCards />
               </div>
               {showCategoryModal && (

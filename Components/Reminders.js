@@ -47,7 +47,7 @@ const [details, setDetails] = useState(null)
             return (
               <div
                 key={ind}
-                className=" p-5 rounded-lg shadow-sm border border-gray-700 bg-base-200"
+                className=" p-5 rounded-lg shadow-sm border border-gray-700 bg-[#181a1b]"
               >
                 <div className="flex justify-between items-start mb-3">
                   <div className="flex items-center gap-2">

@@ -3,43 +3,48 @@ import React, { use, useRef, useState } from "react";
 
 const AddExpenseModal = ({ visible }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [selectCat, setSelectCat] = useState("")
-  const desc = useRef("")
-  const date = useRef(null)
-  const amount = useRef(0.0)
-  const [emtCat,setEmtCat] = useState(false)
-  const [emtAmt, setEmtAmt] = useState(false)
-  const [emtDate, setEmtDate] = useState(false)
-  const [emtdesc,setEmtDesc] = useState(false)
-  function handle(){
-    console.log(desc.current.value,date.current.value,amount.current.value,selectCat)
-    const temp = parseInt(amount.current.value)
-    if (temp===0|| isNaN(temp)){
-      setEmtAmt(true)
-      return
-    }else{
-      setEmtAmt(false)
+  const [selectCat, setSelectCat] = useState("");
+  const desc = useRef("");
+  const date = useRef(null);
+  const amount = useRef(0.0);
+  const [emtCat, setEmtCat] = useState(false);
+  const [emtAmt, setEmtAmt] = useState(false);
+  const [emtDate, setEmtDate] = useState(false);
+  const [emtdesc, setEmtDesc] = useState(false);
+  function handle() {
+    console.log(
+      desc.current.value,
+      date.current.value,
+      amount.current.value,
+      selectCat
+    );
+    const temp = parseInt(amount.current.value);
+    if (temp === 0 || isNaN(temp)) {
+      setEmtAmt(true);
+      return;
+    } else {
+      setEmtAmt(false);
     }
 
-    if(!selectCat){
-      setEmtCat(true)
-      return
-    }else{
-      setEmtCat(false)
+    if (!selectCat) {
+      setEmtCat(true);
+      return;
+    } else {
+      setEmtCat(false);
     }
 
-    if(!desc){
-      setEmtDesc(true)
-      return
-    }else{
-      setEmtDesc(false)
+    if (!desc) {
+      setEmtDesc(true);
+      return;
+    } else {
+      setEmtDesc(false);
     }
 
-    if (!date.current.value){
-      setEmtDate(true)
-      return
-    }else{
-      setEmtDate(false)
+    if (!date.current.value) {
+      setEmtDate(true);
+      return;
+    } else {
+      setEmtDate(false);
     }
   }
   return (
@@ -49,7 +54,7 @@ const AddExpenseModal = ({ visible }) => {
       onClick={() => visible()}
     >
       <div
-        className="modal-box max-w-md w-full sm:w-11/12 bg-base-100 text-white"
+        className="modal-box max-w-md w-full sm:w-11/12 bg-[#1c1e1f] text-white"
         onClick={(e) => e.stopPropagation()}
       >
         <button
@@ -68,63 +73,80 @@ const AddExpenseModal = ({ visible }) => {
             <input
               type="number"
               placeholder="0.00"
-              className="input input-bordered w-full focus:outline-none text-white [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+              className="input bg-[#181a1b] input-bordered w-full focus:outline-none text-white [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
               ref={amount}
             />
-            {emtAmt&&<p className="text-xs text-red-600 py-1">
+            {emtAmt && (
+              <p className="text-xs text-red-600 py-1">
                 Please Enter a Valid Amount.
-              </p>}
+              </p>
+            )}
           </div>
 
           <div>
             <label className="label">
-              <span className="label-text mb-2 text-white">Category</span>
+              <span className="label-text mb-2  text-white">Category</span>
             </label>
-            <div className="relative">
+            <div className="relative ">
               <button
                 type="button"
-                className="focus:outline-none input input-bordered w-full text-left text-white flex justify-between items-center"
+                className="focus:outline-none bg-[#181a1b] input input-bordered w-full text-left text-white flex justify-between items-center"
                 onClick={() => setDropdownOpen(!dropdownOpen)}
               >
-                {selectCat===""?"Select a Category":<p
-                      className="flex items-center pl-1 px-4 py-2 cursor-pointer"
-                    >
-                      <Image src={`./${selectCat.icon}.svg`} width={24} height={24} alt={selectCat.icon} className="mr-3 text-lg" />
-                      <span>{selectCat.label}</span>
-                    </p>}
+                {selectCat === "" ? (
+                  "Select a Category"
+                ) : (
+                  <p className="flex items-center pl-1 px-4 py-2 cursor-pointer">
+                    <Image
+                      src={`./${selectCat.icon}.svg`}
+                      width={24}
+                      height={24}
+                      alt={selectCat.icon}
+                      className="mr-3 text-lg"
+                    />
+                    <span>{selectCat.label}</span>
+                  </p>
+                )}
                 <span className="ml-2">▾</span>
               </button>
               {dropdownOpen && (
-                <ul className="absolute mt-1 w-full rounded-md shadow-lg bg-base-100 z-10 border border-gray-700 max-h-62 overflow-y-auto">
+                <ul className="bg-[#181a1b] absolute mt-1 w-full rounded-md shadow-lg  z-10 border border-gray-700 max-h-62 overflow-y-auto">
                   {[
-                    { icon: "basket", label: "Groceries" },
+                    { icon: "basket", label: "Personal" },
                     { icon: "bulb", label: "Utilities" },
                     { icon: "car", label: "Transportation" },
                     { icon: "fork-knife", label: "Dining Out" },
                     { icon: "play", label: "Entertainment" },
                     { icon: "bag", label: "Shopping" },
-                    { icon: "fork-knife", label: "Dining Out" },
-                    { icon: "play", label: "Entertainment" },
-                    { icon: "bag", label: "Shopping" },
-                    { icon: "fork-knife", label: "Dining Out" },
-                    { icon: "play", label: "Entertainment" },
-                    { icon: "bag", label: "Shopping" }
                   ].map((item, index) => (
                     <li
                       key={index}
-                      className="flex items-center px-4 py-2 hover:bg-base-300 cursor-pointer"
-                      onClick={() => {setDropdownOpen(false); setSelectCat(item)}}
+                      className={`${
+                        selectCat.label == item.label ? "bg-black" : ""
+                      } flex items-center px-4 py-2 hover:bg-[#2e3132] cursor-pointer`}
+                      onClick={() => {
+                        setDropdownOpen(false);
+                        setSelectCat(item);
+                      }}
                     >
-                      <Image src={`./${item.icon}.svg`} width={24} height={24} alt={item.icon} className="mr-3 text-lg" />
+                      <Image
+                        src={`./${item.icon}.svg`}
+                        width={24}
+                        height={24}
+                        alt={item.icon}
+                        className="mr-3 text-lg"
+                      />
                       <span>{item.label}</span>
                     </li>
                   ))}
                 </ul>
               )}
             </div>
-            {emtCat&&<p className="text-xs text-red-600 py-1">
+            {emtCat && (
+              <p className="text-xs text-red-600 py-1">
                 Please Select a Category.
-              </p>}
+              </p>
+            )}
           </div>
 
           <div>
@@ -134,12 +156,14 @@ const AddExpenseModal = ({ visible }) => {
             <input
               type="text"
               placeholder="Describe this expense"
-              className="input input-bordered w-full focus:outline-none text-white"
+              className="bg-[#181a1b] input input-bordered w-full focus:outline-none text-white"
               ref={desc}
             />
-            {emtdesc&&<p className="text-xs text-red-600 py-1">
+            {emtdesc && (
+              <p className="text-xs text-red-600 py-1">
                 Please Enter a Description.
-              </p>}
+              </p>
+            )}
           </div>
 
           <div>
@@ -148,22 +172,22 @@ const AddExpenseModal = ({ visible }) => {
             </label>
             <input
               type="date"
-              className="input input-bordered w-full focus:outline-none text-white"
+              className="bg-[#181a1b] input input-bordered w-full focus:outline-none text-white"
               ref={date}
             />
-            {emtDate&&<p className="text-xs text-red-600 py-1">
-                Please Select a Date.
-              </p>}
+            {emtDate && (
+              <p className="text-xs text-red-600 py-1">Please Select a Date.</p>
+            )}
           </div>
-
-          
         </div>
 
         <div className="modal-action">
           <button className="btn" onClick={() => visible()}>
             Cancel
           </button>
-          <button className="btn btn-primary" onClick={handle}>Save Expense</button>
+          <button className="btn btn-primary" onClick={handle}>
+            Save Expense
+          </button>
         </div>
       </div>
     </dialog>

@@ -6,12 +6,12 @@ const DashboardHeader = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    <div className="flex flex-row bg-base-100 p-5  justify-between align-middle px-12">
+    <div className="flex flex-row bg-[#1c1e1f] p-5 px-8  justify-between align-middle lg:px-12">
       <h1 className="text-2xl font-bold inline align-middle mt-[5px]">
         Dashboard
       </h1>
       <div className="gap-3 flex">
-        <div className="max-w-35 dropdown dropdown-end border rounded border-solid border-gray-500">
+        <div className="max-w-35 dropdown dropdown-end border rounded border-solid border-gray-500 bg-[#080808]">
           <label
             tabIndex={0}
             className="cursor-pointer justify-center gap-2 rounded-md text-sm font-medium  h-10 px-4 py-2 flex items-center"
@@ -27,7 +27,7 @@ const DashboardHeader = () => {
           </label>
           <ul
             tabIndex={0}
-            className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-full border rounded border-solid border-gray-500"
+            className="dropdown-content z-[1] menu p-2 shadow w-full border rounded-md border-solid border-gray-500 bg-[#080808]"
           >
             <li>
               <a>Dec 2025</a>
@@ -42,7 +42,7 @@ const DashboardHeader = () => {
         </div>
         <button
           onClick={() => setIsModalOpen(true)}
-          className="bg-gray-700 hover:bg-base-300 rounded-full btn w-10 h-10 p-3 border-none"
+          className="bg-base-300 cursor-pointer hover:bg-[#080808] rounded-full w-10 h-10 p-3 border-none"
         >
           <Image
             src="/plus-svgrepo-com.svg"
@@ -51,6 +51,7 @@ const DashboardHeader = () => {
             height={20}
           />
         </button>
+        
       </div>
 
       {isModalOpen && <AddExpenseModal visible={() => setIsModalOpen(false)} />}

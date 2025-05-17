@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import React, { use, useState } from "react";
+import React, { useState } from "react";
 import EditCategory from "./modals/EditCategory";
 
 const CategoriesWiseExpenseCards = ({ visible }) => {
@@ -18,7 +18,7 @@ const CategoriesWiseExpenseCards = ({ visible }) => {
 
   return (
     <div className="w-full">
-      <div className="px-8  bg-base-100 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 pb-5">
+      <div className="px-8 bg-[#1c1e1f] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 pb-5 lg:px-12">
         {category.map((val) => {
           const percentage =
             val.budget > 0 ? (val.spent / val.budget) * 100 : 0;
@@ -26,7 +26,7 @@ const CategoriesWiseExpenseCards = ({ visible }) => {
           return (
             <div
               key={val.category}
-              className="bg-base-100 p-5 rounded-lg shadow-sm border border-gray-600"
+              className="bg-[#181a1b] p-5 rounded-lg shadow-sm border border-gray-600"
             >
               <div className="flex justify-between items-start mb-3">
                 <div className="flex items-center gap-2">
@@ -45,7 +45,7 @@ const CategoriesWiseExpenseCards = ({ visible }) => {
                     setDetails({category: val.category, budget: val.budget, icon: val.icon})
                     setEditCategory(!editCategory)
                   }}
-                  className="rounded-md h-8 w-8 flex items-center justify-center cursor-pointer hover:bg-base-300"
+                  className="rounded-md h-8 w-8 flex items-center justify-center cursor-pointer hover:bg-[#202223]"
                 >
                   <Image src="./edit.svg" alt="edit" width={22} height={22} />
                 </button>
