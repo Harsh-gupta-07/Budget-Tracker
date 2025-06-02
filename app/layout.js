@@ -16,6 +16,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${poppins.variable}antialiased`}>
+        <div className="w-full h-10 bg-red-700 flex justify-center items-center">
+          <p className="text-white font-bold ml-64" >This Project is still a work in Progess.</p>
+        </div>
         <Wrapper>{children}</Wrapper>
       </body>
     </html>
