@@ -52,7 +52,7 @@ const [details, setDetails] = useState(null)
                 <div className="flex justify-between items-start mb-3">
                   <div className="flex items-center gap-2">
                     <Image
-                      src="./notifications.svg"
+                      src="/notifications.svg"
                       alt="noti"
                       width={20}
                       height={20}
@@ -74,7 +74,7 @@ const [details, setDetails] = useState(null)
                       setEditReminder(!editReminder)
                       }} className="w-8 h-8 text-gray-400 hover:bg-black cursor-pointer flex justify-around items-center rounded-lg">
                       <Image
-                        src="./edit.svg"
+                        src="/edit.svg"
                         alt="edit"
                         width={20}
                         height={20}
@@ -82,7 +82,7 @@ const [details, setDetails] = useState(null)
                     </button>
                     <button className="w-8 h-8 text-gray-400 hover:bg-black cursor-pointer flex justify-around items-center rounded-lg">
                       <Image
-                        src="./delete.svg"
+                        src="/delete.svg"
                         alt="edit"
                         width={20}
                         height={20}

@@ -1,3 +1,4 @@
+"use client"
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -11,10 +12,10 @@ const Sidebar = () => {
       </li>
       <li
         className={`mt-5 ${
-          usePathname() === "/" ? "bg-[#1e2022]" : "hover:bg-[#202223]"
+          usePathname() === "/dashboard" ? "bg-[#1e2022]" : "hover:bg-[#202223]"
         } cursor-pointer`}
       >
-        <Link href="/">
+        <Link href="/dashboard/">
           <div className="flex items-center justify-start py-3.5 rounded-none pl-6">
             <svg
               width="800px"
@@ -35,19 +36,19 @@ const Sidebar = () => {
               <g id="SVGRepo_iconCarrier">
                 <path
                   d="M55.64 22.751H35.09C34.5596 22.751 34.0509 22.9617 33.6758 23.3368C33.3007 23.7118 33.09 24.2205 33.09 24.751V55.571C33.0916 56.1009 33.3028 56.6087 33.6775 56.9834C34.0523 57.3582 34.5601 57.5694 35.09 57.571H55.64C56.1699 57.5694 56.6777 57.3582 57.0525 56.9834C57.4272 56.6087 57.6384 56.1009 57.64 55.571V24.751C57.64 24.2205 57.4293 23.7118 57.0542 23.3368C56.6791 22.9617 56.1704 22.751 55.64 22.751Z"
-                  fill={usePathname() === "/" ? "#3e9bf7" : "#b0a99e"}
+                  fill={usePathname() === "/dashboard" ? "#3e9bf7" : "#b0a99e"}
                 />
                 <path
                   d="M55.64 5.62695H35.09C34.5596 5.62695 34.0509 5.83767 33.6758 6.21274C33.3007 6.58781 33.09 7.09652 33.09 7.62695V17.8969C33.0916 18.4269 33.3028 18.9347 33.6775 19.3094C34.0523 19.6841 34.5601 19.8954 35.09 19.8969H55.64C56.1699 19.8954 56.6777 19.6841 57.0525 19.3094C57.4272 18.9347 57.6384 18.4269 57.64 17.8969V7.62695C57.64 7.09652 57.4293 6.58781 57.0542 6.21274C56.6791 5.83767 56.1704 5.62695 55.64 5.62695Z"
-                  fill={usePathname() === "/" ? "#3e9bf7" : "#b0a99e"}
+                  fill={usePathname() === "/dashboard" ? "#3e9bf7" : "#b0a99e"}
                 />
                 <path
                   d="M28.24 36.451H7.7C6.59543 36.451 5.7 37.3465 5.7 38.451V55.5711C5.7 56.6756 6.59543 57.5711 7.7 57.5711H28.24C29.3446 57.5711 30.24 56.6756 30.24 55.5711V38.451C30.24 37.3465 29.3446 36.451 28.24 36.451Z"
-                  fill={usePathname() === "/" ? "#3e9bf7" : "#b0a99e"}
+                  fill={usePathname() === "/dashboard" ? "#3e9bf7" : "#b0a99e"}
                 />
                 <path
                   d="M28.24 5.62697H7.70002C7.43712 5.62604 7.17661 5.67714 6.93355 5.77733C6.69048 5.87751 6.46964 6.02477 6.28373 6.21068C6.09783 6.39658 5.95054 6.61742 5.85035 6.86049C5.75017 7.10355 5.6991 7.36406 5.70002 7.62697V31.557C5.70002 32.0874 5.91074 32.5961 6.28581 32.9712C6.66088 33.3462 7.16959 33.557 7.70002 33.557H28.24C28.7704 33.557 29.2791 33.3462 29.6542 32.9712C30.0293 32.5961 30.24 32.0874 30.24 31.557V7.62697C30.2409 7.36406 30.1898 7.10355 30.0896 6.86049C29.9895 6.61742 29.8422 6.39658 29.6563 6.21068C29.4704 6.02477 29.2495 5.87751 29.0065 5.77733C28.7634 5.67714 28.5029 5.62604 28.24 5.62697Z"
-                  fill={usePathname() === "/" ? "#3e9bf7" : "#b0a99e"}
+                  fill={usePathname() === "/dashboard" ? "#3e9bf7" : "#b0a99e"}
                 />
               </g>
             </svg>
@@ -57,10 +58,10 @@ const Sidebar = () => {
       </li>
       <li
         className={`cursor-pointer ${
-          usePathname() === "/categories" ? "bg-[#1e2022]" : "hover:bg-[#202223]"
+          usePathname() === "/dashboard/categories" ? "bg-[#1e2022]" : "hover:bg-[#202223]"
         }`}
       >
-        <Link href="/categories">
+        <Link href="/dashboard/categories">
           <div className="flex items-center justify-start py-3.5 rounded-none pl-6">
             <svg
               width="800px"
@@ -97,7 +98,7 @@ const Sidebar = () => {
                       <path
                         d="M19,4.98858 L19,5.99999 C20.1046,5.99999 21,6.89542 21,7.99999 L21,18 C21,19.1046 20.1046,20 19,20 L5,20 C3.89543,20 3,19.1046 3,18 L3,7.99999 C3,6.95543 3.83483,6.00716 4.8132,5.72763 L15.8132,2.58477 C17.4102,2.12847 19,3.32763 19,4.98858 Z M15.5,11.5 C14.6716,11.5 14,12.1716 14,13 C14,13.8284 14.6716,14.5 15.5,14.5 C16.3284,14.5 17,13.8284 17,13 C17,12.1716 16.3284,11.5 15.5,11.5 Z M17,4.98858 C17,4.6840725 16.7327917,4.45717306 16.4422376,4.49176455 L16.3626,4.50782 L11.1401,5.99999 L17,5.99999 L17,4.98858 Z"
                         fill={
-                          usePathname() === "/categories"
+                          usePathname() === "/dashboard/categories"
                             ? "#3e9bf7"
                             : "#b0a99e"
                         }
@@ -113,10 +114,10 @@ const Sidebar = () => {
       </li>
       <li
         className={`cursor-pointer ${
-          usePathname() === "/expenses" ? "bg-[#1e2022]" : "hover:bg-[#202223]"
+          usePathname() === "/dashboard/expenses" ? "bg-[#1e2022]" : "hover:bg-[#202223]"
         }`}
       >
-        <Link href="/expenses">
+        <Link href="/dashboard/expenses">
           <div className="flex  items-center justify-start py-3.5 rounded-none pl-6">
             <svg
               width="800px"
@@ -136,25 +137,25 @@ const Sidebar = () => {
               <g id="SVGRepo_iconCarrier">
                 <path
                   d="M21 6V3.50519C21 2.92196 20.3109 2.61251 19.875 2.99999C19.2334 3.57029 18.2666 3.57029 17.625 2.99999C16.9834 2.42969 16.0166 2.42969 15.375 2.99999C14.7334 3.57029 13.7666 3.57029 13.125 2.99999C12.4834 2.42969 11.5166 2.42969 10.875 2.99999C10.2334 3.57029 9.26659 3.57029 8.625 2.99999C7.98341 2.42969 7.01659 2.42969 6.375 2.99999C5.73341 3.57029 4.76659 3.57029 4.125 2.99999C3.68909 2.61251 3 2.92196 3 3.50519V14M21 10V20.495C21 21.0782 20.3109 21.3876 19.875 21.0002C19.2334 20.4299 18.2666 20.4299 17.625 21.0002C16.9834 21.5705 16.0166 21.5705 15.375 21.0002C14.7334 20.4299 13.7666 20.4299 13.125 21.0002C12.4834 21.5705 11.5166 21.5705 10.875 21.0002C10.2334 20.4299 9.26659 20.4299 8.625 21.0002C7.98341 21.5705 7.01659 21.5705 6.375 21.0002C5.73341 20.4299 4.76659 20.4299 4.125 21.0002C3.68909 21.3876 3 21.0782 3 20.495V18"
-                  stroke={usePathname() === "/expenses" ? "#3e9bf7" : "#b0a99e"}
+                  stroke={usePathname() === "/dashboard/expenses" ? "#3e9bf7" : "#b0a99e"}
                   strokeWidth="1.5"
                   strokeLinecap="round"
                 />
                 <path
                   d="M7.5 15.5H11.5M16.5 15.5H14.5"
-                  stroke={usePathname() === "/expenses" ? "#3e9bf7" : "#b0a99e"}
+                  stroke={usePathname() === "/dashboard/expenses" ? "#3e9bf7" : "#b0a99e"}
                   strokeWidth="1.5"
                   strokeLinecap="round"
                 />
                 <path
                   d="M16.5 12H12.5M7.5 12H9.5"
-                  stroke={usePathname() === "/expenses" ? "#3e9bf7" : "#b0a99e"}
+                  stroke={usePathname() === "/dashboard/expenses" ? "#3e9bf7" : "#b0a99e"}
                   strokeWidth="1.5"
                   strokeLinecap="round"
                 />
                 <path
                   d="M7.5 8.5H16.5"
-                  stroke={usePathname() === "/expenses" ? "#3e9bf7" : "#b0a99e"}
+                  stroke={usePathname() === "/dashboard/expenses" ? "#3e9bf7" : "#b0a99e"}
                   strokeWidth="1.5"
                   strokeLinecap="round"
                 />
@@ -166,10 +167,10 @@ const Sidebar = () => {
       </li>
       <li
         className={`cursor-pointer ${
-          usePathname() === "/reminders" ? "bg-[#1e2022]" : "hover:bg-[#202223]"
+          usePathname() === "/dashboard/reminders" ? "bg-[#1e2022]" : "hover:bg-[#202223]"
         }`}
       >
-        <Link href="/reminders">
+        <Link href="/dashboard/reminders">
           <div className="flex items-center justify-start py-3.5 rounded-none pl-6">
             <svg
               width="800px"
@@ -190,7 +191,7 @@ const Sidebar = () => {
                 <path
                   d="M9.00195 17H5.60636C4.34793 17 3.71872 17 3.58633 16.9023C3.4376 16.7925 3.40126 16.7277 3.38515 16.5436C3.37082 16.3797 3.75646 15.7486 4.52776 14.4866C5.32411 13.1835 6.00031 11.2862 6.00031 8.6C6.00031 7.11479 6.63245 5.69041 7.75766 4.6402C8.88288 3.59 10.409 3 12.0003 3C13.5916 3 15.1177 3.59 16.2429 4.6402C17.3682 5.69041 18.0003 7.11479 18.0003 8.6C18.0003 11.2862 18.6765 13.1835 19.4729 14.4866C20.2441 15.7486 20.6298 16.3797 20.6155 16.5436C20.5994 16.7277 20.563 16.7925 20.4143 16.9023C20.2819 17 19.6527 17 18.3943 17H15.0003M9.00195 17L9.00031 18C9.00031 19.6569 10.3435 21 12.0003 21C13.6572 21 15.0003 19.6569 15.0003 18V17M9.00195 17H15.0003"
                   stroke={
-                    usePathname() === "/reminders" ? "#3e9bf7" : "#b0a99e"
+                    usePathname() === "/dashboard/reminders" ? "#3e9bf7" : "#b0a99e"
                   }
                   strokeWidth="2"
                   strokeLinecap="round"

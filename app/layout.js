@@ -1,6 +1,12 @@
 import { Poppins } from "next/font/google";
 import "./globals.css";
-import Wrapper from "../context/AllContext";
+import Navbar from "@/Components/Navbar";
+import Sidebar from "@/Components/Sidebar";
+import Dock from "@/Components/Dock";
+import LayoutWrapper from "@/Components/LayoutWrapper";
+import { BudgetProvider } from "./context/BudgetContext";
+import { AuthProvider } from "./context/AuthContext";
+
 const poppins = Poppins({
   variable: "--font-poppins",
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -15,11 +21,12 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${poppins.variable}antialiased`}>
-        <div className="w-full h-10 bg-red-700 flex justify-center items-center">
-          <p className="text-white font-bold ml-64" >This Project is still a work in Progess.</p>
-        </div>
-        <Wrapper>{children}</Wrapper>
+      <body className={`${poppins.variable} antialiased`}>
+        <AuthProvider>
+          <BudgetProvider>
+            {children}
+          </BudgetProvider>
+        </AuthProvider>
       </body>
     </html>
   );

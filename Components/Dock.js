@@ -1,12 +1,22 @@
-import React from "react";
+"use client"
+import React, { useMemo } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
 const Dock = () => {
+  const pathname = usePathname();
+  
+  const isActive = useMemo(() => ({
+    dashboard: pathname === "/dashboard",
+    categories: pathname === "/dashboard/categories",
+    expenses: pathname === "/dashboard/expenses",
+    reminders: pathname === "/dashboard/reminders"
+  }), [pathname]);
+
   return (
     <div className="dock dock-sm bg-[#181a1b]">
-      <button className={usePathname() === "/" ? "dock-active" : ""}>
-        <Link href="/">
+      <button className={isActive.dashboard ? "dock-active" : ""}>
+        <Link href="/dashboard">
           <svg
             width="800px"
             height="800px"
@@ -45,8 +55,8 @@ const Dock = () => {
         </Link>
       </button>
 
-      <button className={usePathname() === "/categories" ? "dock-active" : ""}>
-        <Link href="/categories">
+      <button className={isActive.categories ? "dock-active" : ""}>
+        <Link href="/dashboard/categories">
           <svg
             width="800px"
             height="800px"
@@ -91,8 +101,8 @@ const Dock = () => {
         </Link>
       </button>
 
-      <button className={usePathname() === "/expenses" ? "dock-active" : ""}>
-        <Link href="/expenses">
+      <button className={isActive.expenses ? "dock-active" : ""}>
+        <Link href="/dashboard/expenses">
           <svg
             width="800px"
             height="800px"
@@ -138,8 +148,8 @@ const Dock = () => {
         </Link>
       </button>
 
-      <button className={usePathname() === "/reminders" ? "dock-active" : ""}>
-        <Link href="/reminders">
+      <button className={isActive.reminders ? "dock-active" : ""}>
+        <Link href="/dashboard/reminders">
           <svg
             width="800px"
             height="800px"
@@ -171,4 +181,4 @@ const Dock = () => {
   );
 };
 
-export default Dock;
+export default React.memo(Dock);

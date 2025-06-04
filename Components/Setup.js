@@ -1,70 +1,73 @@
+"use client";
 import Image from "next/image";
-import React, {
-  useEffect,
-  useState,
-  forwardRef,
-  useImperativeHandle,
-} from "react";
+import React, { useEffect, useState, useMemo, useCallback } from "react";
 
-const Setup = forwardRef((props, ref) => {
-  const [category, setCategory] = useState([
-    { category: "Personal", icon: "basket", budget: 0 },
-    { category: "Utilities", icon: "bulb", budget: 0 },
-    { category: "Transportation", icon: "car", budget: 0 },
-    { category: "DiningOut", icon: "fork-knife", budget: 0 },
-    { category: "Entertainment", icon: "play", budget: 0 },
-    { category: "Shopping", icon: "bag", budget: 0 },
-  ]);
-  const [fail, setFail] = useState(false);
-  function finalCheck() {
-    let hasInvalid = false;
-    catBud.forEach((val) => {
-      const temp = parseInt(val);
-      if (!temp || isNaN(temp)) {
-        hasInvalid = true;
-      }
-    });
-    if (hasInvalid) {
-      setFail(true);
-      return false;
-    } else {
-      setFail(false);
-      return true;
-    }
-  }
+const INITIAL_CATEGORIES = [
+  { category: "Personal", icon: "basket", budget: 0, spent: 0,id:0 },
+  { category: "Utilities", icon: "bulb", budget: 0, spent: 0,id:1 },
+  { category: "Transportation", icon: "car", budget: 0, spent: 0,id:2 },
+  { category: "DiningOut", icon: "fork-knife", budget: 0, spent: 0,id:3 },
+  { category: "Entertainment", icon: "play", budget: 0, spent: 0,id:4 },
+  { category: "Shopping", icon: "bag", budget: 0, spent: 0,id:5 },
+];
 
-  useImperativeHandle(ref, () => ({
-    handleNext: finalCheck,
-  }));
-  const [catBud, setCatBud] = useState([0, 0, 0, 0, 0, 0]);
-  const [total, setTotal] = useState(0);
-  const [dis, setDis] = useState(false);
+const MIN_CATEGORIES = 2;
+
+const Setup = ({ setDone, category, setCategory }) => {
+  const [categories, setCategories] = useState(INITIAL_CATEGORIES);
+  const [budgets, setBudgets] = useState(
+    new Array(INITIAL_CATEGORIES.length).fill(0)
+  );
+  const [error, setError] = useState("");
+
+  const totalBudget = useMemo(
+    () => budgets.reduce((sum, budget) => sum + (parseInt(budget) || 0), 0),
+    [budgets]
+  );
+
   useEffect(() => {
-    setTotal(
-      catBud.reduce(function (x, y) {
-        return x + y;
-      }, 0)
+    const hasInvalidBudget = budgets.some(
+      (budget) => !budget || isNaN(parseInt(budget))
     );
-  }, [catBud]);
 
-  function deleteCat(i) {
-    if (category.length > 2 && catBud.length > 2) {
-      setCategory(
-        category.filter((_, ind) => {
-          return i !== ind;
-        })
+    if (hasInvalidBudget && category.length !== 0) {
+      setError(
+        "One or more Categories have a budget of Zero or an Invalid Number."
       );
-      setCatBud(
-        catBud.filter((_, ind) => {
-          return i !== ind;
-        })
-      );
-      setDis(false);
+      setDone(false);
+      return;
     }
-    if (category.length <= 3) {
-      setDis(true);
-    }
-  }
+
+    const updatedCategories = categories.map((cat, index) => ({
+      ...cat,
+      budget: parseInt(budgets[index]) || 0,
+    }));
+
+    setCategory(updatedCategories);
+    setError(null);
+    setDone(true);
+  }, [budgets, categories, setCategory, setDone, category.length]);
+
+  const handleDelete = useCallback(
+    (index) => {
+      if (categories.length <= MIN_CATEGORIES) {
+        setError("You need at least two Categories.");
+        return;
+      }
+
+      setCategories((prev) => prev.filter((_, i) => i !== index));
+      setBudgets((prev) => prev.filter((_, i) => i !== index));
+      setError(null);
+    },
+    [categories.length]
+  );
+
+  const handleBudgetUpdate = useCallback((index, value) => {
+    setBudgets((prev) =>
+      prev.map((budget, i) => (i === index ? parseInt(value) || 0 : budget))
+    );
+  }, []);
+
   return (
     <>
       <div className="flex flex-col space-y-1.5 p-6 text-center">
@@ -85,7 +88,7 @@ const Setup = forwardRef((props, ref) => {
               min="0"
               step="10"
               disabled
-              value={total ? total : 0}
+              value={totalBudget}
               className="disabled:opacity-35 disabled:cursor-not-allowed w-full h-10 rounded-md border border-gray-600 bg-gray-800 px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
             <p className="text-xs text-gray-500">
@@ -94,66 +97,51 @@ const Setup = forwardRef((props, ref) => {
           </div>
         </div>
       </div>
-      {dis ? (
-        <p className="text-sm px-8 text-red-600 py-1">
-          You need atleast two Categories.
-        </p>
-      ) : (
-        ""
+
+      {error && (
+        <p className="text-sm px-8 text-red-600 py-1">{error}</p>
       )}
-      {fail ? (
-        <p className="text-sm px-8 text-red-600 py-1">
-          One or more Categories have a budget of Zero or a Invalid Number.
-        </p>
-      ) : (
-        ""
-      )}
+
       <div className="w-full px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 pb-12">
-        {category.map((val, ind) => (
+        {categories.map((cat, index) => (
           <div
-            key={ind}
+            key={cat.category}
             className="p-5 rounded-xl border border-gray-700 bg-gradient-to-br from-gray-800 to-gray-900 shadow-sm hover:shadow-lg transition-shadow duration-300"
           >
             <div className="flex flex-col gap-4">
               <div className="flex items-center justify-between gap-3">
                 <div className="flex gap-2">
                   <Image
-                    src={`./${val.icon}.svg`}
-                    alt={`${val.category} icon`}
+                    src={`/${cat.icon}.svg`}
+                    alt={`${cat.category} icon`}
                     width={28}
                     height={28}
                   />
                   <h4 className="text-lg font-regular text-gray-200">
-                    {val.category}
+                    {cat.category}
                   </h4>
                 </div>
                 <button
-                  onClick={() => {
-                    deleteCat(ind);
-                  }}
-                  disabled={dis}
+                  onClick={() => handleDelete(index)}
+                  disabled={categories.length <= MIN_CATEGORIES}
                   className="disabled:opacity-35 disabled:cursor-not-allowed w-8 h-8 text-gray-400 hover:bg-black cursor-pointer flex justify-around items-center rounded-lg"
                 >
-                  <Image src="./delete.svg" alt="edit" width={20} height={20} />
+                  <Image
+                    src="/delete.svg"
+                    alt="delete"
+                    width={20}
+                    height={20}
+                  />
                 </button>
               </div>
 
               <input
                 type="number"
                 min="0"
-                placeholder={`Enter ${val.category} Budget`}
+                value={budgets[index] || ""}
+                placeholder={`Enter ${cat.category} Budget`}
                 className="w-full rounded-md bg-gray-700 text-white px-4 py-2 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                onChange={(e) => {
-                  setCatBud(
-                    catBud.map((item, index) => {
-                      if (index === ind) {
-                        return parseInt(e.target.value);
-                      } else {
-                        return item;
-                      }
-                    })
-                  );
-                }}
+                onChange={(e) => handleBudgetUpdate(index, e.target.value)}
               />
             </div>
           </div>
@@ -161,6 +149,6 @@ const Setup = forwardRef((props, ref) => {
       </div>
     </>
   );
-});
+};
 
-export default Setup;
+export default React.memo(Setup);

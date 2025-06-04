@@ -1,16 +1,17 @@
 import Image from "next/image";
 import React, { use, useRef, useState } from "react";
+import { useBudget } from "@/app/context/BudgetContext";
 
 const AddExpenseModal = ({ visible }) => {
+  const {categories,addTransaction} = useBudget();
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [selectCat, setSelectCat] = useState("");
+  const [selectCat, setSelectCat] = useState(-1);
   const desc = useRef("");
   const date = useRef(null);
   const amount = useRef(0.0);
   const [emtCat, setEmtCat] = useState(false);
   const [emtAmt, setEmtAmt] = useState(false);
   const [emtDate, setEmtDate] = useState(false);
-  const [emtdesc, setEmtDesc] = useState(false);
   function handle() {
     console.log(
       desc.current.value,
@@ -18,26 +19,20 @@ const AddExpenseModal = ({ visible }) => {
       amount.current.value,
       selectCat
     );
-    const temp = parseInt(amount.current.value);
-    if (temp === 0 || isNaN(temp)) {
+
+    const temp = Number(amount.current.value);
+    if (temp <= 0 || isNaN(temp)) {
       setEmtAmt(true);
       return;
     } else {
       setEmtAmt(false);
     }
 
-    if (!selectCat) {
+    if (selectCat < 0) {
       setEmtCat(true);
       return;
     } else {
       setEmtCat(false);
-    }
-
-    if (!desc) {
-      setEmtDesc(true);
-      return;
-    } else {
-      setEmtDesc(false);
     }
 
     if (!date.current.value) {
@@ -46,7 +41,16 @@ const AddExpenseModal = ({ visible }) => {
     } else {
       setEmtDate(false);
     }
+
+    addTransaction({
+      amount: temp,
+      id: selectCat,
+      date: date.current.value,
+      description: desc.current.value,
+    });
+    visible();
   }
+
   return (
     <dialog
       id="add_expense_modal"
@@ -93,40 +97,33 @@ const AddExpenseModal = ({ visible }) => {
                 className="focus:outline-none bg-[#181a1b] input input-bordered w-full text-left text-white flex justify-between items-center"
                 onClick={() => setDropdownOpen(!dropdownOpen)}
               >
-                {selectCat === "" ? (
+                {selectCat < 0 ? (
                   "Select a Category"
                 ) : (
                   <p className="flex items-center pl-1 px-4 py-2 cursor-pointer">
                     <Image
-                      src={`./${selectCat.icon}.svg`}
+                      src={`/${categories[selectCat].icon}.svg`}
                       width={24}
                       height={24}
-                      alt={selectCat.icon}
+                      alt={categories[selectCat].icon}
                       className="mr-3 text-lg"
                     />
-                    <span>{selectCat.label}</span>
+                    <span>{categories[selectCat].category}</span>
                   </p>
                 )}
                 <span className="ml-2">▾</span>
               </button>
               {dropdownOpen && (
                 <ul className="bg-[#181a1b] absolute mt-1 w-full rounded-md shadow-lg  z-10 border border-gray-700 max-h-62 overflow-y-auto">
-                  {[
-                    { icon: "basket", label: "Personal" },
-                    { icon: "bulb", label: "Utilities" },
-                    { icon: "car", label: "Transportation" },
-                    { icon: "fork-knife", label: "Dining Out" },
-                    { icon: "play", label: "Entertainment" },
-                    { icon: "bag", label: "Shopping" },
-                  ].map((item, index) => (
+                  {categories.map((item, index) => (
                     <li
                       key={index}
                       className={`${
-                        selectCat.label == item.label ? "bg-black" : ""
+                        selectCat === index ? "bg-black" : ""
                       } flex items-center px-4 py-2 hover:bg-[#2e3132] cursor-pointer`}
                       onClick={() => {
                         setDropdownOpen(false);
-                        setSelectCat(item);
+                        setSelectCat(index);
                       }}
                     >
                       <Image
@@ -136,7 +133,7 @@ const AddExpenseModal = ({ visible }) => {
                         alt={item.icon}
                         className="mr-3 text-lg"
                       />
-                      <span>{item.label}</span>
+                      <span>{item.category}</span>
                     </li>
                   ))}
                 </ul>
@@ -157,13 +154,9 @@ const AddExpenseModal = ({ visible }) => {
               type="text"
               placeholder="Describe this expense"
               className="bg-[#181a1b] input input-bordered w-full focus:outline-none text-white"
+              maxLength={25}
               ref={desc}
             />
-            {emtdesc && (
-              <p className="text-xs text-red-600 py-1">
-                Please Enter a Description.
-              </p>
-            )}
           </div>
 
           <div>

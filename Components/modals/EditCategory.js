@@ -1,12 +1,19 @@
 "use client";
 import React, { use, useState } from "react";
 import Image from "next/image";
+import { useBudget } from "@/app/context/BudgetContext";
 
 const EditCategory = ({ visible, details }) => {
   const [icon, setIcon] = useState(details.icon);
   const [name, setName] = useState(details.category);
   const [bud, setbud] = useState(details.budget);
 
+  const {updateCategory} = useBudget();
+
+  const handleSave = () => {
+    updateCategory({...details, icon, category: name, budget: bud});
+    visible();
+  };
   return (
     <dialog
       id="add_category_modal"
@@ -104,7 +111,7 @@ const EditCategory = ({ visible, details }) => {
           <button className="btn" onClick={() => visible()}>
             Cancel
           </button>
-          <button className="btn btn-primary">Save Changes</button>
+          <button className="btn btn-primary" onClick={handleSave}>Save Changes</button>
         </div>
       </div>
     </dialog>

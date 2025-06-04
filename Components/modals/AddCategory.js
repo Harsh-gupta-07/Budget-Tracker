@@ -1,6 +1,7 @@
 "use client";
 import React, { useRef, useState } from "react";
 import Image from "next/image";
+import { useBudget } from "@/app/context/BudgetContext";
 
 const AddCategoryModal = ({ visible }) => {
   const [icon, setIcon] = useState("basket");
@@ -8,6 +9,7 @@ const AddCategoryModal = ({ visible }) => {
   const amount = useRef(0);
   const [emtCat, setEmtCat] = useState(false);
   const [emtAmt, setAmtCat] = useState(false);
+  const {addCategory} = useBudget();
   function handle() {
     console.log(
       { icon: icon, category: catName.current.value },
@@ -20,14 +22,18 @@ const AddCategoryModal = ({ visible }) => {
       setEmtCat(false)
     }
 
-    const amountValue = parseFloat(amount.current.value);
+    const amountValue = Number(amount.current.value);
     if (isNaN(amountValue) || amountValue === 0) {
       setAmtCat(true);
       return;
     }else{
       setAmtCat(false)
     }
+
+    addCategory({category: catName.current.value, icon, budget: amountValue, spent: 0});
+    visible();  
   }
+
   return (
     <dialog
       id="add_category_modal"
@@ -55,6 +61,7 @@ const AddCategoryModal = ({ visible }) => {
               type="text"
               placeholder="e.g. Groceries"
               className="input input-bordered w-full focus:outline-none bg-[#181a1b]"
+              maxLength={15}
               ref={catName}
             />
             {emtCat && (
@@ -81,7 +88,7 @@ const AddCategoryModal = ({ visible }) => {
 
           <div>
             <label className="label">
-              <span className="label-text mb-2">item</span>
+              <span className="label-text mb-2">Icon</span>
             </label>
             <div className="grid grid-cols-6 gap-3 bg-[#181a1b] p-4 rounded">
               {[
