@@ -2,23 +2,25 @@ import Image from "next/image";
 import React, { use, useRef, useState } from "react";
 import { useBudget } from "@/app/context/BudgetContext";
 
-const AddExpenseModal = ({ visible }) => {
+const AddExpenseModal = ({ visible, category }) => {
   const {categories,addTransaction} = useBudget();
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [selectCat, setSelectCat] = useState(-1);
+  const [selectCat, setSelectCat] = useState(isNaN(category)?-1:category);
   const desc = useRef("");
   const date = useRef(null);
   const amount = useRef(0.0);
   const [emtCat, setEmtCat] = useState(false);
   const [emtAmt, setEmtAmt] = useState(false);
   const [emtDate, setEmtDate] = useState(false);
+  // console.log(category);
+  
   function handle() {
-    console.log(
-      desc.current.value,
-      date.current.value,
-      amount.current.value,
-      selectCat
-    );
+    // console.log(
+    //   desc.current.value,
+    //   date.current.value,
+    //   amount.current.value,
+    //   selectCat
+    // );
 
     const temp = Number(amount.current.value);
     if (temp <= 0 || isNaN(temp)) {
@@ -44,7 +46,7 @@ const AddExpenseModal = ({ visible }) => {
 
     addTransaction({
       amount: temp,
-      id: selectCat,
+      category: selectCat,
       date: date.current.value,
       description: desc.current.value,
     });
@@ -97,7 +99,7 @@ const AddExpenseModal = ({ visible }) => {
                 className="focus:outline-none bg-[#181a1b] input input-bordered w-full text-left text-white flex justify-between items-center"
                 onClick={() => setDropdownOpen(!dropdownOpen)}
               >
-                {selectCat < 0 ? (
+                {selectCat < 0 || isNaN(selectCat) ? (
                   "Select a Category"
                 ) : (
                   <p className="flex items-center pl-1 px-4 py-2 cursor-pointer">
@@ -167,6 +169,7 @@ const AddExpenseModal = ({ visible }) => {
               type="date"
               className="bg-[#181a1b] input input-bordered w-full focus:outline-none text-white"
               ref={date}
+              max={new Date().toISOString().split('T')[0]}
             />
             {emtDate && (
               <p className="text-xs text-red-600 py-1">Please Select a Date.</p>
