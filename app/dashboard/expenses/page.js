@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "@/Components/Navbar";
 import Sidebar from "@/Components/Sidebar";
 import ExpenseList from "@/Components/ExpenseList";
@@ -7,8 +7,18 @@ import AddExpenseModal from "@/Components/modals/AddExpense";
 import Dock from "@/Components/Dock";
 import { AnimatePresence, motion } from "framer-motion";
 import { useBudget } from "@/app/context/BudgetContext";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/app/context/AuthContext";
 
 const page = () => {
+  const router = useRouter();
+  const { isLoggedIn } = useAuth();
+  useEffect(() => {
+    if (!isLoggedIn()) {
+      router.push("/login");
+    }
+  }, []);
+
   const [addExpense, setExpense] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState(-1);

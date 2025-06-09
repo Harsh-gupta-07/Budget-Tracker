@@ -1,11 +1,20 @@
 "use client";
-import React, { useContext, useState } from "react";
+import React, {useState, useEffect } from "react";
 import CategoriesWiseExpenseCards from "@/Components/CategoriesWiseExpenseCards";
 import AddCategoryModal from "@/Components/modals/AddCategory";
 import { AnimatePresence, motion } from "framer-motion";
 import { useBudget } from "@/app/context/BudgetContext";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/app/context/AuthContext";
 
 const page = () => {
+  const router = useRouter();
+  const { isLoggedIn } = useAuth();
+  useEffect(() => {
+    if (!isLoggedIn()) {
+      router.push("/login");
+    }
+  }, []);
   const [showCategoryModal, setShowCategoryModal] = useState(false);
   const {category} = useBudget()
   console.log(category);

@@ -6,9 +6,11 @@ import Reminders from "@/Components/Reminders";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState, useCallback, memo } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import AddCategoryModal from "@/Components/modals/AddCategory";
 import AddReminderModal from "@/Components/modals/AddReminder";
+import { useRouter } from "next/navigation";
+import { useAuth } from "../context/AuthContext";
 
 const AddButton = (({ text, onClick }) => (
   <button
@@ -29,6 +31,13 @@ const AddButton = (({ text, onClick }) => (
 
 
 const DashboardPage = () => {
+  const router = useRouter();
+  const { isLoggedIn } = useAuth();
+  useEffect(() => {
+    if (!isLoggedIn()) {
+      router.push("/login");
+    }
+  }, []);
 
   const [showCategoryModal, setShowCategoryModal] = useState(false);
   const [showReminderModal, setShowReminderModal] = useState(false);
@@ -120,4 +129,4 @@ const DashboardPage = () => {
   );
 };
 
-export default memo(DashboardPage);
+export default DashboardPage;

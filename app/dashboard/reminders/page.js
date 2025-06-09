@@ -1,13 +1,23 @@
 "use client";
-import React, { useContext, useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "@/Components/Navbar";
 import Sidebar from "@/Components/Sidebar";
 import Reminders from "@/Components/Reminders";
 import AddReminderModal from "@/Components/modals/AddReminder";
 import Dock from "@/Components/Dock";
 import { AnimatePresence, motion } from "framer-motion";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/app/context/AuthContext";
+
 
 const page = () => {
+  const router = useRouter();
+    const { isLoggedIn } = useAuth();
+    useEffect(() => {
+      if (!isLoggedIn()) {
+        router.push("/login");
+      }
+    }, []);
 
   const [showReminderModal, setShowReminderModal] = useState(false);
   return (

@@ -22,9 +22,16 @@ export function AuthProvider({ children }) {
     router.push('/login');
   };
 
+  const isLoggedIn = () => {
+    const userData = localStorage.getItem('userData');
+    return userData !== null;
+  };
+
+
   const value = {
     login,
     logout,
+    isLoggedIn,
   };
 
   return (
