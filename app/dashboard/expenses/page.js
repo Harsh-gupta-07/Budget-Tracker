@@ -6,10 +6,14 @@ import ExpenseList from "@/Components/ExpenseList";
 import AddExpenseModal from "@/Components/modals/AddExpense";
 import Dock from "@/Components/Dock";
 import { AnimatePresence, motion } from "framer-motion";
+import { useBudget } from "@/app/context/BudgetContext";
 
 const page = () => {
-  
   const [addExpense, setExpense] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState(-1);
+  const { categories } = useBudget();
+  
   return (
     <>
       <AnimatePresence mode="wait">
@@ -57,13 +61,15 @@ const page = () => {
                 type="text"
                 placeholder="Search by description"
                 className="input input-bordered w-full focus:outline-none bg-[#080808]"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
               />
               <div className="dropdown dropdown-end w-full bg-[#080808] sm:w-64 border rounded border-solid border-gray-500">
                 <label
                   tabIndex={0}
                   className="btn w-full justify-between bg-[#080808]"
                 >
-                  All Categories
+                  {selectedCategory === -1 ? "All Categories" : categories[parseInt(selectedCategory)]?.category || "All Categories"}
                   <svg
                     className="ml-2 h-4 w-4 fill-current"
                     xmlns="http://www.w3.org/2000/svg"
@@ -77,25 +83,18 @@ const page = () => {
                   className="dropdown-content z-[1] menu p-2 shadow bg-[#080808] rounded-box w-full border rounded border-solid border-gray-500"
                 >
                   <li>
-                    <a>All Categories</a>
+                    <a onClick={() => setSelectedCategory(-1)}>All Categories</a>
                   </li>
-                  <li>
-                    <a>Food</a>
-                  </li>
-                  <li>
-                    <a>Transport</a>
-                  </li>
-                  <li>
-                    <a>Entertainment</a>
-                  </li>
-                  <li>
-                    <a>Other</a>
-                  </li>
+                  {categories.map((cat, index) => (
+                    <li key={cat.id}>
+                      <a onClick={() => setSelectedCategory(index)}>{cat.category}</a>
+                    </li>
+                  ))}
                 </ul>
               </div>
             </div>
           </div>
-          <ExpenseList />
+          <ExpenseList searchQuery={searchQuery} selectedCategory={selectedCategory} />
 
           {addExpense && (
             <AddExpenseModal

@@ -1,27 +1,33 @@
 import Image from "next/image";
-import React, { use, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useBudget } from "@/app/context/BudgetContext";
 
-const AddExpenseModal = ({ visible, category }) => {
-  const {categories,addTransaction} = useBudget();
+const AddExpenseModal = ({ visible, category, details }) => {
+  const {categories,addTransaction, deleteReminder} = useBudget();
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [selectCat, setSelectCat] = useState(isNaN(category)?-1:category);
+  const [selectCat, setSelectCat] = useState(
+    category != null
+      ? category
+      : details && details.category != null
+      ? details.category
+      : -1
+  );
   const desc = useRef("");
-  const date = useRef(null);
-  const amount = useRef(0.0);
+  const date = useRef( "");
+  const amount = useRef( 0.0);
   const [emtCat, setEmtCat] = useState(false);
   const [emtAmt, setEmtAmt] = useState(false);
   const [emtDate, setEmtDate] = useState(false);
-  // console.log(category);
+
+  useEffect(() => {
+    if (details != null) {
+      desc.current.value = details.description;
+      date.current.value = details.date;
+      amount.current.value = details.amount;
+    }
+  }, [details]);
   
   function handle() {
-    // console.log(
-    //   desc.current.value,
-    //   date.current.value,
-    //   amount.current.value,
-    //   selectCat
-    // );
-
     const temp = Number(amount.current.value);
     if (temp <= 0 || isNaN(temp)) {
       setEmtAmt(true);
@@ -50,6 +56,9 @@ const AddExpenseModal = ({ visible, category }) => {
       date: date.current.value,
       description: desc.current.value,
     });
+    if(details && details.id !== undefined) {
+      deleteReminder(details.id);
+    }
     visible();
   }
 
@@ -129,7 +138,7 @@ const AddExpenseModal = ({ visible, category }) => {
                       }}
                     >
                       <Image
-                        src={`./${item.icon}.svg`}
+                        src={`/${item.icon}.svg`}
                         width={24}
                         height={24}
                         alt={item.icon}

@@ -27,7 +27,6 @@ const AddButton = (({ text, onClick }) => (
   </button>
 ));
 
-AddButton.displayName = 'AddButton';
 
 const DashboardPage = () => {
 
@@ -81,7 +80,7 @@ const DashboardPage = () => {
               </h1>
             </div>
             <Link
-              href="/expenses"
+              href="/dashboard/expenses"
               className="flex flex-row items-center cursor-pointer"
             >
               <p className="text-[#459df5] text-sm ">View all</p>
@@ -95,7 +94,7 @@ const DashboardPage = () => {
               </div>
             </Link>
           </div>
-          <ExpenseList />
+          <ExpenseList searchQuery={""} selectedCategory={-1} />
 
           <div className="flex flex-row bg-[#1c1e1f] py-3 px-8 lg:py-5 justify-between align-middle lg:px-12">
             <div>

@@ -1,37 +1,83 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import EditReminder from "./modals/EditReminder";
+import { useBudget } from "@/app/context/BudgetContext";
+import AddExpenseModal from "./modals/AddExpense";
+
+const ConfirmDeleteReminder = ({ visible, details }) => {
+  const { deleteReminder } = useBudget();
+  return (
+    <dialog
+      id="confirm_delete_category_modal"
+      className="modal modal-open"
+      onClick={() => {
+        visible();
+      }}
+    >
+      <div
+        className="modal-box max-w-md w-full sm:w-11/12 bg-[#1c1e1f] text-white"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button
+          className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+          onClick={() => visible()}
+        >
+          ✕
+        </button>
+        <h3 className="font-bold text-lg mb-4">Delete Reminder</h3>
+
+        <div className="py-4">
+          <p className="text-lg mb-2">
+            Are you sure you want to delete this reminder?
+          </p>
+
+          <p className="text-sm text-red-400 mt-2">
+            Warning: This action cannot be undone.
+          </p>
+        </div>
+
+        <div className="modal-action">
+          <button className="btn" onClick={visible}>
+            Cancel
+          </button>
+          <button
+            className="btn btn-error"
+            onClick={() => {
+              deleteReminder(details?.id);
+              visible();
+            }}
+          >
+            Delete Reminder
+          </button>
+        </div>
+      </div>
+    </dialog>
+  );
+};
 
 const Reminders = () => {
-  const [reminders, setReminders] = useState([
-    {
-      title: "Rent Payment",
-      timeInterval: "Monthly",
-      amount: 950,
-      dueTime: "Due in 30 Days",
-      date: "1 June, 2025",
-      category: "Entertainment"
-    },
-    {
-      title: "Electricity",
-      timeInterval: "Monthly",
-      amount: 500,
-      dueTime: "Due in 25 Days",
-      date: "5 June, 2025",
-      category:"DiningOut"
-    },
-    {
-      title: "Mobile Recharge",
-      timeInterval: "Monthly",
-      amount: 59.99,
-      dueTime: "Due in 20 Days",
-      date: "20 May, 2025",
-      category:""
-    },
-  ]);
-const [editReminder,setEditReminder] = useState(false)
-const [details, setDetails] = useState(null)
+  const { categories, reminders, deleteReminder } = useBudget();
 
+  const dueDate = (date) => {
+    const today = new Date();
+    const dueDate = new Date(date);
+    const diffTime = Math.abs(dueDate - today);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays;
+  };
+
+  const wordDate = (date) => {
+    return new Date(date).toLocaleDateString("en-IN", {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+    });
+  };
+
+  const [editReminder, setEditReminder] = useState(false);
+  const [details, setDetails] = useState(null);
+  const [confirmDeleteReminder, setConfirmDeleteReminder] = useState(false);
+  const [addExpense, setAddExpense] = useState(false);
   return (
     <div className="w-full">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 px-8 lg:px-12 pb-5">
@@ -60,19 +106,50 @@ const [details, setDetails] = useState(null)
                     <h4 className="font-medium text-gray-300">{val.title}</h4>
                   </div>
                   <span className="text-xs bg-gray-800 text-[#449ff6] px-2 py-1 rounded-full">
-                    {val.timeInterval}
+                    {categories[val.category].category}
                   </span>
                 </div>
-                <p className="text-sm text-gray-400 mb-3">
-                  {`${val.dueTime}, (${val.date})`}
-                </p>
+                <div className="flex items-center mb-2">
+                  <p className="text-sm text-gray-400 ">
+                    {`${dueDate(val.date)} Days Left, (${wordDate(val.date)})`}
+                  </p>
+                </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-base font-medium font-mono">{`$${val.amount}`}</span>
+                  <span className="text-base font-medium font-mono">{`₹ ${val.amount}`}</span>
                   <div className="flex space-x-2">
-                    <button onClick={()=>{
-                      setDetails({timeInterval: val.timeInterval, title: val.title, amount: val.amount, category: val.category})
-                      setEditReminder(!editReminder)
-                      }} className="w-8 h-8 text-gray-400 hover:bg-black cursor-pointer flex justify-around items-center rounded-lg">
+                    <button
+                      onClick={() => {
+                        setDetails({
+                          id: val.id,
+                          description: val.title,
+                          amount: val.amount,
+                          category: val.category,
+                          date: val.date, 
+                        });
+                        setAddExpense(!addExpense);
+                      }}
+                      className="w-8 h-8 text-gray-400 hover:bg-black cursor-pointer flex justify-around items-center rounded-lg"
+                    >
+                      <Image
+                        src="/plus-skincol.svg"
+                        alt="reminder"
+                        width={16}
+                        height={16}
+                      />
+                    </button>
+                    <button
+                      onClick={() => {
+                        setDetails({
+                          id: val.id,
+                          title: val.title,
+                          amount: val.amount,
+                          category: val.category,
+                          date: val.date,
+                        });
+                        setEditReminder(!editReminder);
+                      }}
+                      className="w-8 h-8 text-gray-400 hover:bg-black cursor-pointer flex justify-around items-center rounded-lg"
+                    >
                       <Image
                         src="/edit.svg"
                         alt="edit"
@@ -80,7 +157,19 @@ const [details, setDetails] = useState(null)
                         height={20}
                       />
                     </button>
-                    <button className="w-8 h-8 text-gray-400 hover:bg-black cursor-pointer flex justify-around items-center rounded-lg">
+                    <button
+                      onClick={() => {
+                        setDetails({
+                          id: val.id,
+                          title: val.title,
+                          amount: val.amount,
+                          category: val.category,
+                          date: val.date,
+                        });
+                        setConfirmDeleteReminder(!confirmDeleteReminder);
+                      }}
+                      className="w-8 h-8 text-gray-400 hover:bg-black cursor-pointer flex justify-around items-center rounded-lg"
+                    >
                       <Image
                         src="/delete.svg"
                         alt="edit"
@@ -95,8 +184,24 @@ const [details, setDetails] = useState(null)
           })
         )}
       </div>
-      {editReminder && 
-      (<EditReminder visible={()=>setEditReminder(!editReminder)} details={details} />)}
+      {editReminder && (
+        <EditReminder
+          visible={() => setEditReminder(!editReminder)}
+          details={details}
+        />
+      )}
+      {confirmDeleteReminder && (
+        <ConfirmDeleteReminder
+          visible={() => setConfirmDeleteReminder(!confirmDeleteReminder)}
+          details={details}
+        />
+      )}
+      {addExpense && (
+        <AddExpenseModal
+          visible={() => setAddExpense(!addExpense)}
+          details={details}
+        />
+      )}
     </div>
   );
 };
