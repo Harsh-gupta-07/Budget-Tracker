@@ -1,5 +1,6 @@
 "use client";
 import { createContext, useContext, useState, useEffect } from "react";
+import { useAuth } from "./AuthContext";
 
 const BudgetContext = createContext({});
 
@@ -8,41 +9,29 @@ export function useBudget() {
 }
 
 export function BudgetProvider({ children }) {
-  const [transactions, setTransactions] = useState(() => {
+  const {updateCurrUser} = useAuth()
+  const [details, setDetails] = useState(()=>{
     if (typeof window !== "undefined") {
-      const saved = localStorage.getItem("transactions");
-      return saved ? JSON.parse(saved) : [];
+      const saved = localStorage.getItem("currUser");
+      return saved ? JSON.parse(saved).details : {categories:[],reminders:[],transactions:[]};
     }
-    return [];
-  });
+    return {categories:[],reminders:[],transactions:[]};
+  })
+  console.log(details);
+  
 
-  const [categories, setCategories] = useState(() => {
-    if (typeof window !== "undefined") {
-      const saved = localStorage.getItem("categories");
-      return saved ? JSON.parse(saved) : [];
-    }
-    return [];
-  });
-
-  const [reminders, setReminders] = useState(() => {
-    if (typeof window !== "undefined") {
-      const saved = localStorage.getItem("reminders");
-      return saved ? JSON.parse(saved) : [];
-    }
-    return [];
-  });
+  const [transactions, setTransactions] = useState(details.transactions);
+  const [categories, setCategories] = useState(details.categories);
+  const [reminders, setReminders] = useState(details.reminders);
 
   useEffect(() => {
-    localStorage.setItem("transactions", JSON.stringify(transactions));
-  }, [transactions]);
+    setDetails({categories:categories,transactions:transactions,reminders:reminders})
+    
+  }, [transactions,reminders,categories]);
 
-  useEffect(() => {
-    localStorage.setItem("categories", JSON.stringify(categories));
-  }, [categories]);
-
-  useEffect(() => {
-    localStorage.setItem("reminders", JSON.stringify(reminders));
-  }, [reminders]);
+  useEffect(()=>{
+    updateCurrUser(details)
+  },[details])
 
   const addTransaction = (transaction) => {
     setTransactions((prev) => [

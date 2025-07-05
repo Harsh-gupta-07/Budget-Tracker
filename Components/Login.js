@@ -1,8 +1,8 @@
-import React from 'react'
+import React from "react";
 
-const page = () => {
+const Login = () => {
   return (
-    <div className="w-full min-h-screen bg-black text-white font-sans flex items-center justify-center p-4">
+    <div className=" bg-black text-white font-sans flex items-center justify-center p-4">
       <div className="bg-zinc-900 rounded-2xl shadow-xl max-w-md w-full p-6 space-y-6 border border-zinc-800">
         <h1 className="text-3xl font-bold text-center text-white">
           Login to Expense Tracker
@@ -56,4 +56,4 @@ const page = () => {
   );
 };
 
-export default page
+export default Login;

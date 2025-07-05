@@ -54,7 +54,7 @@ const RemainingBudgetCard = ({Remaining ,Percentage}) => {
     <div className="bg-[#181a1b] p-5 rounded-lg shadow-sm border border-gray-700">
       <div className="flex justify-between items-start mb-4">
         <div>
-          <p className="text-gray-300 text-sm mb-2">Total Expense</p>
+          <p className="text-gray-300 text-sm mb-2">Remaining Budget</p>
           <p className="text-2xl font-semibold font-mono">₹ {Remaining}</p>
         </div>
         <div className="w-10 h-10 p-2 flex justify-center align-middle bg-[#1e2021] rounded-full">
@@ -69,6 +69,7 @@ const RemainingBudgetCard = ({Remaining ,Percentage}) => {
 };
 
 const NumberOfCategories = ({numberOfCategories}) => {
+  
   return (
     <div className="bg-[#181a1b] p-5 rounded-lg shadow-sm border border-gray-700">
       <div className="flex justify-between items-start mb-4">
@@ -92,9 +93,8 @@ const DashboardCards = () => {
   const {categories} = useBudget();
   
   
+  
   const calculateTotal = (key) => {
-    // console.log(categories,"total");
-    
     return categories.reduce((sum, category) => {
       const value = Number(category[key]) || 0;
       return sum + value;
