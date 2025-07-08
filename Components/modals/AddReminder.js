@@ -148,7 +148,7 @@ const AddReminderModal = ({ visible }) => {
                 ) : (
                   <div className="flex items-center px-4 py-2 pl-1  cursor-pointer">
                     <Image
-                      src={`./${categories[cat].icon}.svg`}
+                      src={`/${categories[cat].icon}.svg`}
                       width={24}
                       height={24}
                       alt={categories[cat].icon}
@@ -173,7 +173,7 @@ const AddReminderModal = ({ visible }) => {
                       }}
                     >
                       <Image
-                        src={`./${item.icon}.svg`}
+                        src={`/${item.icon}.svg`}
                         width={24}
                         height={24}
                         alt={item.icon}

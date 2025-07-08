@@ -1,4 +1,5 @@
 import { useAuth } from "@/app/context/AuthContext";
+import Link from "next/link";
 import React, { useState } from "react";
 
 const CreateAccount = ({createAccountSuccess,setDetails}) => {
@@ -42,8 +43,6 @@ const CreateAccount = ({createAccountSuccess,setDetails}) => {
     if (password.length < 5 || password.length > 15) {
       setPasswordError("Password must be between 5 and 15 characters long");
       return;
-    }else{
-        setPasswordError("");
     }
 
     const uppercasePattern = /[A-Z]/;
@@ -52,29 +51,21 @@ const CreateAccount = ({createAccountSuccess,setDetails}) => {
     if (!uppercasePattern.test(password)) {
       setPasswordError("Password must contain at least one uppercase letter");
       return;
-    }else{
-        setPasswordError("");
     }
 
     if (!specialCharPattern.test(password)) {
       setPasswordError("Password must contain at least one special character");
       return;
-    }else{
-        setPasswordError("");
     }
 
     if (!numberPattern.test(password)) {
       setPasswordError("Password must contain at least one number");
       return;
-    }else{
-        setPasswordError("");
     }
 
     if(passwordStrength.score < 3){
         setPasswordError("Password must be at least strong");
         return;
-    }else{
-        setPasswordError("");
     }
     if(password !== confirmPassword){
       return
@@ -86,14 +77,14 @@ const CreateAccount = ({createAccountSuccess,setDetails}) => {
     }else{
       setUsedEmailError(false)
     }
-    setDetails({email:email, password:password})
+    setDetails({email:email.toLowerCase(), password:password})
     createAccountSuccess()
   };
 
   return (
     <div className=" bg-black text-white font-sans flex items-center justify-center p-4">
       <div className="bg-zinc-900 rounded-2xl shadow-xl max-w-md w-full p-6 space-y-6 border border-zinc-800">
-        <h1 className="text-3xl font-bold text-center text-white">Welcome to Expense Tracker</h1>
+        <h1 className="text-3xl font-bold text-center text-white">Welcome to Budget Tracker</h1>
 
         <p className="text-zinc-400 text-center text-sm">Create your account</p>
 
@@ -161,9 +152,9 @@ const CreateAccount = ({createAccountSuccess,setDetails}) => {
 
         <p className="text-center text-sm text-zinc-500">
           Already have an account? 
-          <a href="#" className="text-purple-400 hover:underline">
+          <Link href="/login" className="text-purple-400 hover:underline">
             Login
-          </a>
+          </Link>
         </p>
       </div>
     </div>

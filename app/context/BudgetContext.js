@@ -8,21 +8,47 @@ export function useBudget() {
   return useContext(BudgetContext);
 }
 
-export function BudgetProvider({ children }) {
+export function BudgetProvider({ children }) {  
   const {updateCurrUser} = useAuth()
-  const [details, setDetails] = useState(()=>{
+  const getInitialDetails = () => {
     if (typeof window !== "undefined") {
       const saved = localStorage.getItem("currUser");
       return saved ? JSON.parse(saved).details : {categories:[],reminders:[],transactions:[]};
     }
     return {categories:[],reminders:[],transactions:[]};
-  })
-  console.log(details);
-  
+  };
 
+  const getInitialEmail = () => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("currUser");
+      return saved ? JSON.parse(saved).email : null;
+    }
+    return null;
+  };
+
+  const [userEmail, setUserEmail] = useState(getInitialEmail());
+  const [details, setDetails] = useState(getInitialDetails());
   const [transactions, setTransactions] = useState(details.transactions);
   const [categories, setCategories] = useState(details.categories);
   const [reminders, setReminders] = useState(details.reminders);
+
+  useEffect(() => {
+    const checkUserChange = () => {
+      const saved = localStorage.getItem("currUser");
+      const email = saved ? JSON.parse(saved).email : null;
+      if (email !== userEmail) {
+        const newDetails = saved ? JSON.parse(saved).details : {categories:[],reminders:[],transactions:[]};
+        setUserEmail(email);
+        setDetails(newDetails);
+        setTransactions(newDetails.transactions);
+        setCategories(newDetails.categories);
+        setReminders(newDetails.reminders);
+      }
+    };
+    const interval = setInterval(checkUserChange, 300);
+    return () => clearInterval(interval);
+  }, [userEmail]);
+
 
   useEffect(() => {
     setDetails({categories:categories,transactions:transactions,reminders:reminders})
@@ -66,7 +92,7 @@ export function BudgetProvider({ children }) {
   };
 
   const deleteCategory = (id) => {
-    setTransactions((prev) => prev.filter((c) => c.id !== id));
+    setTransactions((prev) => prev.filter((c) => c.category !== id));
     setCategories((prev) => {
       const filtered = prev.filter((c) => c.id !== id);
       return filtered.map((category, index) => ({
@@ -96,7 +122,7 @@ export function BudgetProvider({ children }) {
   };
 
   const deleteTransaction = (id) => {
-    console.log(transactions[id]);
+    // console.log(transactions[id]);
 
     setCategories((prev) =>
       prev.map((c) =>

@@ -2,7 +2,7 @@ import React from 'react'
 import { useBudget } from '@/app/context/BudgetContext';
 
 const ConfirmDeleteCategory = ({visible, details}) => {
-    console.log(details);
+    // console.log(details);
     const {deleteCategory} = useBudget();
     
   return (

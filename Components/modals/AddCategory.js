@@ -123,7 +123,7 @@ const AddCategoryModal = ({ visible }) => {
                   }}
                 >
                   <Image
-                    src={`${item}.svg`}
+                    src={`/${item}.svg`}
                     alt="item"
                     width={24}
                     height={24}

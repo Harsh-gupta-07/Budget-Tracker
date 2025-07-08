@@ -18,10 +18,12 @@ const AddExpenseModal = ({ visible, category, details }) => {
   const [emtCat, setEmtCat] = useState(false);
   const [emtAmt, setEmtAmt] = useState(false);
   const [emtDate, setEmtDate] = useState(false);
+  const [emtDesc, setEmtDesc] = useState(false);
+  
 
   useEffect(() => {
     if (details != null) {
-      desc.current.value = details.description;
+      desc.current.value = details.description==null?"":details.description;
       date.current.value = details.date;
       amount.current.value = details.amount;
     }
@@ -48,6 +50,13 @@ const AddExpenseModal = ({ visible, category, details }) => {
       return;
     } else {
       setEmtDate(false);
+    }
+
+    if (oth.length <=0){
+      setEmtDesc(true);
+      return
+    }else{
+      setEmtDesc(false);
     }
 
     addTransaction({
@@ -168,6 +177,7 @@ const AddExpenseModal = ({ visible, category, details }) => {
               maxLength={25}
               ref={desc}
             />
+            {emtDesc && <p className="text-red-500 text-sm">Description is required</p>}
           </div>
 
           <div>

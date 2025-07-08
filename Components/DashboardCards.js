@@ -1,6 +1,6 @@
 'use client';
 
-import React, { memo } from "react";
+import React, { memo, useEffect } from "react";
 import DashboardHeader from "./DashboardHeader";
 import BudgetHeaderDashboard from "./BudgetHeaderDashboard";
 import { useBudget } from "@/app/context/BudgetContext";
@@ -90,9 +90,7 @@ const NumberOfCategories = ({numberOfCategories}) => {
 
 
 const DashboardCards = () => {
-  const {categories} = useBudget();
-  
-  
+  const {categories} = useBudget();  
   
   const calculateTotal = (key) => {
     return categories.reduce((sum, category) => {
