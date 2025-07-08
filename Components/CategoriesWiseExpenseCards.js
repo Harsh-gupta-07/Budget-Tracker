@@ -82,6 +82,8 @@ const CategoriesWiseExpenseCards = () => {
   };
 
   const handleDelete = (categoryDetails) => {
+    // console.log(categoryDetails);
+    
     setDetails({
       name: categoryDetails.category,
       id: categoryDetails.id,
@@ -94,7 +96,7 @@ const CategoriesWiseExpenseCards = () => {
     setDetails({
       category: category.id,
     });
-    console.log(details);
+    // console.log(details);
   };
 
   return (

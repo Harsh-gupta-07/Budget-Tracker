@@ -60,6 +60,7 @@ export function BudgetProvider({ children }) {
   },[details])
 
   const addTransaction = (transaction) => {
+
     setTransactions((prev) => [
       ...prev,
       { ...transaction, id: transactions.length },
@@ -73,6 +74,11 @@ export function BudgetProvider({ children }) {
       })
     );
   };
+
+  useEffect(()=>{
+    console.log(transactions);
+    
+  },[transactions])
 
   const initialCategory = (category) => {
     setCategories(category);
@@ -92,7 +98,12 @@ export function BudgetProvider({ children }) {
   };
 
   const deleteCategory = (id) => {
+    // console.log(id);
+    // console.log(categories);
+    // console.log(transactions);
+    
     setTransactions((prev) => prev.filter((c) => c.category !== id));
+    setTransactions((prev)=> prev.map((c,ind)=> c.category>id ? {...c, category:c.category-1, id:ind}:{...c, ind}))
     setCategories((prev) => {
       const filtered = prev.filter((c) => c.id !== id);
       return filtered.map((category, index) => ({
