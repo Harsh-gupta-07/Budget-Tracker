@@ -52,7 +52,7 @@ const AddExpenseModal = ({ visible, category, details }) => {
       setEmtDate(false);
     }
 
-    if (oth.length <=0){
+    if (desc.current.value.length <=0){
       setEmtDesc(true);
       return
     }else{
