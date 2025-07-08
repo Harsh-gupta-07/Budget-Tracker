@@ -68,7 +68,7 @@ const LoginPage = () => {
 
   return (
     <div className="w-full min-h-screen bg-black flex justify-center items-center relative">
-      <div className="absolute z-10 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl bg-black rounded-xl border border-gray-500 px-6 md:px-8 py-5">
+      <div className="absolute z-10 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl bg-black rounded-xl border border-gray-500 px-6 md:px-8 py-5 max-h-screen overflow-y-auto">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentStep}
