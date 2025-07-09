@@ -75,11 +75,6 @@ export function BudgetProvider({ children }) {
     );
   };
 
-  useEffect(()=>{
-    console.log(transactions);
-    
-  },[transactions])
-
   const initialCategory = (category) => {
     setCategories(category);
   };
@@ -104,6 +99,10 @@ export function BudgetProvider({ children }) {
     
     setTransactions((prev) => prev.filter((c) => c.category !== id));
     setTransactions((prev)=> prev.map((c,ind)=> c.category>id ? {...c, category:c.category-1, id:ind}:{...c, ind}))
+    setReminders((prev)=> {
+      const filtered = prev.filter((c)=> c.category !== id)
+      return filtered.map((c, ind)=> {return {...c, id:ind}})
+    })
     setCategories((prev) => {
       const filtered = prev.filter((c) => c.id !== id);
       return filtered.map((category, index) => ({
@@ -112,6 +111,11 @@ export function BudgetProvider({ children }) {
       }));
     });
   };
+
+  useEffect(()=>{
+    console.log(reminders);
+    
+  }, [reminders])
 
   const updateTransaction = (transaction) => {
     setCategories((prev) =>

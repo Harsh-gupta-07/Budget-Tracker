@@ -3,6 +3,7 @@ import Image from "next/image";
 import EditReminder from "./modals/EditReminder";
 import { useBudget } from "@/app/context/BudgetContext";
 import AddExpenseModal from "./modals/AddExpense";
+import AddReminderModal from "./modals/AddReminder";
 
 const ConfirmDeleteReminder = ({ visible, details }) => {
   const { deleteReminder } = useBudget();
@@ -78,13 +79,14 @@ const Reminders = () => {
   const [details, setDetails] = useState(null);
   const [confirmDeleteReminder, setConfirmDeleteReminder] = useState(false);
   const [addExpense, setAddExpense] = useState(false);
+  const [addReminder, setAddReminder] = useState(false);
   return (
     <div className="w-full">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 px-8 lg:px-12 pb-5">
         {reminders.length === 0 ? (
           <div className="col-span-full flex flex-col items-center justify-center p-8 bg-base-300 rounded-2xl">
             <p className="text-gray-500 mb-4">No reminders found</p>
-            <button className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+            <button onClick={()=> setAddReminder(true)} className="cursor-pointer inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
               Create your first reminder
             </button>
           </div>
@@ -202,6 +204,7 @@ const Reminders = () => {
           details={details}
         />
       )}
+      {addReminder && <AddReminderModal visible={()=>{setAddReminder(false)}} />}
     </div>
   );
 };

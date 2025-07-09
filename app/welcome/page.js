@@ -17,12 +17,11 @@ const LoginPage = () => {
   const [done, setDone] = useState(false);
   const [category, setCategory] = useState([]);
   const [user, setUser] = useState([]);
-
-  // useEffect(() => {
-  //   {
-  //     isLoggedIn() && router.push("/dashboard");
-  //   }
-  // }, [isLoggedIn]);
+  useEffect(() => {
+      if (isLoggedIn()) {
+        router.push("/dashboard");
+      }
+    }, []);
 
   const proceed = () => {
     setCurrentStep((prev) => prev + 1);

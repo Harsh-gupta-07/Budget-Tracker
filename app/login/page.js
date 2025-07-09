@@ -1,16 +1,22 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import Link from "next/link";
 import Squares from "@/utils/Squares";
+import { useRouter } from "next/navigation";
 
 const page = () => {
-  const { checkCredentials, login } = useAuth();
+  const router = useRouter();
+  const { checkCredentials, login, isLoggedIn } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState(false);
   const [invalid, setInvalid] = useState(false);
-
+  useEffect(() => {
+    if (isLoggedIn()) {
+      router.push("/dashboard");
+    }
+  }, []);
   const handleLogin = () => {
     const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!pattern.test(email)) {
@@ -20,7 +26,7 @@ const page = () => {
       setEmailError(false);
     }
     // console.log(checkCredentials(email,password));
-    if (checkCredentials(email,password)) {
+    if (checkCredentials(email, password)) {
       login(email);
     } else {
       setInvalid(true);
@@ -46,7 +52,9 @@ const page = () => {
             <input
               type="email"
               id="email"
-              className={`w-full bg-zinc-800 text-white border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 transition ${invalid===true? "border-red-600 border-2":"border-zinc-700"}`}
+              className={`w-full bg-zinc-800 text-white border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 transition ${
+                invalid === true ? "border-red-600 border-2" : "border-zinc-700"
+              }`}
               placeholder="you@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -67,16 +75,20 @@ const page = () => {
             <input
               type=""
               id="password"
-              className={`border ${invalid===true? "border-red-600 border-2":"border-zinc-700"} w-full bg-zinc-800 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 transition`}
+              className={`border ${
+                invalid === true ? "border-red-600 border-2" : "border-zinc-700"
+              } w-full bg-zinc-800 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 transition`}
               placeholder="••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
             {invalid && (
-            <p className="text-red-500 text-sm ml-2 mt-0.5">Invalid Credentials</p>
-          )}
+              <p className="text-red-500 text-sm ml-2 mt-0.5">
+                Invalid Credentials
+              </p>
+            )}
           </div>
-          
+
           <button
             className="w-full disabled:opacity-25 disabled:cursor-not-allowed cursor-pointer  bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 rounded-lg transition duration-200"
             onClick={handleLogin}
