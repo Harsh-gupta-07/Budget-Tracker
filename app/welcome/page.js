@@ -9,14 +9,17 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "../context/AuthContext";
 import CreateAccount from "@/Components/CreateAccount";
 import Squares from "@/utils/Squares";
+import { useBudget } from "../context/BudgetContext";
+import { Transaction } from "firebase/firestore";
+import Reminders from "@/Components/Reminders";
 
 const LoginPage = () => {
   const router = useRouter();
-  const { createUser, isLoggedIn } = useAuth();
+  const { setIntialData, isLoggedIn } = useAuth();
+  const {setAllDetails} = useBudget()
   const [currentStep, setCurrentStep] = useState(0);
   const [done, setDone] = useState(false);
   const [category, setCategory] = useState([]);
-  const [user, setUser] = useState([]);
   useEffect(() => {
       if (isLoggedIn()) {
         router.push("/dashboard");
@@ -34,7 +37,6 @@ const LoginPage = () => {
       <CreateAccount
         key="createAccount"
         createAccountSuccess={proceed}
-        setDetails={setUser}
       />,
       <Setup
         key="setup"
@@ -55,12 +57,10 @@ const LoginPage = () => {
     setCurrentStep((prev) => prev - 1);
   };
 
-  const handleLogin = () => {
-    createUser({
-      ...user,
-      details: { categories: category, transactions: [], reminders: [] },
-      prev: []
-    });
+  const handleLogin = async () => {
+    await setIntialData(category)
+    setAllDetails({categories: category, transaction: [], reminders:[]})
+    router.push("/dashboard");
   };
 
   const isNextDisabled = currentStep === 3 && !done;

@@ -2,15 +2,15 @@ import { useAuth } from "@/app/context/AuthContext";
 import Link from "next/link";
 import React, { useState } from "react";
 
-const CreateAccount = ({createAccountSuccess,setDetails}) => {
-  const {createUser,checkPrevUsers} = useAuth();
+const CreateAccount = ({ createAccountSuccess }) => {
+  const { createUser, error } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [passwordStrength, setPasswordStrength] = useState('');
-  const [usedEmailError, setUsedEmailError] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const getPasswordStrength = (pwd) => {
     let score = 0;
@@ -32,13 +32,13 @@ const CreateAccount = ({createAccountSuccess,setDetails}) => {
     setPasswordStrength(getPasswordStrength(value));
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!pattern.test(email)) {
       setEmailError("Invalid email address");
       return;
-    }else{
-        setEmailError("");
+    } else {
+      setEmailError("");
     }
     if (password.length < 5 || password.length > 15) {
       setPasswordError("Password must be between 5 and 15 characters long");
@@ -63,22 +63,22 @@ const CreateAccount = ({createAccountSuccess,setDetails}) => {
       return;
     }
 
-    if(passwordStrength.score < 3){
-        setPasswordError("Password must be at least strong");
-        return;
+    if (passwordStrength.score < 3) {
+      setPasswordError("Password must be at least strong");
+      return;
     }
-    if(password !== confirmPassword){
-      return
-    }   
-
-    if (checkPrevUsers(email)){
-      setUsedEmailError(true)
-      return 
-    }else{
-      setUsedEmailError(false)
+    if (password !== confirmPassword) {
+      return;
     }
-    setDetails({email:email.toLowerCase(), password:password})
-    createAccountSuccess()
+    setLoading(true);
+    try {
+      await createUser(email.toLowerCase(), password);
+      createAccountSuccess();
+    } catch (err) {
+      // error is handled by context
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -102,7 +102,7 @@ const CreateAccount = ({createAccountSuccess,setDetails}) => {
               onChange={(e) => setEmail(e.target.value)}
             />
             {emailError && <p className="text-red-500 text-sm">{emailError}</p>}
-            {usedEmailError && <p className="text-red-500 text-sm">A user with this email already exists.</p>}
+            {error && <p className="text-red-500 text-sm">{error}</p>}
           </div>
 
           <div>
@@ -145,8 +145,9 @@ const CreateAccount = ({createAccountSuccess,setDetails}) => {
           <button
             className="w-full cursor-pointer  bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 rounded-lg transition duration-200"
             onClick={handleSubmit}
+            disabled={loading}
           >
-            Create Account
+            {loading ? "Creating..." : "Create Account"}
           </button>
         </div>
 

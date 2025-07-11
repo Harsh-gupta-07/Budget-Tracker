@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { useAuth } from "@/app/context/AuthContext";
 
 const ConfirmLogout = ({ visible, logout }) => {
+  const [loggingOut, setLoggingOut] = useState(false)
   return (
     <dialog
       id="confirm_delete_category_modal"
@@ -34,7 +35,9 @@ const ConfirmLogout = ({ visible, logout }) => {
           <button className="btn" onClick={visible}>
             Cancel
           </button>
-          <button onClick={logout} className="btn btn-error">Logout</button>
+          <button onClick={async () => { setLoggingOut(true);  await logout(); }} className="btn btn-error" disabled={loggingOut}>
+            {loggingOut ? "Logging out..." : "Logout"}
+          </button>
         </div>
       </div>
     </dialog>

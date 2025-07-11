@@ -1,23 +1,26 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
+import { useBudget } from "../context/BudgetContext";
 import Link from "next/link";
 import Squares from "@/utils/Squares";
 import { useRouter } from "next/navigation";
 
 const page = () => {
   const router = useRouter();
-  const { checkCredentials, login, isLoggedIn } = useAuth();
+  const { login, isLoggedIn, error } = useAuth();
+  const { setAllDetails } = useBudget();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState(false);
   const [invalid, setInvalid] = useState(false);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
-    if (isLoggedIn()) {
-      router.push("/dashboard");
-    }
-  }, []);
-  const handleLogin = () => {
+      if (isLoggedIn()) {
+        router.push("/dashboard");
+      }
+    }, []);
+  const handleLogin = async () => {
     const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!pattern.test(email)) {
       setEmailError(true);
@@ -25,11 +28,19 @@ const page = () => {
     } else {
       setEmailError(false);
     }
-    // console.log(checkCredentials(email,password));
-    if (checkCredentials(email, password)) {
-      login(email);
-    } else {
+    setLoading(true);
+    try {
+      await login(email, password);
+      // After login, get user data from localStorage and set in context
+      const userData = JSON.parse(localStorage.getItem("currUser"));
+      if (userData && userData.details) {
+        setAllDetails(userData.details);
+      }
+      setInvalid(false);
+    } catch (err) {
       setInvalid(true);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -73,7 +84,7 @@ const page = () => {
             </label>
 
             <input
-              type=""
+              type="password"
               id="password"
               className={`border ${
                 invalid === true ? "border-red-600 border-2" : "border-zinc-700"
@@ -87,14 +98,17 @@ const page = () => {
                 Invalid Credentials
               </p>
             )}
+            {error && (
+              <p className="text-red-500 text-sm ml-2 mt-0.5">{error}</p>
+            )}
           </div>
 
           <button
             className="w-full disabled:opacity-25 disabled:cursor-not-allowed cursor-pointer  bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 rounded-lg transition duration-200"
             onClick={handleLogin}
-            disabled={email === "" || password === ""}
+            disabled={email === "" || password === "" || loading}
           >
-            Login
+            {loading ? "Logging in..." : "Login"}
           </button>
         </div>
 

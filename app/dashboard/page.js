@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import CategoriesWiseExpenseCards from "@/Components/CategoriesWiseExpenseCards";
 import DashboardCards from "@/Components/DashboardCards";
 import ExpenseList from "@/Components/ExpenseList";
@@ -12,42 +12,37 @@ import AddReminderModal from "@/Components/modals/AddReminder";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../context/AuthContext";
 
-const AddButton = (({ text, onClick }) => (
+const AddButton = ({ text, onClick }) => (
   <button
     className="flex flex-row items-center cursor-pointer"
     onClick={onClick}
   >
     <div className="w-6 h-6 bg-[#459df5] rounded-full flex justify-center items-center mr-2">
-      <Image
-        src="/plus-black.svg"
-        alt="plus icon"
-        width={12}
-        height={12}
-      />
+      <Image src="/plus-black.svg" alt="plus icon" width={12} height={12} />
     </div>
     <p className="text-[#459df5] text-sm">{text}</p>
   </button>
-));
-
+);
 
 const DashboardPage = () => {
   const router = useRouter();
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, loading } = useAuth();
   useEffect(() => {
-    if (!isLoggedIn()) {
-      router.push("/login");
+    if (!loading) {
+      if (!isLoggedIn()) {
+        router.push("/login");
+      }
     }
-  }, []);
-
+  }, [loading, isLoggedIn, router]);
   const [showCategoryModal, setShowCategoryModal] = useState(false);
   const [showReminderModal, setShowReminderModal] = useState(false);
 
   const handleCategoryModal = useCallback(() => {
-    setShowCategoryModal(prev => !prev);
+    setShowCategoryModal((prev) => !prev);
   }, []);
 
   const handleReminderModal = useCallback(() => {
-    setShowReminderModal(prev => !prev);
+    setShowReminderModal((prev) => !prev);
   }, []);
 
   return (
@@ -77,9 +72,7 @@ const DashboardPage = () => {
           <div className="w-full"></div>
           <CategoriesWiseExpenseCards />
           {showCategoryModal && (
-            <AddCategoryModal
-              visible={handleCategoryModal}
-            />
+            <AddCategoryModal visible={handleCategoryModal} />
           )}
 
           <div className="flex flex-row justify-between align-middle bg-[#1c1e1f] py-1.5 lg:py-3 px-8 lg:px-12">
@@ -119,9 +112,7 @@ const DashboardPage = () => {
           </div>
           <Reminders />
           {showReminderModal && (
-            <AddReminderModal
-              visible={handleReminderModal}
-            />
+            <AddReminderModal visible={handleReminderModal} />
           )}
         </motion.div>
       </AnimatePresence>
