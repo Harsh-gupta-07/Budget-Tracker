@@ -15,16 +15,16 @@ import Reminders from "@/Components/Reminders";
 
 const LoginPage = () => {
   const router = useRouter();
-  const { setIntialData, isLoggedIn } = useAuth();
+  const { setIntialData, isLoggedIn, loading } = useAuth();
   const {setAllDetails} = useBudget()
   const [currentStep, setCurrentStep] = useState(0);
   const [done, setDone] = useState(false);
   const [category, setCategory] = useState([]);
   useEffect(() => {
-      if (isLoggedIn()) {
-        router.push("/dashboard");
-      }
-    }, []);
+    if (!loading && isLoggedIn()) {
+      router.push("/dashboard");
+    }
+  }, [loading, isLoggedIn, router]);
 
   const proceed = () => {
     setCurrentStep((prev) => prev + 1);

@@ -8,18 +8,18 @@ import { useRouter } from "next/navigation";
 
 const page = () => {
   const router = useRouter();
-  const { login, isLoggedIn, error } = useAuth();
+  const { login, isLoggedIn, error, loading } = useAuth();
   const { setAllDetails } = useBudget();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState(false);
   const [invalid, setInvalid] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [formLoading, setFormLoading] = useState(false);
   useEffect(() => {
-      if (isLoggedIn()) {
-        router.push("/dashboard");
-      }
-    }, []);
+    if (!loading && isLoggedIn()) {
+      router.push("/dashboard");
+    }
+  }, [loading, isLoggedIn, router]);
   const handleLogin = async () => {
     const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!pattern.test(email)) {
@@ -28,7 +28,7 @@ const page = () => {
     } else {
       setEmailError(false);
     }
-    setLoading(true);
+    setFormLoading(true);
     try {
       await login(email, password);
       // After login, get user data from localStorage and set in context
@@ -40,7 +40,7 @@ const page = () => {
     } catch (err) {
       setInvalid(true);
     } finally {
-      setLoading(false);
+      setFormLoading(false);
     }
   };
 
@@ -106,9 +106,9 @@ const page = () => {
           <button
             className="w-full disabled:opacity-25 disabled:cursor-not-allowed cursor-pointer  bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 rounded-lg transition duration-200"
             onClick={handleLogin}
-            disabled={email === "" || password === "" || loading}
+            disabled={email === "" || password === "" || formLoading}
           >
-            {loading ? "Logging in..." : "Login"}
+            {formLoading ? "Logging in..." : "Login"}
           </button>
         </div>
 
