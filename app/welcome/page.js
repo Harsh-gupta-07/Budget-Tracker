@@ -24,7 +24,7 @@ const LoginPage = () => {
     if (!loading && isLoggedIn()) {
       router.push("/dashboard");
     }
-  }, [loading, isLoggedIn, router]);
+  }, [loading]);
 
   const proceed = () => {
     setCurrentStep((prev) => prev + 1);

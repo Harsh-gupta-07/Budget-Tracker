@@ -92,10 +92,11 @@ const Reminders = () => {
           </div>
         ) : (
           reminders.map((val, ind) => {
+            const remDays = dueDate(val.date);
             return (
               <div
                 key={ind}
-                className=" p-5 rounded-lg shadow-sm border border-gray-700 bg-[#181a1b]"
+                className={`p-5 rounded-lg shadow-sm border border-gray-700 bg-[#181a1b] ${remDays<=5? "bg-[#630404] border-red-500":""}`}
               >
                 <div className="flex justify-between items-start mb-3">
                   <div className="flex items-center gap-2">
@@ -113,7 +114,7 @@ const Reminders = () => {
                 </div>
                 <div className="flex items-center mb-2">
                   <p className="text-sm text-gray-400 ">
-                    {`${dueDate(val.date)} Days Left, (${wordDate(val.date)})`}
+                    {`${remDays} Days Left, (${wordDate(val.date)})`}
                   </p>
                 </div>
                 <div className="flex justify-between items-center">

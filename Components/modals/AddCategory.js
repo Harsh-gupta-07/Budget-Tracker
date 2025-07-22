@@ -9,29 +9,39 @@ const AddCategoryModal = ({ visible }) => {
   const amount = useRef(0);
   const [emtCat, setEmtCat] = useState(false);
   const [emtAmt, setAmtCat] = useState(false);
-  const {addCategory} = useBudget();
+  const [loading, setLoading] = useState(false);
+  const { addCategory } = useBudget();
   function handle() {
-    console.log(
-      { icon: icon, category: catName.current.value },
-      amount.current.value
-    );
-    if (catName.current.value === "" || catName.current.value.length <3) {
+    setLoading(true);
+
+    // console.log(
+    //   { icon: icon, category: catName.current.value },
+    //   amount.current.value
+    // );
+    if (catName.current.value === "" || catName.current.value.length < 3) {
       setEmtCat(true);
+      setLoading(false)
       return;
-    }else{
-      setEmtCat(false)
+    } else {
+      setEmtCat(false);
     }
 
     const amountValue = Number(amount.current.value);
-    if (isNaN(amountValue) || amountValue === 0) {
+    if (isNaN(amountValue) || amountValue === 0 || amountValue>1000000) {
+      setLoading(false)
       setAmtCat(true);
       return;
-    }else{
-      setAmtCat(false)
+    } else {
+      setAmtCat(false);
     }
 
-    addCategory({category: catName.current.value, icon, budget: amountValue, spent: 0});
-    visible();  
+    addCategory({
+      category: catName.current.value,
+      icon,
+      budget: amountValue,
+      spent: 0,
+    });
+    setTimeout(()=>{visible(); setLoading(false)},1000)
   }
 
   return (
@@ -77,7 +87,7 @@ const AddCategoryModal = ({ visible }) => {
             </label>
             <input
               type="number"
-              placeholder="0.00"
+              placeholder="Max amount &#8377;1000000"
               className="input bg-[#181a1b] input-bordered w-full focus:outline-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
               ref={amount}
             />
@@ -139,7 +149,7 @@ const AddCategoryModal = ({ visible }) => {
             Cancel
           </button>
           <button className="btn btn-primary" onClick={handle}>
-            Create Category
+            {loading? <span class="loading loading-spinner"></span>: "Create Category"}
           </button>
         </div>
       </div>

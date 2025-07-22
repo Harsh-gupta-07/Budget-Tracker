@@ -78,7 +78,7 @@ export function BudgetProvider({ children }) {
       prev.map((c, ind) =>
         c.category > id
           ? { ...c, category: c.category - 1, id: ind }
-          : { ...c, ind }
+          : { ...c, id:ind }
       )
     );
     setReminders((prev) => {
@@ -101,6 +101,8 @@ export function BudgetProvider({ children }) {
   // }, [reminders]);
 
   const updateTransaction = (transaction) => {
+    console.log(transaction);
+    
     setCategories((prev) =>
       prev.map((c) =>
         c.id === transaction.category
@@ -178,7 +180,7 @@ export function BudgetProvider({ children }) {
     reminders,
     editReminder,
     deleteReminder,
-    setAllDetails, // <-- add this
+    setAllDetails,
   };
 
   return (

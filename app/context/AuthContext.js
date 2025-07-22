@@ -5,6 +5,7 @@ import { useRouter, redirect } from "next/navigation";
 import { auth } from "../firebase";
 import { db } from "../firebase";
 import { doc, setDoc, getDoc } from "firebase/firestore";
+import { sendPasswordResetEmail } from "firebase/auth";
 import {
   signInWithEmailAndPassword,
   signOut,
@@ -31,46 +32,47 @@ export function AuthProvider({ children }) {
     return `${currentMonth}-${currentYear}`;
   });
 
-  // useEffect(() => {
-  //   const saved = localStorage.getItem("currUser");
-  //   if (saved == null) return;
+  useEffect(() => {
+    async function temp() {
+      const saved = localStorage.getItem("currUser");
+      if (saved == null) return;
 
-  //   const userData = JSON.parse(saved);
+      const userData = JSON.parse(saved);
 
-  //   if (userData.currMonth !== month) {
-  //     // Move details to prev
-  //     const updatedPrev = {
-  //       ...(userData.prev || {}),
-  //       [userData.currMonth]: userData.details,
-  //     };
+      if (userData.currMonth !== month) {
+        const updatedPrev = {
+          ...(userData.prev || {}),
+          [userData.currMonth]: userData.details,
+        };
 
-  //     // Reset transactions
-  //     const updatedDetails = {
-  //       ...userData.details,
-  //       transactions: [],
-  //       categories: userData.details.categories.map((cat) => ({
-  //         ...cat,
-  //         spent: 0,
-  //       })),
-  //     };
+        const updatedDetails = {
+          ...userData.details,
+          transactions: [],
+          categories: userData.details.categories.map((cat) => ({
+            ...cat,
+            spent: 0,
+          })),
+        };
 
-  //     const updatedUser = {
-  //       ...userData,
-  //       currMonth: month,
-  //       prev: updatedPrev,
-  //       details: updatedDetails,
-  //     };
+        const updatedUser = {
+          ...userData,
+          currMonth: month,
+          prev: updatedPrev,
+          details: updatedDetails,
+        };
 
-  // try {
-  //     const userRef = doc(db, "users", user.uid);
-  //     await setDoc(userRef, updatedUser, { merge: true });
-  //     localStorage.setItem("currUser", JSON.stringify(updatedUser));
-  //   } catch (err) {
-  //     setError(err.message);
-  //     console.error(err.message);
-  //   }
-  //   }
-  // }, []);
+        try {
+          const userRef = doc(db, "users", user.uid);
+          await setDoc(userRef, updatedUser, { merge: true });
+
+          localStorage.setItem("currUser", JSON.stringify(updatedUser));
+        } catch (err) {
+          setError(err.message);
+          console.error(err.message);
+        }
+      }
+    }
+  }, []);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
@@ -100,7 +102,7 @@ export function AuthProvider({ children }) {
       }
     } catch (err) {
       setError(err.message);
-      console.error(err.message)
+      console.error(err.message);
       // throw err;
     }
   };
@@ -109,10 +111,11 @@ export function AuthProvider({ children }) {
     setError(null);
     try {
       await signOut(auth);
-      localStorage.removeItem("currUser")
+      localStorage.removeItem("currUser");
       router.push("/login");
     } catch (err) {
       setError(err.message);
+      console.error(err.message);
     }
   };
 
@@ -124,7 +127,6 @@ export function AuthProvider({ children }) {
         email,
         password
       );
-      // Store user data in Firestore
 
       await setDoc(doc(db, "users", userCredential.user.uid), {
         uid: userCredential.user.uid,
@@ -145,7 +147,7 @@ export function AuthProvider({ children }) {
       return;
     }
     // console.log(categories);
-    
+
     const userData = {
       uid: user.uid,
       email: user.email,
@@ -170,7 +172,7 @@ export function AuthProvider({ children }) {
 
   const updateCurrUser = async (details) => {
     console.log(details);
-    
+
     setError(null);
     if (!user) {
       setError("No authenticated user.");
@@ -195,6 +197,19 @@ export function AuthProvider({ children }) {
 
   const isLoggedIn = () => !!user;
 
+  const sendResetEmail = async (email) => {
+    setError(null);
+    const cleanedEmail = email.trim().toLowerCase();
+    
+    try {
+      await sendPasswordResetEmail(auth, cleanedEmail);
+      console.log("✅ Password reset email sent successfully to:", cleanedEmail);
+      setError("Password reset email sent! Check your inbox and spam folder.");
+    } catch (err) {
+      
+      setError(err.message);
+    }
+  };
   const value = {
     user,
     loading,
@@ -205,6 +220,7 @@ export function AuthProvider({ children }) {
     createUser,
     updateCurrUser,
     setIntialData,
+    sendResetEmail,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

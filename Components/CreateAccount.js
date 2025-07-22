@@ -1,4 +1,5 @@
 import { useAuth } from "@/app/context/AuthContext";
+import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 
@@ -11,6 +12,8 @@ const CreateAccount = ({ createAccountSuccess }) => {
   const [passwordError, setPasswordError] = useState("");
   const [passwordStrength, setPasswordStrength] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const getPasswordStrength = (pwd) => {
     let score = 0;
@@ -75,7 +78,7 @@ const CreateAccount = ({ createAccountSuccess }) => {
       await createUser(email.toLowerCase(), password);
       createAccountSuccess();
     } catch (err) {
-      // error is handled by context
+     
     } finally {
       setLoading(false);
     }
@@ -109,14 +112,23 @@ const CreateAccount = ({ createAccountSuccess }) => {
             <label className="block text-sm text-zinc-300 mb-1" htmlFor="password">
               Password
             </label>
+            <div className="flex flex-row gap-2">
             <input
-              type=""
+              type={showPassword ? "text" : "password"}
               id="password"
               className="w-full bg-zinc-800 text-white border border-zinc-700 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 transition"
               placeholder="••••••••"
               value={password}
               onChange={handlePasswordChange}
             />
+            <button
+              type="button"
+              onClick={() => setShowPassword((prev) => !prev)}
+              className="btn btn-circle"
+            >
+              {showPassword?<Image  alt="eye-show" src={"/eye-hidden.svg"} width={25} height={25}/>: <Image  alt="eye-hide" src={"/eye-visible.svg"} width={25} height={25}/>}
+            </button>
+            </div>
             {passwordError && <p className="text-red-500 text-sm">{passwordError}</p>}
             {password && (
               <div className="mt-2">
@@ -132,14 +144,25 @@ const CreateAccount = ({ createAccountSuccess }) => {
             <label className="block text-sm text-zinc-300 mb-1" htmlFor="confirmPassword">
               Confirm Password
             </label>
+            <div className="flex flex-row gap-2 ">
+
+      
             <input
-              type="password"
+              type={showConfirmPassword ? "text" : "password"}
               id="confirmPassword"
               className="w-full bg-zinc-800 text-white border border-zinc-700 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 transition"
               placeholder="••••••••"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
+            <button
+              type="button"
+              onClick={() => setShowConfirmPassword((prev) => !prev)}
+              className="btn btn-circle"
+            >
+              {showConfirmPassword?<Image  alt="eye-show" src={"/eye-hidden.svg"} width={25} height={25}/>: <Image  alt="eye-hide" src={"/eye-visible.svg"} width={25} height={25}/>}
+            </button>
+            </div>
             {confirmPassword && password!==confirmPassword && <p className="text-red-500 text-sm">Passwords do not match</p>}
           </div>
           <button

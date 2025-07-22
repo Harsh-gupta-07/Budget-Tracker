@@ -77,6 +77,10 @@ const ExpenseList = ({ searchQuery, selectedCategory }) => {
   const [details, setDetails] = useState(null);
   const [deleteExpense, setDeleteExpense] = useState(false);
   const [addExpense, setAddExpense] = useState(false);
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
+
   const filteredTransactions = transactions.filter(transaction => {
     const matchesSearch = searchQuery
       ? transaction.description.toLowerCase().includes(searchQuery.toLowerCase())
@@ -93,7 +97,12 @@ const ExpenseList = ({ searchQuery, selectedCategory }) => {
     return new Date(b.date) - new Date(a.date);
   });
 
-  // console.log(transactions)
+  const totalPages = Math.ceil(sortedTransactions.length / itemsPerPage);
+  const paginatedTransactions = sortedTransactions.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
 
   return (
     <div className="bg-[#1c1e1f] py-3 lg:px-12 ">
@@ -106,6 +115,7 @@ const ExpenseList = ({ searchQuery, selectedCategory }) => {
           }} >Add Transaction</button>
         </div>
       ) : (
+        <>
         <div className="overflow-x-auto">
           <table className="min-w-full caption-bottom text-sm">
             <thead className="">
@@ -128,7 +138,7 @@ const ExpenseList = ({ searchQuery, selectedCategory }) => {
               </tr>
             </thead>
             <tbody className="bg-[#181a1b] ">
-              {sortedTransactions.map((val, ind) => {
+              {paginatedTransactions.map((val, ind) => {
                 const temp = val.date.split("-");
                 return (
                   <tr
@@ -193,6 +203,29 @@ const ExpenseList = ({ searchQuery, selectedCategory }) => {
             </tbody>
           </table>
         </div>
+
+        {totalPages > 1 && (
+          <div className="flex justify-center items-center gap-2 mt-4">
+            <button
+              className="btn btn-active"
+              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+              disabled={currentPage === 1}
+            >
+              Previous
+            </button>
+            <span className="text-gray-300">
+              Page {currentPage} of {totalPages}
+            </span>
+            <button
+              className="btn btn-active"
+              onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+              disabled={currentPage === totalPages}
+            >
+              Next
+            </button>
+          </div>
+        )}
+        </>
       )}
       {editExpense && (
         <EditExpense

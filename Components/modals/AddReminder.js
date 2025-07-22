@@ -15,11 +15,15 @@ const AddReminderModal = ({ visible }) => {
   const [emtAmt, setEmtAmt] = useState(false);
   const [emtCat, setEmtCat] = useState(false);
   const [emtDate, setEmtDate] = useState(false);
+  const [loading, setLoading] = useState(false);
+
 
   function handle() {
+    setLoading(true)
     // console.log(amount.current.value, remName.current.value, cat);
     if (!remName.current.value || remName.current.value.length < 3){
       setEmtName(true)
+      setLoading(false)
       return
     }else{
       setEmtName(false)
@@ -28,6 +32,7 @@ const AddReminderModal = ({ visible }) => {
     const temp = parseInt(amount.current.value)
     if (temp===0|| isNaN(temp)){
       setEmtAmt(true)
+      setLoading(false)
       return
     }else{
       setEmtAmt(false)
@@ -35,6 +40,7 @@ const AddReminderModal = ({ visible }) => {
 
     if (!date.current.value){
       setEmtDate(true)
+      setLoading(false)
       return
     }else{
       setEmtDate(false)
@@ -42,6 +48,7 @@ const AddReminderModal = ({ visible }) => {
 
     if(cat === -1){
       setEmtCat(true)
+      setLoading(false)
       return
     }else{
       setEmtCat(false)
@@ -53,7 +60,7 @@ const AddReminderModal = ({ visible }) => {
       date: date.current.value,
       category: cat,
     });
-    visible();
+    setTimeout(()=>{visible(); setLoading(false)},1000)
   }
 
   const tomorrow = new Date();
@@ -198,7 +205,7 @@ const AddReminderModal = ({ visible }) => {
             Cancel
           </button>
           <button className="btn btn-primary" onClick={handle}>
-            Save Reminder
+            {loading? <span className="loading loading-spinner"></span>: "Save Reminder"}
           </button>
         </div>
       </div>

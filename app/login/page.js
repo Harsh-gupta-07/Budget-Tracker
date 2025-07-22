@@ -5,6 +5,7 @@ import { useBudget } from "../context/BudgetContext";
 import Link from "next/link";
 import Squares from "@/utils/Squares";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 const page = () => {
   const router = useRouter();
@@ -15,11 +16,14 @@ const page = () => {
   const [emailError, setEmailError] = useState(false);
   const [invalid, setInvalid] = useState(false);
   const [formLoading, setFormLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
   useEffect(() => {
     if (!loading && isLoggedIn()) {
       router.push("/dashboard");
     }
-  }, [loading, isLoggedIn, router]);
+  }, [loading, isLoggedIn]);
+
   const handleLogin = async () => {
     const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!pattern.test(email)) {
@@ -82,17 +86,41 @@ const page = () => {
             >
               Password
             </label>
-
-            <input
-              type="password"
-              id="password"
-              className={`border ${
-                invalid === true ? "border-red-600 border-2" : "border-zinc-700"
-              } w-full bg-zinc-800 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 transition`}
-              placeholder="••••••••"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
+            <div className="flex flex-row gap-2">
+              <input
+                type={showPassword ? "text" : "password"}
+                id="password"
+                className={`border  w-full bg-zinc-800 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 transition ${
+                  invalid === true
+                    ? "border-red-600 border-2"
+                    : "border-zinc-700"
+                }`}
+                placeholder="••••••••"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword((prev) => !prev)}
+                className="btn btn-circle"
+              >
+                {showPassword ? (
+                  <Image
+                    alt="eye-show"
+                    src={"/eye-hidden.svg"}
+                    width={25}
+                    height={25}
+                  />
+                ) : (
+                  <Image
+                    alt="eye-hide"
+                    src={"/eye-visible.svg"}
+                    width={25}
+                    height={25}
+                  />
+                )}
+              </button>
+            </div>
             {invalid && (
               <p className="text-red-500 text-sm ml-2 mt-0.5">
                 Invalid Credentials
@@ -101,6 +129,11 @@ const page = () => {
             {error && (
               <p className="text-red-500 text-sm ml-2 mt-0.5">{error}</p>
             )}
+            <div className="text-left mt-1">
+              <Link href="/forgot-password" className="text-xs text-purple-400 hover:underline">
+                Forgot Password?
+              </Link>
+            </div>
           </div>
 
           <button

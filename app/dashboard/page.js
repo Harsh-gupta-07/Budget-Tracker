@@ -11,6 +11,7 @@ import AddCategoryModal from "@/Components/modals/AddCategory";
 import AddReminderModal from "@/Components/modals/AddReminder";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../context/AuthContext";
+import PieCharts from "@/Components/PieCharts";
 
 const AddButton = ({ text, onClick }) => (
   <button
@@ -20,7 +21,7 @@ const AddButton = ({ text, onClick }) => (
     <div className="w-6 h-6 bg-[#459df5] rounded-full flex justify-center items-center mr-2">
       <Image src="/plus-black.svg" alt="plus icon" width={12} height={12} />
     </div>
-    <p className="text-[#459df5] text-sm">{text}</p>
+    <p className="hidden md:block text-[#459df5] text-sm">{text}</p>
   </button>
 );
 
@@ -54,8 +55,12 @@ const DashboardPage = () => {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
           transition={{ duration: 0.3, ease: "easeOut" }}
+          className="mt-[64px] lg:mt-0"
         >
           <DashboardCards />
+
+          {/* Pie Charts for budget vs expense and category-wise expense */}
+          <PieCharts />
 
           <div className="flex flex-row bg-[#1c1e1f] py-2 pb-4 lg:py-5 justify-between align-middle px-8 lg:px-12 w-full">
             <div>

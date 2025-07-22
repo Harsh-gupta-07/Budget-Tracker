@@ -6,6 +6,7 @@ import Dock from "@/Components/Dock";
 import LayoutWrapper from "@/Components/LayoutWrapper";
 import { BudgetProvider } from "./context/BudgetContext";
 import { AuthProvider } from "./context/AuthContext";
+import { Analytics } from "@vercel/analytics/next"
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -27,6 +28,7 @@ export default function RootLayout({ children }) {
             {children}
           </BudgetProvider>
         </AuthProvider>
+        <Analytics />
       </body>
     </html>
   );

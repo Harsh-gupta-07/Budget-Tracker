@@ -19,6 +19,7 @@ const AddExpenseModal = ({ visible, category, details }) => {
   const [emtAmt, setEmtAmt] = useState(false);
   const [emtDate, setEmtDate] = useState(false);
   const [emtDesc, setEmtDesc] = useState(false);
+  const [loading, setLoading] = useState(false);
   
 
   useEffect(() => {
@@ -30,9 +31,11 @@ const AddExpenseModal = ({ visible, category, details }) => {
   }, [details]);
   
   function handle() {
+    setLoading(true)
     const temp = Number(amount.current.value);
     if (temp <= 0 || isNaN(temp)) {
       setEmtAmt(true);
+      setLoading(false)
       return;
     } else {
       setEmtAmt(false);
@@ -40,6 +43,7 @@ const AddExpenseModal = ({ visible, category, details }) => {
 
     if (selectCat < 0) {
       setEmtCat(true);
+      setLoading(false)
       return;
     } else {
       setEmtCat(false);
@@ -47,6 +51,7 @@ const AddExpenseModal = ({ visible, category, details }) => {
 
     if (!date.current.value) {
       setEmtDate(true);
+      setLoading(false)
       return;
     } else {
       setEmtDate(false);
@@ -54,6 +59,7 @@ const AddExpenseModal = ({ visible, category, details }) => {
 
     if (desc.current.value.length <=0){
       setEmtDesc(true);
+      setLoading(false)
       return
     }else{
       setEmtDesc(false);
@@ -68,7 +74,7 @@ const AddExpenseModal = ({ visible, category, details }) => {
     if(details && details.id !== undefined) {
       deleteReminder(details.id);
     }
-    visible();
+    setTimeout(()=>{visible(),setLoading(false)},1000)
   }
 
   return (
@@ -201,7 +207,7 @@ const AddExpenseModal = ({ visible, category, details }) => {
             Cancel
           </button>
           <button className="btn btn-primary" onClick={handle}>
-            Save Expense
+            {loading? <span class="loading loading-spinner"></span>: "Save Expense"}
           </button>
         </div>
       </div>

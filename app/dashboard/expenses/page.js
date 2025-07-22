@@ -32,6 +32,7 @@ const page = () => {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
           transition={{ duration: 0.3, ease: "easeOut" }}
+          className="mt-[64px] lg:mt-0"
         >
           <div className="flex flex-row bg-[#1b1d1e] py-5 justify-between align-middle w-full px-8">
             <div>

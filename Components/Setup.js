@@ -63,6 +63,9 @@ const Setup = ({ setDone, category, setCategory }) => {
   );
 
   const handleBudgetUpdate = useCallback((index, value) => {
+    if (value<1 || value>1000000){
+      return
+    }
     setBudgets((prev) =>
       prev.map((budget, i) => (i === index ? parseInt(value) || 0 : budget))
     );
@@ -137,9 +140,8 @@ const Setup = ({ setDone, category, setCategory }) => {
 
               <input
                 type="number"
-                min="0"
                 value={budgets[index] || ""}
-                placeholder={`Enter ${cat.category} Budget`}
+                placeholder="Max &#8377;1000000"
                 className="w-full rounded-md bg-gray-700 text-white px-4 py-2 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 onChange={(e) => handleBudgetUpdate(index, e.target.value)}
               />
