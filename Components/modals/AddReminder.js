@@ -30,7 +30,7 @@ const AddReminderModal = ({ visible }) => {
     }
 
     const temp = parseInt(amount.current.value)
-    if (temp===0|| isNaN(temp)){
+    if (temp===0|| isNaN(temp) || temp>1000000){
       setEmtAmt(true)
       setLoading(false)
       return
@@ -119,7 +119,7 @@ const AddReminderModal = ({ visible }) => {
             />
             {emtAmt && (
               <p className="text-xs text-red-600 py-1">
-                Please Enter a Valid Amount.
+                Please Enter a Valid Amount between 1 and 1000000.
               </p>
             )}
           </div>

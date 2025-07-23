@@ -130,6 +130,9 @@ const CreateAccount = ({ createAccountSuccess }) => {
             </button>
             </div>
             {passwordError && <p className="text-red-500 text-sm">{passwordError}</p>}
+            <p className="text-xs text-zinc-400 mt-1">
+              Password must be 5–15 characters long and include at least one uppercase letter, one lowercase letter, one special character, and one number.
+            </p>
             {password && (
               <div className="mt-2">
                 <div style={{ height: 6, borderRadius: 4, background: '#27272a' }}>

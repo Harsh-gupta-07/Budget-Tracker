@@ -59,7 +59,7 @@ const DashboardPage = () => {
         >
           <DashboardCards />
 
-          {/* Pie Charts for budget vs expense and category-wise expense */}
+     
           <PieCharts />
 
           <div className="flex flex-row bg-[#1c1e1f] py-2 pb-4 lg:py-5 justify-between align-middle px-8 lg:px-12 w-full">

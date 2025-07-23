@@ -6,7 +6,7 @@ import { useBudget } from "@/app/context/BudgetContext";
 import ConfirmDeleteCategory from "./modals/ConfirmDeleteCategory";
 import AddExpenseModal from "./modals/AddExpense";
 
-const CategoryCard = ({ category, onEdit , onDelete, AddExpense}) => {
+const CategoryCard = ({ category, onEdit , onDelete, AddExpense,ln}) => {
   const percentage =
     category.budget > 0 ? (category.spent / category.budget) * 100 : 0;
   const remaining = category.budget - category.spent;
@@ -32,7 +32,7 @@ const CategoryCard = ({ category, onEdit , onDelete, AddExpense}) => {
           >
             <Image src="/edit.svg" alt="edit" width={22} height={22} />
           </button>
-          <button onClick={() => onDelete(category)} className="w-8 h-8 text-gray-400 hover:bg-black cursor-pointer flex justify-around items-center rounded-lg">
+          <button disabled={ln<=3} onClick={() => onDelete(category)} className="disabled:cursor-not-allowed disabled:opacity-40 w-8 h-8 text-gray-400 hover:bg-black cursor-pointer flex justify-around items-center rounded-lg">
             <Image src="/delete.svg" alt="edit" width={20} height={20} />
           </button>
         </div>
@@ -110,6 +110,7 @@ const CategoriesWiseExpenseCards = () => {
               onEdit={handleEdit}
               onDelete={handleDelete}
               AddExpense={()=>{handleAddExpense(cat)}}
+              ln={categories.length}
             />
           ))}
       </div>

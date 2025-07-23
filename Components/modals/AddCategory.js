@@ -149,7 +149,7 @@ const AddCategoryModal = ({ visible }) => {
             Cancel
           </button>
           <button className="btn btn-primary" onClick={handle}>
-            {loading? <span class="loading loading-spinner"></span>: "Create Category"}
+            {loading? <span className="loading loading-spinner"></span>: "Create Category"}
           </button>
         </div>
       </div>

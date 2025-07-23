@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useState, useEffect } from "react";
-import { useRouter, redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { auth } from "../firebase";
 import { db } from "../firebase";
 import { doc, setDoc, getDoc } from "firebase/firestore";
@@ -171,7 +171,7 @@ export function AuthProvider({ children }) {
   };
 
   const updateCurrUser = async (details) => {
-    console.log(details);
+    // console.log(details);
 
     setError(null);
     if (!user) {

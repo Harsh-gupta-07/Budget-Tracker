@@ -33,7 +33,7 @@ const AddExpenseModal = ({ visible, category, details }) => {
   function handle() {
     setLoading(true)
     const temp = Number(amount.current.value);
-    if (temp <= 0 || isNaN(temp)) {
+    if (temp <= 0 || isNaN(temp) || temp>1000000) {
       setEmtAmt(true);
       setLoading(false)
       return;
@@ -108,7 +108,7 @@ const AddExpenseModal = ({ visible, category, details }) => {
             />
             {emtAmt && (
               <p className="text-xs text-red-600 py-1">
-                Please Enter a Valid Amount.
+                Please Enter a Valid Amount between 1 and 1000000.
               </p>
             )}
           </div>
@@ -207,7 +207,7 @@ const AddExpenseModal = ({ visible, category, details }) => {
             Cancel
           </button>
           <button className="btn btn-primary" onClick={handle}>
-            {loading? <span class="loading loading-spinner"></span>: "Save Expense"}
+            {loading? <span className="loading loading-spinner"></span>: "Save Expense"}
           </button>
         </div>
       </div>

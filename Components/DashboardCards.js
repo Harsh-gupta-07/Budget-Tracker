@@ -81,7 +81,7 @@ const NumberOfCategories = ({numberOfCategories}) => {
           <Image src="/shapes.svg" alt="bank-logo" width={23} height={23} />
         </div>
       </div>
-      <Link href="/categories">
+      <Link href="/dashboard/categories">
         <div className="text-xs text-[#469ff6]">Manage Categories</div>
       </Link>
     </div>

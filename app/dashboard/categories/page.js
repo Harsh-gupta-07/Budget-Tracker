@@ -16,8 +16,7 @@ const page = () => {
     }
   }, []);
   const [showCategoryModal, setShowCategoryModal] = useState(false);
-  const {category} = useBudget()
-  console.log(category);
+
   
   return (
     <>

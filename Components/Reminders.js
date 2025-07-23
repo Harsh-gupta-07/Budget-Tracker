@@ -62,7 +62,11 @@ const Reminders = () => {
   const dueDate = (date) => {
     const today = new Date();
     const dueDate = new Date(date);
-    const diffTime = Math.abs(dueDate - today);
+
+    const diffTime = dueDate - today;
+
+    if (diffTime < 0) return 0;
+
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     return diffDays;
   };
@@ -86,7 +90,10 @@ const Reminders = () => {
         {reminders.length === 0 ? (
           <div className="col-span-full flex flex-col items-center justify-center p-8 bg-base-300 rounded-2xl">
             <p className="text-gray-500 mb-4">No reminders found</p>
-            <button onClick={()=> setAddReminder(true)} className="cursor-pointer inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+            <button
+              onClick={() => setAddReminder(true)}
+              className="cursor-pointer inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
+            >
               Create your first reminder
             </button>
           </div>
@@ -96,7 +103,9 @@ const Reminders = () => {
             return (
               <div
                 key={ind}
-                className={`p-5 rounded-lg shadow-sm border border-gray-700 bg-[#181a1b] ${remDays<=5? "bg-[#630404] border-red-500":""}`}
+                className={`p-5 rounded-lg shadow-sm border border-gray-700 bg-[#181a1b] ${
+                  remDays <= 5 ? "bg-[#630404] border-red-500" : ""
+                }`}
               >
                 <div className="flex justify-between items-start mb-3">
                   <div className="flex items-center gap-2">
@@ -127,7 +136,7 @@ const Reminders = () => {
                           description: val.title,
                           amount: val.amount,
                           category: val.category,
-                          date: val.date, 
+                          date: val.date,
                         });
                         setAddExpense(!addExpense);
                       }}
@@ -205,7 +214,13 @@ const Reminders = () => {
           details={details}
         />
       )}
-      {addReminder && <AddReminderModal visible={()=>{setAddReminder(false)}} />}
+      {addReminder && (
+        <AddReminderModal
+          visible={() => {
+            setAddReminder(false);
+          }}
+        />
+      )}
     </div>
   );
 };

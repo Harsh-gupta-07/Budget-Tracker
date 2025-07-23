@@ -5,6 +5,11 @@ import AddExpenseModal from "./modals/AddExpense";
 const DashboardHeader = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const currentMonthYear = new Date().toLocaleString("default", {
+    month: "long",
+    year: "numeric",
+  });
+
   return (
     <div className="flex flex-row bg-[#1c1e1f] p-5 px-8  justify-between align-middle lg:px-12">
       <h1 className="text-2xl font-bold inline align-middle mt-[5px]">
@@ -16,7 +21,7 @@ const DashboardHeader = () => {
             tabIndex={0}
             className="cursor-pointer justify-center gap-2 rounded-md text-sm font-medium  h-10 px-4 py-2 flex items-center"
           >
-            May 2025
+            {currentMonthYear}
             <svg
               className="ml-2 h-4 w-4 fill-current"
               xmlns="http://www.w3.org/2000/svg"
@@ -29,15 +34,7 @@ const DashboardHeader = () => {
             tabIndex={0}
             className="dropdown-content z-[1] menu p-2 shadow w-full border rounded-md border-solid border-gray-500 bg-[#080808]"
           >
-            <li>
-              <a>Dec 2025</a>
-            </li>
-            <li>
-              <a>Aug 2025</a>
-            </li>
-            <li>
-              <a>Sept 2025</a>
-            </li>
+            <li>No data found</li>
           </ul>
         </div>
         <button
